@@ -8,4 +8,18 @@ export const CREATE_SNIPPET_MUTATION = gql`
             }
         }
     }
-`
+`;
+
+export const CREATE_USER_REGISTRATION = gql`
+mutation($username:String!, $email:String!,$password:String!){
+  insert_user_one(object:{
+    email:$email
+    username:$username
+    password:$password
+  })
+    {
+      id
+      createdAt
+    }
+}
+`;
