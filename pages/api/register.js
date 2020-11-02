@@ -1,58 +1,54 @@
-import fetch from "node-fetch";
-import {CREATE_USER_REGISTRATION} from '../../graphql/mutations';
+import bcrypt from 'bcrypt'
+import { request, gql } from 'graphql-request'
 
+// TODO: error handling
 export default async (req, res) => {
-  /*
-  GraphQL mutation which inserts a user in TABLE USER
-  ------
-  have to implement the crypt_password() function !
+	const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
 
-  */
-  
-    //async function that executes the GraphQL mutation
-    //the function needs VARIABLES -> username, email, password (NOT IN ORDER)
-    //returns the server response
-
-      const execute = async (variables) => {
-        const fetchResponse = await fetch(
-          "https://climbing-bear-85.hasura.app/v1/graphql",
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              query: CREATE_USER_REGISTRATION,
-              variables
-            })
-          }
-        );
-        const data = await fetchResponse.json();
-        return data;
-  
-      };
-
-      //BLOCK OD CODE THAT FIND OUT THE TYPE OF THE REQUEST
-      // TAKES ONLY POST REQUESTS
-  if (req.method === 'POST') {
-
-    // GETS THE USED PARAMETERS
-    const { username, email, password } = req.body;
-
-    // CALL TO EXECUTION OF THE QUERY
-    const { data, errors } = await execute({ username, email, password });
-
-    if (errors) {
-      res.status(400).json(errors[0])
-    }
-    //RETURNS TO CLIENT THE FIELDS OF THE QUERY
-    res.status(201).json({
-      ...data.insert_user_one
-    })
-  } else {
-    //IF THE METHON IS NOT POST
-    res.status(401).send("Method unauthorized");
-  }
+	// saves user to the database
+	const execute = async (variables) => {
+		const query = gql`
+			mutation($username:String!, $email:String!,$password:String!){
+				insert_user_one(object:{
+					email:$email
+					username:$username
+					password:$password
+				})
+				{
+					id
+					createdAt
+				}
+			}
+		`
+		const data = await request(endpoint, query, variables)
+		return JSON.stringify(data);
+	};
 
 
+  	if (req.method === 'POST') {
+		try {
+			// Get user data from body
+			const { username, email, password } = req.body
+
+			const hashedPassword = await bcrypt.hash(password, 10)
+
+			const user = {username, email, password: hashedPassword}
+
+			const data = await execute(user)
+
+			res.status(201).json({ message: "Check your email to verify your account"})
+		}
+		catch (err) {
+			res.status(500).json({ message: err})
+		}
+
+	} else {	// Any method that is not POST
+		res.status(401).send("Method unauthorized");
+	}
 }
+
+
+
 /*
 {
 snippet(limit: 6, offset: 0) {
