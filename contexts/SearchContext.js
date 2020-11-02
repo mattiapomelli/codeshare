@@ -18,7 +18,7 @@ export const useSearch = () => {
 
 function useProvideSearch() {
     const [search, setSearch] = useState("")
-    const [activeLanguage, setActiveLanguage] = useState("")
+    const [activeLanguage, setActiveLanguage] = useState(null)
 
     return {
         search,
