@@ -3,6 +3,7 @@ import { useApollo } from '../graphql/apolloClient'
 import { createGlobalStyle } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
 import Navbar from "../components/Navbar"
+import { Provider } from 'next-auth/client'
 
 const GlobalStyle = createGlobalStyle`
 	html,
@@ -55,12 +56,14 @@ export default function App({ Component, pageProps }) {
   	const apolloClient = useApollo(pageProps.initialApolloState)
 
   	return (
-    	<ApolloProvider client={apolloClient}>
-			<SearchProvider>
-				<GlobalStyle />
-				<Navbar />
-				<Component {...pageProps} />
-			</SearchProvider>
-    	</ApolloProvider>
+		<Provider session={pageProps.session}>
+			<ApolloProvider client={apolloClient}>
+				<SearchProvider>
+					<GlobalStyle />
+					<Navbar />
+					<Component {...pageProps} />
+				</SearchProvider>
+			</ApolloProvider>
+		</Provider>
   	)
 }
