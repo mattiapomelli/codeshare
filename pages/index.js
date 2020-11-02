@@ -1,8 +1,9 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from 'next-auth/client'
 
 export default function Home() {
 	const [session] = useSession()
+	const [credentials, setCredentials] = useState({ email: '', password: ''})
 
 	useEffect(() => {
 		console.log(session)
@@ -18,6 +19,18 @@ export default function Home() {
 		signOut()
 	  }
 
+	  const onChange = (e) => {
+		setCredentials({...credentials, [e.target.name]: e.target.value})
+	  }
+
+	const onSubmit = (e) => {
+		e.preventDefault()
+		signIn('credentials', {
+			email: credentials.email,
+			password: credentials.password,
+		})
+	} 
+
 	return (
 		<div>
 			<div>CodeShare</div>
@@ -29,6 +42,13 @@ export default function Home() {
 				) : (
 				<a href="#" onClick={handleLogin} className="logout">Login</a>
 			)}
+
+
+			<form>
+				<input value={credentials.email} onChange={onChange} name="email" type="text"/>
+				<input value={credentials.password} onChange={onChange} name="password" type="password"/>
+				<button onClick={onSubmit}>Login</button>
+			</form>
 		</div>
 	)
 }
