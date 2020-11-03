@@ -61,17 +61,17 @@ export default async (req, res) => {
 				Hello ${username}<br />
 				Welcome to CodeShare!
 				To verify your email please click the button below <br />
-				<a href=${process.env.URL}/api/emailVerification/?id=${data.insert_user_one.id}><button>Verify</button></a>
+				<a href=${process.env.NEXTAUTH_URL}/api/emailVerification/?id=${data.insert_user_one.id}><button>Verify</button></a>
 				`
-			}).then(value=>{
-				//email was sent correctly block
-				res.status(201).json({ message: "Check your email to verify your account"})
-			}).catch(err=>{
-				res.status(500).json({ message: err})
-			});
+			},(err,info)=>{
+				if (err){
+					res.status(500).send({ message: err})
+				}
+				res.status(201).send({ message: "Check your email to verify your account"})
+			})
 		}
 		catch (err) {
-			res.status(500).json({ message: err})
+			res.status(500).send({ message: err})
 		}
 
 	} else {	// Any method that is not POST

@@ -29,7 +29,7 @@ export default async (req, res) => {
             const data = await execute(userId)
             // if query executes correctly redirects to homepage 
             if(data.update_user_by_pk.verificated){
-                res.redirect(301,'/')
+                res.redirect(301,'/') //?verificated=true
             }
 		}
 		catch (err) {
