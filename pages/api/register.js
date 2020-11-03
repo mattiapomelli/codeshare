@@ -1,5 +1,18 @@
 import bcrypt from 'bcrypt'
 import { request, gql } from 'graphql-request'
+import nodemailer from 'nodemailer';
+
+//initialization and settings of nodemailer module
+let transporter = nodemailer.createTransport({
+	host: process.env.SMTP_HOST,
+	port: 465,
+	// secure: false, // upgrade later with STARTTLS
+	auth: {
+	  user: process.env.GMAIL_EMAIL,
+	  pass: process.env.GMAIL_PASSWORD
+	}
+  });
+
 
 // TODO: error handling
 export default async (req, res) => {
@@ -21,7 +34,8 @@ export default async (req, res) => {
 			}
 		`
 		const data = await request(endpoint, query, variables)
-		return JSON.stringify(data);
+		// return: data to return have to be JSON FORMAT !!
+		return data;
 	};
 
 
@@ -35,11 +49,29 @@ export default async (req, res) => {
 			const user = {username, email, password: hashedPassword}
 
 			const data = await execute(user)
-
-			res.status(201).json({ message: "Check your email to verify your account"})
+			// after query return send email verification link,
+			//if error in query the @try@catch block will catch the error
+			//all sensitive data are located in process.env file
+			transporter.sendMail({
+				from: 'CodeShare',
+				to: user.email,
+				subject: 'Email verification',
+				//html code to display on user screen
+				html: `
+				Hello ${username}<br />
+				Welcome to CodeShare!
+				To verify your email please click the button below <br />
+				<a href=${process.env.NEXTAUTH_URL}/api/emailVerification/?id=${data.insert_user_one.id}><button>Verify</button></a>
+				`
+			},(err,info)=>{
+				if (err){
+					res.status(500).send({ message: err})
+				}
+				res.status(201).send({ message: "Check your email to verify your account"})
+			})
 		}
 		catch (err) {
-			res.status(500).json({ message: err})
+			res.status(500).send({ message: err})
 		}
 
 	} else {	// Any method that is not POST
