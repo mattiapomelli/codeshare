@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
-
+import { offsetLimitPagination } from "@apollo/client/utilities"
 let apolloClient
 
 function createApolloClient() {
@@ -10,9 +10,18 @@ function createApolloClient() {
       uri: 'https://climbing-bear-85.hasura.app/v1/graphql', // Server URL (must be absolute)
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            snippet: offsetLimitPagination(),
+          }
+        }
+      }
+    })
   })
 }
+
 
 export function initializeApollo(initialState = null) {
   const _apolloClient = apolloClient ?? createApolloClient()
