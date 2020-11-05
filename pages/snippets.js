@@ -1,4 +1,3 @@
-import { Fragment, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_SNIPPETS_QUERY } from "../graphql/queries"
 import SnippetCard from "../components/SnippetCard"
@@ -6,26 +5,24 @@ import { useSearch } from '../contexts/SearchContext'
 import { Grid, Tabs, SearchBar } from "../components/elements/HomeElements"
 
 export default function Home() {
-
-	const { loading, data,fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
+	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
+	const { loading, data, fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
 		variables: {
 			offset: 0,
 			limit: 4
 		},
 	})
-	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 
 	const onLoadMore = () => {
 		fetchMore({
 			variables: {
 			  offset: data.snippet.length,
-			  limit:4
 			}
-		},)
+		})
 	}
-	useEffect(()=>{
-		console.log(data);
-	},[data]);
+
+	const languages = ["Java", "Javascript", "CSS", "HTML", "SQL", "C"]
+
 	return (
 		<div>
 			<SearchBar placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -40,7 +37,7 @@ export default function Home() {
 				))}
 			</Tabs>
 			<Grid>
-				{!data ? <div>Loading...</div> :
+				{loading ? <div>Loading...</div> :
 					data.snippet.map((snippet, index) => (
 						<SnippetCard {...snippet} key={index} preview={true} />
 					))}
