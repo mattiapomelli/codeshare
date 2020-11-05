@@ -15,14 +15,6 @@ export default function Home() {
 	})
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 
-	const query = search.length > 0 ? GET_FILTERED_SNIPPETS : GET_LATEST_SNIPPETS_QUERY
-	const variables = search.length > 0 ? { search: search, programmingLang: activeLanguage } : { programmingLang: activeLanguage }
-
-	const { loading, error, data } = useQuery(query, { variables }) 
-	//console.log(query.definitions[0].name.value ,variables)
-	
-	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
-
 	const onLoadMore = () => {
 		fetchMore({
 			variables: {
