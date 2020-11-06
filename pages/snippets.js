@@ -1,27 +1,39 @@
+import {  useRef, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_SNIPPETS_QUERY } from "../graphql/queries"
+import scrolledToBottom from "../utils/scrolled-to-bottom"
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import { Grid, Tabs, SearchBar } from "../components/elements/HomeElements"
 
 export default function Home() {
+	const offset = useRef(0)
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { loading, data, fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
 		variables: {
-			offset: 0,
-			limit: 4
+			offset: offset.current,
+			limit: 6
 		},
 	})
 
-	const onLoadMore = () => {
-		fetchMore({
-			variables: {
-			  offset: data.snippet.length,
-			}
-		})
-	}
-
 	const languages = ["Java", "Javascript", "CSS", "HTML", "SQL", "C"]
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll)
+
+		return () => { window.removeEventListener('scroll', handleScroll)}
+	}, [])
+
+	const handleScroll = () => {
+		if ( scrolledToBottom() ) {
+			offset.current += 6
+			fetchMore({
+				variables: {
+					offset: offset.current,
+				}
+			})
+		}
+	}
 
 	return (
 		<div>
@@ -31,7 +43,7 @@ export default function Home() {
 					All
 				</span>
 				{languages.map((language, index) => (
-					<span key={index} className={activeLanguage === language ? language : ""} onClick={() => setActiveLanguage(language)}>
+					<span key={index} className={activeLanguage === language ? language.toLowerCase() : ""} onClick={() => setActiveLanguage(language)}>
 						{language}
 					</span>
 				))}
@@ -42,7 +54,7 @@ export default function Home() {
 						<SnippetCard {...snippet} key={index} preview={true} />
 					))}
 			</Grid>
-			<button onClick={onLoadMore}> click to load more</button>
+			{ loading && <button> click to load more</button> }
 		</div>
 	)
 }
