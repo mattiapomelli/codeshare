@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const Grid = styled.div`
 	width: 100%;
@@ -56,4 +56,25 @@ export const Tabs = styled.div`
 	& .active {
 		background-color: #e7e7e7 !important;
 	}
+`
+
+const loadspinner = keyframes`
+ 	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+`
+
+export const Spinner = styled.div`
+	display: flex;
+	margin: auto;
+	width: 3em;
+	height: 3em;
+	border: 0.5em solid #484d7627;
+	border-left: 0.5em solid #484D76;
+	border-radius: 50%;
+	animation: ${loadspinner} 1.1s infinite linear;
+	margin-bottom: 4rem;
 `
