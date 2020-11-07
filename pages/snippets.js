@@ -8,8 +8,8 @@ import { Grid, Tabs, SearchBar, Spinner } from "../components/elements/HomeEleme
 
 export default function Home() {
 	const offset = useRef(0)
-	const loadedEverything = useRef(false)
-	const [fetching, setFetching] = useState(false)
+	const hasMoreData = useRef(true)
+	const [moreData, setMoreData ] = useState(true);
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { loading, data, fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
 		variables: {
@@ -26,21 +26,26 @@ export default function Home() {
 		return () => { window.removeEventListener('scroll', handleScroll)}
 	}, [])
 
+	let fetching = false;
 	const handleScroll = () => {
-		if ( scrolledToBottom() && !loadedEverything.current && !fetching) {
-			setFetching(true)
+		if ( scrolledToBottom() && hasMoreData.current && !fetching) {
+			fetching = true;
 			offset.current += 6
 			fetchMore({
 				variables: {
 					offset: offset.current,
 				}
 			}).then(result => {
-				setFetching(false)
+				fetching = false
 				if(result.data.snippet.length == 0)
-					loadedEverything.current = true;
+					setMoreData(false)
 			})
 		}
 	}
+
+	useEffect(() => {
+		hasMoreData.current = moreData
+	}, [moreData])
 
 	return (
 		<div>
@@ -61,7 +66,7 @@ export default function Home() {
 						<SnippetCard {...snippet} key={index} preview={true} />
 					))}
 			</Grid>
-			{ (loading || fetching) && <Spinner />}
+			{ moreData && <Spinner />}
 		</div>
 	)
 }

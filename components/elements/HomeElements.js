@@ -10,7 +10,7 @@ export const Grid = styled.div`
 	margin-bottom: 5rem;
 	
 	@media (min-width: 500px) {
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(800px, 1fr));
 	}
 `
 

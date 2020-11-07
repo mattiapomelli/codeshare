@@ -5,7 +5,7 @@ const scrolledToBottom = () => {
     
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     
-    return Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+    return Math.ceil(scrollTop + clientHeight) >= scrollHeight - 400;
 }
 
 export default scrolledToBottom
