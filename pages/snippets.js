@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_SNIPPETS_QUERY } from "../graphql/queries"
+import { GET_FILTERED_SNIPPETS_QUERY } from "../graphql/queries"
 import scrolledToBottom from "../utils/scrolled-to-bottom"
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
@@ -11,14 +11,17 @@ export default function Home() {
 	const hasMoreData = useRef(true)
 	const [moreData, setMoreData ] = useState(true);
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
-	const { loading, data, fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
+	const { loading, data, fetchMore } = useQuery(GET_FILTERED_SNIPPETS_QUERY, {
 		variables: {
 			offset: offset.current,
-			limit: 6
+			limit: 6,
+			order: search > 0 ? null : "desc",
+			programmingLang: activeLanguage,
+			search: search
 		}
 	})
 
-	const languages = ["Java", "Javascript", "CSS", "HTML", "SQL", "C"]
+	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll)
@@ -37,7 +40,7 @@ export default function Home() {
 				}
 			}).then(result => {
 				fetching = false
-				if(result.data.snippet.length == 0)
+				if(result.data.snippets.length == 0)
 					setMoreData(false)
 			})
 		}
@@ -62,7 +65,7 @@ export default function Home() {
 			</Tabs>
 			<Grid>
 				{!loading &&
-					data.snippet.map((snippet, index) => (
+					data.snippets.map((snippet, index) => (
 						<SnippetCard {...snippet} key={index} preview={true} />
 					))}
 			</Grid>

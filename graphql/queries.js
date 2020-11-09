@@ -1,19 +1,13 @@
 import { gql } from '@apollo/client'
 
-
-//query MyQuery($limit:Int!,$offset:Int!) {
-export const GET_ALL_SNIPPETS_QUERY = gql`
-query MyQuery($limit:Int!,$offset:Int!) {
-  snippet(limit: $limit, offset: $offset, order_by: {createdAt: desc}) {
-    userId
+export const GET_FILTERED_SNIPPETS_QUERY = gql`
+query SearchSnippetsQuery($search: String, $programmingLang: String, $order: order_by, $limit: Int!, $offset: Int!) {
+  snippets: search_snippet(args: {search: $search}, where: {programmingLang: {_eq: $programmingLang}}, order_by: {createdAt: $order}, limit: $limit, offset: $offset) {
     title
     code
     createdAt
-    description
     programmingLang
     id
   }
 }
-
-
 `
