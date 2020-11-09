@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
 	#__next {
 		display: flex;
 		flex-direction: column;
+		justify-content: flex-start;
 		min-height: 100vh;
 		background-color: #fff;
 		width: 90%;

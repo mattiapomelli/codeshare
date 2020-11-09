@@ -65,9 +65,9 @@ export default async (req, res) => {
 				`
 			},(err,info)=>{
 				if (err){
-					res.status(500).send({ message: err})
+					return res.status(500).send(err)
 				}
-				res.status(201).send({ message: "Check your email to verify your account"})
+				return res.status(201).send({ message: "Check your email to verify your account"})
 			})
 		}
 		catch (err) {

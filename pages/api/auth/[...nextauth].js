@@ -58,7 +58,7 @@ const providers = [
             const user = result[0]
 
             // check if user exists and is verificated
-            if(!user) return Promise.reject(new Error('Use not found'))
+            if(!user) return Promise.reject(new Error('User not found'))
             if(!user.verificated) return Promise.reject(new Error('User not verificated'))
 
             // check if password matches
@@ -136,6 +136,10 @@ const options = {
     jwt: {
         secret: process.env.JWT_SECRET
     },
+    pages: {
+        signIn: '/login',
+        error: '/login'
+    }
 }
 
 export default (req, res) => NextAuth(req, res, options)
