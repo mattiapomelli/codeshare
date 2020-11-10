@@ -1,10 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
 import { Form } from "../components/elements/AuthElements"
+import { usePopup } from "../contexts/PopupContext"
 
 const Login = () => {
+    const router = useRouter()
+    const addPopup = usePopup()
     const [isLogin, setIsLogin] = useState(true);
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
+
+    useEffect(() => {
+        if(router.query.error) {
+            addPopup(router.query.error)
+        }
+    }, [router.query])
 
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
@@ -25,7 +35,6 @@ const Login = () => {
     
     const signUp = (e) => {
         e.preventDefault();
-        console.log(credentials)
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -37,7 +46,8 @@ const Login = () => {
                 username: credentials.username,
                 password: credentials.password
             })
-        }).then((res) => res.json())
+        })
+        .then(res => res.json())
         .then(data => alert(data.message))
         .catch(err => console.log(err))
     }
@@ -55,7 +65,7 @@ const Login = () => {
             
 
         </Form>
-            <button onClick={() => setIsLogin(!isLogin)}>{ isLogin ? "Login" : "Signup" }</button>
+            <button onClick={() => setIsLogin(prev => !prev)}>{ isLogin ? "Signup" : "Login" }</button>
         </>
     )
 }
