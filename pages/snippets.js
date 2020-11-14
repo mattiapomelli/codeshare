@@ -1,4 +1,4 @@
-import {  useEffect } from 'react'
+import {  useEffect, useRef } from 'react'
 import { request } from "graphql-request"
 import { useSWRInfinite } from 'swr'
 import scrolledToBottom from "../utils/scrolled-to-bottom"
@@ -17,26 +17,38 @@ const GET_FILTERED_SNIPPETS_QUERY = `
 	}
 	}
 `
-const variables = {
+
+const fetcher = (query, offset, lang, search) => request('https://climbing-bear-85.hasura.app/v1/graphql', query, {
 	limit: 6,
 	order: "desc",
-	programmingLang: null,
-	search: ''
-}
-const fetcher = (query, offset) => request('https://climbing-bear-85.hasura.app/v1/graphql', query, {...variables, offset})
+	offset,
+	programmingLang: lang,
+	search: search
+})
+
+const processData = (data) => {
+	let result = [];
+	data.forEach(set => {
+		const { snippets } = set
+		result = result.concat(...snippets)
+	})
+	return result
+} 
 
 export default function Home() {
+	const loadingMore = useRef(false)
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
-		index => [GET_FILTERED_SNIPPETS_QUERY, index*6],
+		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search],
 		fetcher
 	)
 
 	const isLoadingInitialData = !data && !error;
-	const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === "undefined");
-	console.log('Loading more: ', isLoadingMore)
+	const snippets = data ? processData(data) : []
 
-	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
+	useEffect(() => {
+		loadingMore.current = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === "undefined");
+	}, [data, size])
 
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll)
@@ -45,34 +57,37 @@ export default function Home() {
 	}, [])
 
 	const handleScroll = () => {
-		if ( scrolledToBottom()) {
+		console.log(loadingMore.current)
+		if ( scrolledToBottom() && !loadingMore.current) {
+			setSize(size => size + 1)
+			console.log('loading more, offset: ', size)
 		}
 	}
+
+	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
 	return (
 		<div>
 			<SearchBar placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
 			<Tabs>
-				<span onClick={() => setActiveLanguage(null)} className={!activeLanguage ? "active" : ""}>
+				<span onClick={() => {setActiveLanguage(null), setSize(0)}} className={!activeLanguage ? "active" : ""}>
 					All
 				</span>
 				{languages.map((language, index) => (
-					<span key={index} className={activeLanguage === language ? language.toLowerCase() : ""} onClick={() => setActiveLanguage(language)}>
+					<span key={index} className={activeLanguage === language ? language.toLowerCase() : ""}
+						onClick={() => {setActiveLanguage(language), setSize(0)}}>
 						{language}
 					</span>
 				))}
 			</Tabs>
 			<Grid>
-				{ !isLoadingInitialData && 
-					data.map(set => {
-						return set.snippets.map((snippet, index) => (
-							<SnippetCard {...snippet} key={index} preview={true} />
-						))
-					})
+				{
+					snippets.map((snippet, index) => (
+						<SnippetCard {...snippet} key={index} preview={true} />
+					))
 				}
 					
 			</Grid>
-			<button onClick={() => setSize(size + 1)}>Load more</button>
 		</div>
 	)
 }
