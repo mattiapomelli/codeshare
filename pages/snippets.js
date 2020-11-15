@@ -5,6 +5,7 @@ import scrolledToBottom from "../utils/scrolled-to-bottom"
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import { Grid, Tabs, SearchBar, Spinner } from "../components/elements/HomeElements"
+import next from 'next'
 
 const GET_FILTERED_SNIPPETS_QUERY = `
 	query SearchSnippetsQuery($search: String, $programmingLang: String, $order: order_by, $limit: Int!, $offset: Int!) {
@@ -24,30 +25,33 @@ const fetcher = (query, offset, lang, search) => request('https://climbing-bear-
 	offset,
 	programmingLang: lang,
 	search: search
-})
+}).then(data => {return data.snippets});
 
-const processData = (data) => {
-	let result = [];
-	data.forEach(set => {
-		const { snippets } = set
-		result = result.concat(...snippets)
-	})
-	return result
-} 
 
 export default function Home() {
 	const loadingMore = useRef(false)
+	const reachedEnd = useRef(false)
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
 		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search],
-		fetcher
+		fetcher,
+		{ 
+			revalidateAll: false,
+			revalidateOnFocus: false,
+			//revalidateOnReconnect: false,
+		}
 	)
 
+	const snippets = data ? [].concat(...data) : [];
 	const isLoadingInitialData = !data && !error;
-	const snippets = data ? processData(data) : []
+	const isEmpty = data?.[0]?.length === 0;
+	const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === "undefined");
+	//const reachedEnd = isEmpty || (data && data[data.length - 1]?.length < 6);
+	console.log(reachedEnd)
 
 	useEffect(() => {
 		loadingMore.current = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === "undefined");
+		reachedEnd.current = isEmpty || (data && data[data.length - 1]?.length < 6);
 	}, [data, size])
 
 	useEffect(() => {
@@ -57,10 +61,10 @@ export default function Home() {
 	}, [])
 
 	const handleScroll = () => {
-		console.log(loadingMore.current)
-		if ( scrolledToBottom() && !loadingMore.current) {
-			setSize(size => size + 1)
-			console.log('loading more, offset: ', size)
+		if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
+			//setSize(size => size + 1)
+			const button = document.getElementById("loadmorebutton");
+			button.click();
 		}
 	}
 
@@ -75,7 +79,7 @@ export default function Home() {
 				</span>
 				{languages.map((language, index) => (
 					<span key={index} className={activeLanguage === language ? language.toLowerCase() : ""}
-						onClick={() => {setActiveLanguage(language), setSize(0)}}>
+						onClick={() => {setActiveLanguage(language)}}>
 						{language}
 					</span>
 				))}
@@ -86,8 +90,9 @@ export default function Home() {
 						<SnippetCard {...snippet} key={index} preview={true} />
 					))
 				}
-					
 			</Grid>
+			<button onClick={() => setSize(size => size + 1)} id="loadmorebutton">Load More</button>
+			{ isLoadingMore && <Spinner />}
 		</div>
 	)
 }
