@@ -1,11 +1,11 @@
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import { Grid, Tabs, SearchBar, Spinner } from "../components/elements/HomeElements"
-import useInfiniteScrolling from '../hooks/useInfiniteScrolling'
+import useSnippets from '../hooks/useSnippets'
 
 export default function Home() {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
-	const { data, loading, setSize } = useInfiniteScrolling(activeLanguage, search)
+	const { data, loading, setSize, noResults } = useSnippets(activeLanguage, search)
 
 	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
@@ -23,6 +23,7 @@ export default function Home() {
 					</span>
 				))}
 			</Tabs>
+			{ noResults && "No results"}
 			<Grid>
 				{
 					data.map((snippet, index) => (
@@ -30,7 +31,7 @@ export default function Home() {
 					))
 				}
 			</Grid>
-			<button onClick={() => setSize(size => size + 1)} id="loadmorebutton">Load More</button>
+			<button onClick={() => setSize(size => size + 1)} id="loadMoreButton" style={{display: "none"}}>Load More</button>
 			{ loading && <Spinner />}
 		</div>
 	)

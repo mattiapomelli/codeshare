@@ -44,7 +44,7 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 
 	const handleScroll = () => {
 		if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
-			const button = document.getElementById("loadmorebutton");
+			const button = document.getElementById("loadMoreButton");
 			button.click();
 		}
     }
@@ -52,7 +52,8 @@ const useInfiniteScrolling = (activeLanguage, search) => {
     return {
         data: snippets,
         loading: isLoadingMore,
-        setSize
+		setSize,
+		noResults: snippets.length == 0 && !isLoadingMore
     }
 }
 
