@@ -3,7 +3,8 @@ import Link from "next/link"
 import copyToClipboard from "../utils/copy-to-clipboard"
 import { Container, Header, Body, ScrollWrapper, CopyButton, Tooltip } from "./elements/SnippetElements"
 
-const SnippetCard = ({ code, programmingLang, title, id, preview }) => {
+const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregate, likes }) => {
+    const isLiked = likes ? likes.length > 0 : false
 
     const clickHandler = (e) => {
         e.preventDefault();
@@ -31,6 +32,9 @@ const SnippetCard = ({ code, programmingLang, title, id, preview }) => {
                 </ScrollWrapper>
             </Body>
             <CopyButton onClick={clickHandler}>Copy</CopyButton>
+            <div style={{backgroundColor: isLiked ? "red" : "black", width: '20px', height: '20px', color: 'white', textAlign: 'center', borderRadius: '10px'}}>
+                {likes_aggregate.aggregate.count}
+            </div>
         </Container>
     )
 }
