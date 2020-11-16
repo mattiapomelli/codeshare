@@ -11,7 +11,7 @@ const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregat
     const [session] = useSession()
     const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count)
     const [isLiked, setIsLiked] = useState(() => {
-        return likes ? likes.length > 0 : false             // if likes
+        return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
     })
 
     const clickHandler = (e) => {
@@ -33,7 +33,7 @@ const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregat
     const addLike = () => {
         const query = isLiked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION
         const increment = isLiked ? -1 : 1
-        request('https://climbing-bear-85.hasura.app/v1/graphql', query, {
+        request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
             userId: session.user.id,
             snippetId: id
         }).then(() => {

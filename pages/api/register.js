@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
 
 // TODO: error handling
 export default async (req, res) => {
-	const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
+	const endpoint = process.env.NEXT_PUBLIC_HASURA_URL
 
 	// saves user to the database
 	const execute = async (variables) => {

@@ -5,7 +5,7 @@ import scrolledToBottom from "../utils/scrolled-to-bottom"
 import { GET_FILTERED_SNIPPETS_QUERY } from "../graphql/queries"
 import { useSession } from "next-auth/client"
 
-const fetcher = (query, offset, lang, search, userId) => request('https://climbing-bear-85.hasura.app/v1/graphql', query, {
+const fetcher = (query, offset, lang, search, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
 	order: search.length > 0 ? null : "desc",
 	offset,
