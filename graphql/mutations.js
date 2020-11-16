@@ -23,3 +23,19 @@ mutation($username:String!, $email:String!,$password:String!){
     }
 }
 `;
+
+export const ADD_LIKE_MUTATION = `
+  mutation AddLikeMutation($userId: uuid!, $snippetId: uuid!) {
+    insert_like(objects: {userId: $userId, snippetId: $snippetId}) {
+      affected_rows
+    }
+  }
+`
+
+export const REMOVE_LIKE_MUTATION = `
+  mutation RemoveLikeMutation($userId: uuid!, $snippetId: uuid!) {
+    delete_like(where: {snippetId: {_eq: $snippetId}, userId: {_eq: $userId}}) {
+      affected_rows
+    }
+  }
+`

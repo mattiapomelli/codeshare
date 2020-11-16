@@ -14,7 +14,7 @@ function createApolloClient() {
       typePolicies: {
         Query: {
           fields: {
-            snippet: offsetLimitPagination(),
+            search_snippet: offsetLimitPagination(),
           }
         }
       }

@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
 
 // TODO: error handling
 export default async (req, res) => {
-	const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
+	const endpoint = process.env.NEXT_PUBLIC_HASURA_URL
 
 	// saves user to the database
 	const execute = async (variables) => {
@@ -65,9 +65,9 @@ export default async (req, res) => {
 				`
 			},(err,info)=>{
 				if (err){
-					res.status(500).send({ message: err})
+					return res.status(500).send(err)
 				}
-				res.status(201).send({ message: "Check your email to verify your account"})
+				return res.status(201).send({ message: "Check your email to verify your account"})
 			})
 		}
 		catch (err) {

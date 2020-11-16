@@ -1,48 +1,38 @@
-import { useQuery } from '@apollo/client'
-import { GET_ALL_SNIPPETS_QUERY } from "../graphql/queries"
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
-import { Grid, Tabs, SearchBar } from "../components/elements/HomeElements"
+import { Grid, Tabs, SearchBar, Spinner } from "../components/elements/HomeElements"
+import useSnippets from '../hooks/useSnippets'
 
 export default function Home() {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
-	const { loading, data, fetchMore } = useQuery(GET_ALL_SNIPPETS_QUERY, {
-		variables: {
-			offset: 0,
-			limit: 4
-		},
-	})
+	const { data, loading, setSize, noResults } = useSnippets(activeLanguage, search)
 
-	const onLoadMore = () => {
-		fetchMore({
-			variables: {
-			  offset: data.snippet.length,
-			}
-		})
-	}
-
-	const languages = ["Java", "Javascript", "CSS", "HTML", "SQL", "C"]
+	const languages = ["Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
 	return (
 		<div>
 			<SearchBar placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
 			<Tabs>
-				<span onClick={() => setActiveLanguage(null)} className={!activeLanguage ? "active" : ""}>
+				<span onClick={() => {setActiveLanguage(null)}} className={!activeLanguage ? "active" : ""}>
 					All
 				</span>
 				{languages.map((language, index) => (
-					<span key={index} className={activeLanguage === language ? language : ""} onClick={() => setActiveLanguage(language)}>
+					<span key={index} className={activeLanguage === language ? language.toLowerCase() : ""}
+						onClick={() => {setActiveLanguage(language)}}>
 						{language}
 					</span>
 				))}
 			</Tabs>
+			{ noResults && "No results"}
 			<Grid>
-				{loading ? <div>Loading...</div> :
-					data.snippet.map((snippet, index) => (
+				{
+					data.map((snippet, index) => (
 						<SnippetCard {...snippet} key={index} preview={true} />
-					))}
+					))
+				}
 			</Grid>
-			<button onClick={onLoadMore}> click to load more</button>
+			<button onClick={() => setSize(size => size + 1)} id="loadMoreButton" style={{display: "none"}}>Load More</button>
+			{ loading && <Spinner />}
 		</div>
 	)
 }

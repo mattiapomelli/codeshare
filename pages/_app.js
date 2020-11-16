@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../graphql/apolloClient'
 import { createGlobalStyle } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
+import PopupProvider from '../contexts/PopupContext'
 import Navbar from "../components/Navbar"
 import { Provider } from 'next-auth/client'
 
@@ -20,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 	#__next {
 		display: flex;
 		flex-direction: column;
+		justify-content: flex-start;
 		min-height: 100vh;
 		background-color: #fff;
 		width: 90%;
@@ -59,9 +61,11 @@ export default function App({ Component, pageProps }) {
 		<Provider session={pageProps.session}>
 			<ApolloProvider client={apolloClient}>
 				<SearchProvider>
-					<GlobalStyle />
-					<Navbar />
-					<Component {...pageProps} />
+					<PopupProvider>
+						<GlobalStyle />
+						<Navbar />
+						<Component {...pageProps} />
+					</PopupProvider>
 				</SearchProvider>
 			</ApolloProvider>
 		</Provider>

@@ -1,9 +1,18 @@
+import { useState } from "react"
 import CodeBlock from "./CodeBlock"
 import Link from "next/link"
 import copyToClipboard from "../utils/copy-to-clipboard"
 import { Container, Header, Body, ScrollWrapper, CopyButton, Tooltip } from "./elements/SnippetElements"
+import { request } from "graphql-request"
+import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
+import { useSession } from "next-auth/client"
 
-const SnippetCard = ({ code, programmingLang, title, id, preview }) => {
+const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregate, likes }) => {
+    const [session] = useSession()
+    const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count)
+    const [isLiked, setIsLiked] = useState(() => {
+        return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
+    })
 
     const clickHandler = (e) => {
         e.preventDefault();
@@ -21,6 +30,20 @@ const SnippetCard = ({ code, programmingLang, title, id, preview }) => {
         }
     }
 
+    const addLike = () => {
+        const query = isLiked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION
+        const increment = isLiked ? -1 : 1
+        request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
+            userId: session.user.id,
+            snippetId: id
+        }).then(() => {
+            setIsLiked(isLiked => !isLiked);
+            setLikesCount(prevCount => prevCount + increment)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
     return (
         <Container>
             <Tooltip className={`${programmingLang.toLowerCase()}`}>{programmingLang}</Tooltip>
@@ -31,6 +54,12 @@ const SnippetCard = ({ code, programmingLang, title, id, preview }) => {
                 </ScrollWrapper>
             </Body>
             <CopyButton onClick={clickHandler}>Copy</CopyButton>
+            <div style={{backgroundColor: isLiked ? "red" : "black", width: '20px', height: '20px', color: 'white', textAlign: 'center', borderRadius: '10px'}}>
+                {likesCount}
+            </div>
+            <button onClick={addLike}>
+                Like
+            </button>
         </Container>
     )
 }
