@@ -14,6 +14,9 @@ export const GET_FILTERED_SNIPPETS_QUERY = `
 		likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
 			createdAt
 		}
+		user {
+			username
+		}
 	  }
 	}
 `
