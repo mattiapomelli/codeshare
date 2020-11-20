@@ -36,9 +36,11 @@ const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregat
         request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
             userId: session.user.id,
             snippetId: id
-        }).then(() => {
-            setIsLiked(isLiked => !isLiked);
-            setLikesCount(prevCount => prevCount + increment)
+        }).then(data => {
+            if(data.action.affected_rows == 1) {
+                setIsLiked(isLiked => !isLiked);
+                setLikesCount(prevCount => prevCount + increment)
+            }
         }).catch(err => {
             console.log(err)
         })
