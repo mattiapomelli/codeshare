@@ -1,18 +1,39 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CodeBlock from "./CodeBlock"
 import Link from "next/link"
 import copyToClipboard from "../utils/copy-to-clipboard"
 import { Container, Header, Body, ScrollWrapper, CopyButton, Tooltip, Footer, LikeContainer } from "./elements/SnippetElements"
 import { request } from "graphql-request"
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
+import { GET_SNIPPET_LIKES } from "../graphql/queries"
 import { useSession } from "next-auth/client"
+import useSWR from "swr"
 
 const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregate, likes, user }) => {
     const [session] = useSession()
-    const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count)
+    const [likesCount, setLikesCount] = useState(() => {
+        return likes_aggregate ? likes_aggregate.aggregate.count : null
+    })
     const [isLiked, setIsLiked] = useState(() => {
         return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
     })
+    
+    const userId = session ? session.user.id : null
+    const { data, error } = useSWR(!preview ? [GET_SNIPPET_LIKES, id, userId] : null, (query, id) =>
+        request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
+            id,
+            userId,
+            isAuth: userId ? true : false
+        })
+    );
+
+    useEffect(() => {
+        if(data) {
+            const res = data.snippet.likes ? data.snippet.likes.length > 0 : false
+            setIsLiked(res)
+            setLikesCount(data.snippet.likes_aggregate.aggregate.count)
+        }
+    }, [data])
 
     const clickHandler = (e) => {
         e.preventDefault();
@@ -60,7 +81,7 @@ const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregat
                     <svg viewBox="0 0 107 107" fill="none" onClick={addLike} className={isLiked ? "filled" : "stroke"}>
                         <circle cx="53.5" cy="53.5" r="52" fill="white" stroke="#B80202" strokeWidth="5"/>
                     </svg>
-                    {likesCount} - 
+                    {likesCount != null ? likesCount : "-"} - 
                     <span>
                         by {user.username}
                     </span>
