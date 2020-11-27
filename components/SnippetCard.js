@@ -3,11 +3,17 @@ import CodeBlock from "./CodeBlock"
 import Link from "next/link"
 import copyToClipboard from "../utils/copy-to-clipboard"
 import { Container, Header, Body, ScrollWrapper, CopyButton, Tooltip, Footer, LikeContainer } from "./elements/SnippetElements"
-import { request } from "graphql-request"
+import { request, GraphQLClient } from "graphql-request"
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
 import { GET_SNIPPET_LIKES } from "../graphql/queries"
 import { useSession } from "next-auth/client"
 import useSWR from "swr"
+
+const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
+    headers: {
+        "x-hasura-admin-secret": "UNIMI2020"
+    }
+})
 
 const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregate, likes, user }) => {
     const [session] = useSession()
@@ -54,7 +60,7 @@ const SnippetCard = ({ code, programmingLang, title, id, preview, likes_aggregat
     const addLike = () => {
         const query = isLiked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION
         const increment = isLiked ? -1 : 1
-        request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
+        request( query, {
             userId: session.user.id,
             snippetId: id
         }).then(data => {

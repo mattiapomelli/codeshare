@@ -1,11 +1,17 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { request, gql } from 'graphql-request'
+import { GraphQLClient, gql, request } from 'graphql-request'
 import bcrypt from 'bcrypt'
 
 const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
 
 async function getUserByEmail(email) {
+
+    const graphQLClient = new GraphQLClient(endpoint, {
+        headers: {
+            "x-hasura-admin-secret": "UNIMI2020"
+        }
+    })
 
     const query = gql`
         query MyQuery ($email: String!) {
@@ -19,7 +25,7 @@ async function getUserByEmail(email) {
         }
     `
     const variables = {email: email}
-    const res = await request(endpoint, query, variables)
+    const res = await graphQLClient.request( query, variables)
     return res.user
 }
 
@@ -84,9 +90,9 @@ const callbacks = {
                 'Authorization': `token ${account.accessToken}`
             }
         })
+
         const emails = await emailRes.json()
         const primaryEmail = emails.find(e => e.primary).email;
-
         // check if user already exists in the database
         const res = await getUserByEmail(primaryEmail)
         const userData = res[0]
@@ -111,10 +117,20 @@ const callbacks = {
     jwt: async (token, user) => {
         if (user) {
             // save id and username in the jwt
+            token["https://hasura.io/jwt/claims"] = {
+                "x-hasura-allowed-roles": [
+                "viewer",
+                "user"
+                ],
+                "x-hasura-default-role": "user",
+                "x-hasura-user-id": user.id
+            }
+              
             token.id = user.id              
             token.username = user.username
             //token.email = null;                   // if don't want to save the email in the jwt
         }
+        console.log("promise: ", Promise.resolve(token))
         return Promise.resolve(token)               // token object gets passed to session callback
     },
 
