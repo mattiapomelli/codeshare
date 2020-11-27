@@ -64,18 +64,15 @@ export const CopyButton = styled.button`
     color: #222;
     border-radius: 0.3em;
     cursor: pointer;
-    position: absolute;
+/*     position: absolute;
     right: 1rem;
-    bottom: 1rem;
+    bottom: 3rem; */
     font-size: 0.8em;
     line-height: 0.9em;
 
     &:hover { background-color: rgb(216, 216, 216); }
 
     &.copied {
-        position: absolute;
-        right: 1rem;
-        bottom: 1rem;
         font-size: 0.8em;
         line-height: 0.9em;
         background-color: #fff !important;
@@ -94,4 +91,25 @@ export const Tooltip = styled.span`
     text-align: right;
     text-transform: uppercase;
     top: 0px;
+`
+
+export const Footer = styled.footer`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+`
+
+export const LikeContainer = styled.div`
+    display: flex;
+
+    & svg {
+        width: 20px;
+        margin-right: 5px;
+        cursor: pointer;
+
+        &.filled circle{
+            fill: #f00 !important;
+        }
+    }
 `

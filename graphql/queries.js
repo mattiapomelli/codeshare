@@ -14,6 +14,48 @@ export const GET_FILTERED_SNIPPETS_QUERY = `
 		likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
 			createdAt
 		}
+		user {
+			username
+		}
 	  }
+	}
+`
+
+export const GET_ALL_SNIPPETS_ID_QUERY = `
+	query SnippetsIdQuery {
+		snippets: snippet {
+			id
+		}
+	}
+  `
+
+export const GET_SINGLE_SNIPPET_QUERY = `
+	query SingleSnippetQuery($id: uuid!) {
+	  	snippet: snippet_by_pk(id: $id) {
+			code
+			createdAt
+			description
+			id
+			programmingLang
+			title
+			user {
+				username
+			}
+		}
+	}
+`
+
+export const GET_SNIPPET_LIKES = `
+	query GetSnippetLikes($id: uuid!, $userId: uuid, $isAuth: Boolean!) {
+		snippet: snippet_by_pk(id: $id) {
+			likes_aggregate {
+				aggregate {
+					count
+				}
+			}
+			likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
+				createdAt
+			}
+		}
 	}
 `
