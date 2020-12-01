@@ -27,7 +27,7 @@ export default function Home() {
 			<Grid>
 				{
 					data.map((snippet, index) => (
-						<SnippetCard {...snippet} key={index} preview={true} />
+						<SnippetCard {...snippet} key={index}/>
 					))
 				}
 			</Grid>
