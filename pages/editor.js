@@ -2,11 +2,14 @@ import { useState } from "react"
 import { useMutation } from '@apollo/client'
 import { CREATE_SNIPPET_MUTATION } from '../graphql/mutations'
 import CodeEditor from "../components/CodeEditor"
-import { Container, Header, Dropdown, TextArea, SubmitButton } from '../components/elements/EditorElements'
+import { EditorForm, TextArea, Flex, Input, Label, Button } from '../components/elements/MainElements'
+import Dropdown from "../components/Dropdown"
 
 const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
 }`;
+
+const languages = ["Javascript", "HTML", "CSS", "C", "Python"]
 
 function EditorPage() {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", language: "java"})
@@ -27,33 +30,38 @@ function EditorPage() {
     if(error) return <div>error</div>
 
     return (
-        <Container>
-            <Header>
-                <input placeholder="Title..." value={snippet.title} onChange={onChange} name="title"/>
-                <Dropdown>
-                    <select value={snippet.language} onChange={onChange} name="language">
-                        <option value="java">Java</option>
-                        <option value="javascript">Javascript</option>
-                        <option value="css">Css</option>
-                        <option value="html">HTML</option>
-                        <option value="sql">SQL</option>
-                        <option value="c">C</option>
-                    </select>
-                </Dropdown>
-            </Header>
-            <TextArea
-                rows={3}
-                placeholder="Explain what this code does..."
-                name="description"
-                onChange={onChange}
-                value={snippet.description}
-            />
-            <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.language}/>
-            <SubmitButton
+        <EditorForm dir="column" h="center" v="stretch" as="form">        
+            <Flex>
+                <div>
+                    <Label>Title</Label>
+                    <Input placeholder="title" value={snippet.title} onChange={onChange} name="title"/>
+                </div>
+                <div>
+                    <Label>Language</Label>
+                    <Dropdown options={languages} value={snippet.language} onSelect={onChange} name="language"/>
+                </div>
+            </Flex>
+            <div>
+                <Label>Code</Label>
+                <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.language}/>
+            </div>
+            <div>
+                <Label>Description</Label>
+                <TextArea
+                    placeholder="Describe your snippet"
+                    className="description"
+                    name="description"
+                    onChange={onChange}
+                    value={snippet.description}
+                />
+            </div>
+            <Button
+                type="accent"
                 onClick={publishSnippet}
                 disabled={!snippet.title || !snippet.code || !snippet.description}
-            >PUBLISH</SubmitButton>
-        </Container>
+            >
+            Publish</Button>
+        </EditorForm>
     );
 }
 export default EditorPage;
