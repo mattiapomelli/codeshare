@@ -2,8 +2,8 @@ import styled from "styled-components"
 
 export const CodeWrapper = styled.div`
     border-radius: ${props => props.theme.borderRadius};
-    background-color: ${props => props.theme.colors.lightBlue};
-    padding: 30px 0px 0px 20px;
+    background-color: ${props => props.theme.colors.elements};
+    padding: 40px 0px 0px 20px;
     position: relative;
     overflow: hidden;
 
@@ -25,7 +25,7 @@ export const CodeWrapper = styled.div`
         width: 0.8rem;
         height: 0.8rem;
         top: 10px;
-        background-color: ${props => props.theme.colors.darkBlue};
+        background-color: ${props => props.theme.colors.details};
         border-radius: 50%;
         &:first-child { left: 20px };
         &:nth-child(2) { left: calc(20px + 0.8rem + 0.2rem) };
@@ -35,7 +35,7 @@ export const CodeWrapper = styled.div`
     .tooltip {
         border-radius: 0 0 0.35rem 0.35rem;
         color: black;
-        background-color: ${props => props.theme.colors.yellow};
+        background-color: ${props => props.theme.colors.code[props.language]};
         font-size: 0.8rem;
         padding: 0.3rem 0.7rem;
         position: absolute;
@@ -48,15 +48,15 @@ export const CodeWrapper = styled.div`
     .copy-button {
         position: absolute;
         bottom: 18px;
-        right: 20px;
-        background-color: red;
-        padding: 0.4em;
+        right: 16px;
+        padding: 0.6em;
         border-radius: 5rem;
         font-size: 1rem;
         color: white;
         cursor: pointer;
-        background-color: ${props => props.theme.colors.darkBlue};
-        &:hover { filter: brightness(97%); }
+        &:hover { 
+            background-color: ${props => props.theme.colors.background}
+        }
     }
 
     .copied {
@@ -74,13 +74,13 @@ export const CodeWrapper = styled.div`
         width: 20px;
         height: 20px;
         content: "";
-        background-color: ${props => props.theme.colors.lightBlue};
+        background-color: ${props => props.theme.colors.elements};
     } 
 `
 
 export const ScrollWrapper = styled.div`
     overflow: auto;
-    height: 250px;
+    height: 260px;
     
     &::-webkit-scrollbar {
         height: 10px;
@@ -90,10 +90,10 @@ export const ScrollWrapper = styled.div`
         background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
-        background: rgba(124, 124, 124, 0.1);
+        background: rgba(72, 72, 72, 0.3);
     }
     &::-webkit-scrollbar-thumb:hover {
-        background: rgba(124, 124, 124, 0.3);
+        background: rgba(72, 72, 72, 0.4);
     }
     ::-webkit-scrollbar-corner { background: transparent }
 `
@@ -102,7 +102,7 @@ export const EditorWrapper = styled(CodeWrapper)`
     /* padding-bottom: 20px; */
 
     & > div > * {   //editor
-        border-right: 10px solid ${props => props.theme.colors.lightBlue};
+        border-right: 10px solid ${props => props.theme.colors.elements};
     }
 
     textarea {
@@ -110,11 +110,11 @@ export const EditorWrapper = styled(CodeWrapper)`
         background-color: transparent;
         resize: none;
         outline: none;
-        caret-color: black;
+        caret-color: white;
         overflow-x: scroll;
         font-size: 0.9rem !important;
         /* color: transparent !important; */
 
-        &::selection { background-color: ${props => props.theme.colors.yellow} !important; }
+        &::selection { background-color: ${props => props.theme.colors.text} !important; }
     }
 `       

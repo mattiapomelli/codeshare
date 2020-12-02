@@ -3,16 +3,15 @@ import styled, { css } from "styled-components"
 const normalSidebarStyles = css`
     width: ${props => props.theme.sidebarWidth};
 
-    .menu-title {
+    .menu-text{
         display: inline-block;
     }
     header {
         padding: 0 20px;
         li {
-            padding: 1.4em 2em 1.4em 2em;
-            border-radius: ${props => props.theme.borderRadius};
-            span {
-                margin-right: 10px;
+            border-radius: 10em;
+            a {
+                padding: 1.2em 3.4em 1.2em 2.4em;
             }
         }
     }
@@ -21,24 +20,22 @@ const normalSidebarStyles = css`
 const collapsedSidebarStyles = css`
     width: ${props => props.theme.sidebarWidthCollapsed};
 
-    .menu-title {
+    .menu-text {
         display: none;
     }
     header {
         padding: 0;
         li {
-            padding: 1.4em 1.4em 1.4em 1.4em;
             border-radius: 50%;
-            span {
-                margin-right: 0px;
+            a {
+                padding: 1.2em 1.2em 1.2em 1.2em;
             }
         }
     }
 `
 
 export const Sidebar = styled.aside`
-    background-color: white;
-    border-right: 3px solid ${props => props.theme.colors.lightGrey};
+    background-color: ${props => props.theme.colors.sidebar};
     position: fixed;
     height: 100%;
     top: 0;
@@ -47,7 +44,9 @@ export const Sidebar = styled.aside`
     transition: width 200ms, left 200ms;
     z-index: 7;
     overflow: hidden;
-    padding-top: 25px;
+    padding-top: 35px;
+
+    nav { margin-top: 2rem; width: 80%;}
 
     ${props => props.collapsed && css`
         left: 0;
@@ -80,12 +79,8 @@ export const Sidebar = styled.aside`
 `
 
 export const Main = styled.main`
-    padding-top: calc(${props => props.theme.headerHeight} + 30px);
-    /* padding-right: 75px;
-    padding-left: 75px; */
-    width: 92%;
+    padding: 0.5rem 3rem 75px 3rem;       // top + calc(${props => props.theme.headerHeight}
     margin: auto;
-    padding-bottom: 75px;
 `
 
 export const Page = styled.section`
@@ -111,12 +106,10 @@ export const Page = styled.section`
 `
 
 export const Header = styled.header`
-    background-color: white;
-    border-bottom: 3px solid ${props => props.theme.colors.lightGrey};
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4%;
+    padding: 0 3rem;
     position: ${props => props.fixed ? "fixed" : "block"};
     top: 0;
     width: 100%;

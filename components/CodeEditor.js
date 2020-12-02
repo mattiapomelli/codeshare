@@ -35,7 +35,7 @@ const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
     const highlight = (codeString) => <CodeHighlight language={language} codeString={codeString} pre={CodeWrapper} wrapLongLines/>
 
     return (
-        <EditorWrapper>
+        <EditorWrapper language={language.toLowerCase()}>
             <span className="dot"></span>
             <span className="dot"></span>
             <span className="dot"></span>

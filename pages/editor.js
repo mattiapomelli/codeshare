@@ -12,11 +12,15 @@ const defaultCode = `public void yourAwesomeFunction() {
 const languages = ["Javascript", "HTML", "CSS", "C", "Python"]
 
 function EditorPage() {
-    const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", language: "java"})
+    const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "Javascript"})
     const [addSnippet, {error}] = useMutation(CREATE_SNIPPET_MUTATION);
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
+    };
+
+    const onLanguageChange = (programmingLang) => {
+        setSnippet({...snippet, programmingLang });
     };
 
     const onChange = (e) => {
@@ -24,13 +28,13 @@ function EditorPage() {
     }
 
     const publishSnippet = () => {
-        addSnippet({variables: {code: snippet.code, title: snippet.title, description: snippet.description, programmingLang: "HTML", userId: "26457dd0-1a1e-4102-8fd1-8315dd143a8c" }});
+        addSnippet({variables: {...snippet, userId: "26457dd0-1a1e-4102-8fd1-8315dd143a8c" }});
     }
 
     if(error) return <div>error</div>
 
     return (
-        <EditorForm dir="column" h="center" v="stretch" as="form">        
+        <EditorForm dir="column" h="center" v="stretch">        
             <Flex>
                 <div>
                     <Label>Title</Label>
@@ -38,12 +42,12 @@ function EditorPage() {
                 </div>
                 <div>
                     <Label>Language</Label>
-                    <Dropdown options={languages} value={snippet.language} onSelect={onChange} name="language"/>
+                    <Dropdown options={languages} value={snippet.programmingLang} onSelect={onLanguageChange} name="language"/>
                 </div>
             </Flex>
             <div>
                 <Label>Code</Label>
-                <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.language}/>
+                <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.programmingLang}/>
             </div>
             <div>
                 <Label>Description</Label>
@@ -56,7 +60,7 @@ function EditorPage() {
                 />
             </div>
             <Button
-                type="accent"
+                type="primary"
                 onClick={publishSnippet}
                 disabled={!snippet.title || !snippet.code || !snippet.description}
             >

@@ -23,7 +23,11 @@ const GlobalStyle = createGlobalStyle`
 
 	body {
 		font-family: ${props => props.theme.fonts.main};
+		background-color: ${props => props.theme.colors.background};
+		color: ${props => props.theme.colors.text};
 	}
+
+	ul { list-style-type: none; }
 
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }

@@ -49,7 +49,7 @@ const SnippetCard = ({ code, programmingLang, title, id, likes_aggregate, likes,
                 </div>
                 <div className="likes">
                     <span>{likesCount}</span>
-                    <span className="material-icons" onClick={addLike}>flash_on</span>
+                    <span className="material-icons" onClick={addLike}>star</span>
                 </div>
             </SnippetTitle>
         </article>

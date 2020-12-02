@@ -16,7 +16,7 @@ const CodeBlock = ({ codeString, language }) => {
     }
 
     return (
-        <CodeWrapper>
+        <CodeWrapper language={language.toLowerCase()}>
             <span className="dot"></span>
             <span className="dot"></span>
             <span className="dot"></span>

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Header, Sidebar, Page, Main } from "../components/elements/LayoutElements"
-import { Button } from "../components/elements/MainElements"
+import { Button, IconButton } from "../components/elements/MainElements"
 import SideNav from "./SideNav"
 
 const Layout = ({ children }) => {
@@ -16,9 +16,11 @@ const Layout = ({ children }) => {
                 <SideNav/>
             </Sidebar>
             <Page collapsed={collapsed}>
-                <Header collapsed={collapsed}> 
-                    <span className="material-icons" onClick={clickHandler}>menu</span>
-                    <Button type="accent">Share code</Button>
+                <Header collapsed={collapsed}>
+                    <IconButton  onClick={clickHandler}>
+                        <span className="material-icons">menu</span>
+                    </IconButton>
+                    <Button type="primary">Share code</Button>
                 </Header>
                 <Main>
                     { children }

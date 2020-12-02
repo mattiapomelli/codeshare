@@ -130,7 +130,6 @@ const callbacks = {
             token.username = user.username
             //token.email = null;                   // if don't want to save the email in the jwt
         }
-        console.log("promise: ", Promise.resolve(token))
         return Promise.resolve(token)               // token object gets passed to session callback
     },
 

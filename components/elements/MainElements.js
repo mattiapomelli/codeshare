@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components"
 
 export const H1 = styled.h1`
-    font-size: 2.4rem;
+    font-size: 3.3rem;
     letter-spacing: -2px;
-    font-weight: 600;
-    color: black;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 1.5rem;
 `
 
 const baseStyles = css`
-    border-radius: ${props => props.theme.borderRadius};
     border: none;
     outline: none;
     font-family: inherit;
@@ -20,15 +20,14 @@ const baseStyles = css`
 export const Button = styled.button`
     ${baseStyles}
     cursor: pointer;
+    border-radius: 10em;
 
-    background-color: ${props => {
+    background: ${props => {
         switch(props.type) {
             case "primary":
-                return props.theme.colors.mainBlack
-            case "accent":
-                return props.theme.colors.purple
+                return props.theme.colors.primary
             default:
-                return props.theme.colors.lightGrey
+                return props.theme.colors.elements
         }
     }};
 
@@ -36,10 +35,8 @@ export const Button = styled.button`
         switch(props.type) {
             case "primary":
                 return "white"
-            case "accent":
-                return "white"
             default:
-                return props.theme.colors.darkGrey
+                return props.theme.colors.text
         }
     }};
 
@@ -51,24 +48,40 @@ export const Button = styled.button`
     `}  
 `
 
+export const IconButton = styled.button`
+    border: none;
+    outline: none;
+    background-color: ${props => props.theme.colors.elements};
+    color: ${props => props.theme.colors.text};
+    border-radius: 1.2em;
+    padding: 0.9em;
+    cursor: pointer;
+
+    span { font-size: 1.1rem; line-height: 1;}
+
+    &:hover {
+        background-color: ${props => props.theme.colors.details};
+    }
+`
+
 export const Input = styled.input`
     ${baseStyles}
-    padding-left: 20px;
-    background-color: ${props => props.theme.colors.lightGrey};
-    color: ${props => props.theme.colors.darkGrey};
+    padding: 1.1em 1.4em 1.1em 20px;
+    border-radius: 10em;
+    background-color: ${props => props.theme.colors.elements};
+    color: ${props => props.theme.colors.text};
 
     ::placeholder {
-        color: ${props => props.theme.colors.darkGrey};
+        color: ${props => props.theme.colors.text};
     }
 `
 
 export const InputField = styled.div`
     display: inline-block;
-    border-radius: ${props => props.theme.borderRadius};
-    background-color: ${props => props.theme.colors.lightGrey};
-    color: ${props => props.theme.colors.darkGrey};
+    border-radius: 10em;
+    background-color: ${props => props.theme.colors.elements};
     font-size: 0.8rem;
-    padding: 1.4em 1.4em;
+    padding: 1.1em 1.4em;
     position: relative;
 
     input {
@@ -79,12 +92,16 @@ export const InputField = styled.div`
         font-size: 0.8rem;
         font-weight: 500;
         padding-left: 2rem;
+        color: ${props => props.theme.colors.text};
+
+        ::placeholder { color: ${props => props.theme.colors.text}; }
     }
 
     span {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
+        color: ${props => props.theme.colors.details};
     }
 `
 
@@ -93,55 +110,71 @@ export const DropdownMenu = styled.div`
     display: inline-block;
 
     ${Button} {
-        padding: 1.4em 2.1em;
-        min-width: 8.5em;
+        padding: 1.1em 1.4em;
+        min-width: 9.2em;
 
-        &:hover { filter: brightness(97%); }
+        &:hover { background-color: ${props => props.theme.colors.details}; }
 
-        svg { width: 0.8em; height: 0.57em}
+        svg {
+            width: 0.8em;
+            height: 0.57em;
+            color: ${props => props.theme.colors.details};
+        }
     }
 
     ul {
+        /* box-shadow: 2px 2px 2px 2px #222; */
         list-style-type: none;
         position: absolute;
         top: 110%;
         border-radius: ${props => props.theme.borderRadius};
-        background-color: ${props => props.theme.colors.lightGrey};
+        background-color: ${props => props.theme.colors.elements};
+        border: 1px solid ${props => props.theme.colors.details};
         padding: 0.5em;
         z-index: 3;
 
         li {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            padding: 1.2em 2.6em;
+            padding: 0.7em 2.6em;
             cursor: pointer;
-            background-color: ${props => props.theme.colors.lightGrey};
+            background-color: ${props => props.theme.colors.elements};
             border-radius: ${props => props.theme.borderRadius};
-            &:hover { filter: brightness(97%); }
+            &:hover { background-color: ${props => props.theme.colors.details}; }
         }
     }
 `
 
 export const NavItem = styled.li`
-    color: ${props => props.theme.colors.darkGrey};
     font-size: 0.9rem;
     font-weight: 600;
-    padding: 1.4em 2em 1.4em 2em;
-    border-radius: ${props => props.theme.borderRadius};
     width: 100%;
+    border-radius: 10em;
+    margin-bottom: 0.6rem;
 
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    span {
-        margin-right: 10px;
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: ${props => props.theme.colors.text};
+        text-decoration: none;
+        line-height: 1;
     }
-
-    :nth-child(2) {
-        background-color: ${props => props.theme.colors.lightGrey};
+    .icon {
+        color: ${props => props.theme.colors.details};
+        font-size: 1.2rem;
     }
+    .menu-text {   //span
+        margin-left: 10px;
+    }
+    ${props => props.active && css`
+        background: ${props => props.theme.colors.primary};
+        .icon { color: ${props => props.theme.colors.text}; }
+    `}
+
+    &:hover { background-color: ${props => props.theme.colors.elements}}
 `
+
 
 export const Grid = styled.div`
 	width: 100%;
@@ -149,7 +182,7 @@ export const Grid = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     grid-auto-rows: auto;
     grid-gap: 25px;
-    margin-top: 1rem;
+    margin-top: 2rem;
 	
 	@media ${props => props.theme.breakpoints.tablet} {
         grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -163,6 +196,13 @@ export const Flex = styled.div`
     flex-direction: ${props => props.dir};
     width: ${props => props.w || "auto"};
     margin: auto;
+`
+
+export const Logo = styled(Flex)`
+    color: white;
+    cursor: pointer;
+    h1 { line-height: 1; margin-left: 5px;}
+    span { font-size: 30px}
 `
 
 export const NavMenu = styled(Flex)`
@@ -230,7 +270,7 @@ export const Bubble = styled.span`
     right: ${props => props.right};
     border-radius: 50%;
     z-index: -1;
-    background-color: ${props => props.theme.colors[props.color]};
+    background-color: ${props => props.theme.colors.primary};
 `
 
 export const Form = styled(Flex).attrs(props => ({
@@ -261,13 +301,14 @@ export const SnippetTitle = styled(Flex)`
             overflow: hidden;
             text-overflow: ellipsis;
             margin-bottom: -7px;
-            font-size: 1.1rem;
-            letter-spacing: -1.2px;
-            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: -0.7px;
+            font-weight: 500;
         }
         .user {
-            font-size: 0.9rem;
-            font-size: 300;
+            font-size: 0.8rem;
+            font-weight: 300;
+            opacity: 0.7;
         }
     }
 
@@ -283,7 +324,10 @@ export const Skeleton = styled.div`
     display: block;
     height: ${props => props.h || "100%"};
     width: ${props => props.w || "100%"};
-    background: linear-gradient(-90deg, #eee 0%, #F8F8F8 50%, #eee 100%);
+    background: linear-gradient(-90deg,
+        ${props => props.theme.colors.elements} 0%,
+        ${props => props.theme.colors.details} 50%,
+        ${props => props.theme.colors.elements} 100% );
     background-size: 400% 400%;
     animation: pulse 1.2s ease-in-out infinite;
     margin-bottom: 5px;
@@ -300,15 +344,16 @@ export const Skeleton = styled.div`
 export const TextArea = styled.textarea`
     ${baseStyles}
     padding-left: 20px;
-    background-color: ${props => props.theme.colors.lightGrey};
-    color: ${props => props.theme.colors.darkGrey};
+    border-radius: ${props => props.theme.borderRadius};
+    background-color: ${props => props.theme.colors.elements};
+    color: ${props => props.theme.colors.text};
     resize: none;
     display: block;
     width: 100%;
     height: 200px;
 
     ::placeholder {
-        color: ${props => props.theme.colors.darkGrey};
+        color: ${props => props.theme.colors.details};
     }
 
     &::-webkit-scrollbar {
@@ -350,3 +395,4 @@ export const Label = styled.label`
     margin-left: 5px;
     display: block;
 `
+

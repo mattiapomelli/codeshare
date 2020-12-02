@@ -4,20 +4,27 @@ export default {
         code: "Roboto Mono, monospace",
     },
     colors: {
-        mainBlack: "#2B2E35",
-        lightGrey: "#F6F6F6",
-        darkGrey: "#717284",
-        lightBlue: "#EFF5FA",
-        darkBlue: '#D3DFEB',
-        yellow: '#FFE66D',
-        purple: '#6C5DD3'
+        primary: "linear-gradient(to bottom right, #AF90F2, #69CAEC)",
+        sidebar: "#1A1A1A",
+        background: "#1F1F1F",
+        elements: "#262626",
+        details: "#484848",
+        text: "#f6f6f6",
+        code: {
+            javascript: "#EFF196",
+            java: "#EBBC75",
+            sql: "#75EBE6",
+            c: "#E7A7D9",
+            css: "#7BC3DA",
+            html: "#E58484"
+        }
     },
     breakpoints: {
         tablet: "only screen and (min-width: 600px)",
         desktop: "only screen and (min-width: 900px)",
     },
     borderRadius: "1.25rem",
-    sidebarWidth: "250px",
+    sidebarWidth: "270px",
     sidebarWidthCollapsed: "75px",
     headerHeight: "80px",
 }

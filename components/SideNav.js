@@ -1,19 +1,43 @@
-import { Flex, List, NavItem } from "./elements/MainElements"
+import { Flex, NavItem, Logo } from "./elements/MainElements"
+import Link from "next/link"
 
 export default function SideNav() {
     return (
-        <Flex h="space-between" v="center" dir="column" as="header">
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <span className="material-icons" style={{fontSize: '30px'}}>stop_circle</span>
-                <h1 className="menu-title">Codeshare</h1>
-            </div>
-            <nav>
-                <List vertical>
-                    <NavItem><span className="material-icons">home</span><span className="menu-title">Home</span></NavItem>
-                    <NavItem><span className="material-icons">code</span><span className="menu-title">Snippets</span></NavItem>
-                    <NavItem><span className="material-icons">person</span><span className="menu-title">Profile</span></NavItem>
-                </List>
-            </nav>
-        </Flex>
+        <header>
+            <Link href="/">
+                <Logo v="center" h="center">
+                    <span className="material-icons">change_history</span>
+                    <h1 className="menu-text">Codeshare</h1>
+                </Logo>
+            </Link>
+            <Flex dir="column" v="center" h="center" as="nav">
+                <ul>
+                    <NavItem>
+                        <Link href="/">
+                            <a>
+                                <span className="material-icons icon">home</span>
+                                <span className="menu-text">Home</span>
+                            </a>
+                        </Link>
+                    </NavItem>     
+                    <NavItem active>
+                        <Link href="/">
+                            <a>
+                                <span className="material-icons icon">code</span>
+                                <span className="menu-text">Snippets</span>
+                            </a>
+                        </Link>
+                    </NavItem>
+                    <NavItem>
+                        <Link href="/">
+                            <a>
+                                <span className="material-icons icon">person</span>
+                                <span className="menu-text">Profile</span>
+                            </a>
+                        </Link>
+                    </NavItem>
+                </ul>
+            </Flex>
+        </header>
     )
 }

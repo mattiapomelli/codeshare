@@ -1,6 +1,6 @@
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
-import { Input, Grid, Skeleton } from "../components/elements/MainElements"
+import { InputField, Grid, Skeleton, H1 } from "../components/elements/MainElements"
 import Dropdown from "../components/Dropdown"
 import useSnippets from '../hooks/useSnippets'
 
@@ -12,10 +12,14 @@ export default function Home() {
 
 	return (
 		<div>
-			<Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+			<H1>Snippets</H1>
+			<InputField style={{marginRight: "20px"}}>
+				<span className="material-icons">search</span>
+				<input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)}/>
+			</InputField>
 			<Dropdown options={languages} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
-			{ noResults && "No results"}
 			<Grid>
+				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
 					data.map((snippet, index) => (
 						<SnippetCard {...snippet} key={index}/>

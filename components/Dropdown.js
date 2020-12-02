@@ -25,7 +25,7 @@ export default function Dropdown({ options, onSelect, value, nullValue }) {
 
     return (
         <DropdownMenu ref={dropdownRef}>
-            <Button onClick={() => setOpen(open => !open)} flex>
+            <Button onClick={() => { setOpen(open => !open)}} flex>
                 {value || nullValue}
                 <svg viewBox="0 0 14 9" fill="none">
                     <path d="M2 2L7 7L12 2" stroke="#83878E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
