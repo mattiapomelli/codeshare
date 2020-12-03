@@ -72,7 +72,7 @@ export const Input = styled.input`
     color: ${props => props.theme.colors.text};
 
     ::placeholder {
-        color: ${props => props.theme.colors.text};
+        color: ${props => props.theme.colors.details};
     }
 `
 
@@ -350,7 +350,7 @@ export const TextArea = styled.textarea`
     resize: none;
     display: block;
     width: 100%;
-    height: 200px;
+    height: 300px;
 
     ::placeholder {
         color: ${props => props.theme.colors.details};
@@ -371,28 +371,63 @@ export const TextArea = styled.textarea`
     }
     ::-webkit-scrollbar-corner { background: transparent }
 `
+  
+export const EditorForm = styled.form`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr 200px auto;
+    grid-template-areas:
+        "info"
+        "editor"
+        "description"
+        "submit";
+    grid-gap: 10px 20px;
 
-export const EditorForm = styled(Flex)`
-    width: 800px;
-
-    & div:first-child {
-        width: 100%;
-        & div:first-child {
+    .editor {
+        height: 400px;
+        grid-area: editor;
+        display: flex;
+        flex-direction: column;
+        & > div { flex: 1; }
+    };
+    .info {
+        grid-area: info;
+        display: flex;
+        div:first-child{
             flex: 1;
             margin-right: 10px;
-            input { width: 100%;}
+            input {
+                width: 100%;
+            }
         }
+    };
+    .description {
+        grid-area: description;
+        display: flex;
+        flex-direction: column;
+        div { flex: 1; }
+        textarea { height: 100% }
+    };
+    .submit {
+        grid-area: submit;
+        text-align: right;
     }
-    & > button {
-        align-self: flex-end;
-        margin-top: 10px;
+
+    @media ${props => props.theme.breakpoints.desktop} {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "editor info"
+            "editor description"
+            "submit submit";
     }
-`    
+`
 
 export const Label = styled.label`
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-left: 5px;
+    margin-bottom: 5px;
     display: block;
 `
 

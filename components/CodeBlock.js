@@ -21,7 +21,7 @@ const CodeBlock = ({ codeString, language }) => {
             <span className="dot"></span>
             <span className="dot"></span>
             <span className="tooltip">{language}</span>
-            <ScrollWrapper>
+            <ScrollWrapper height="270px">
                 <CodeHighlight codeString={codeString} language={language.toLowerCase()} wrapLines={true} wrapLongLines={false}/>
             </ScrollWrapper>
             {

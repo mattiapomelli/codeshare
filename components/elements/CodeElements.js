@@ -80,7 +80,8 @@ export const CodeWrapper = styled.div`
 
 export const ScrollWrapper = styled.div`
     overflow: auto;
-    height: 260px;
+    /* height: 260px; */
+    height: ${props => props.height || "100%" };
     
     &::-webkit-scrollbar {
         height: 10px;
