@@ -3,7 +3,7 @@ import CodeHighlight from "./CodeHighlight"
 import { CodeWrapper, ScrollWrapper } from "./elements/CodeElements"
 import copyToClipboard from "../utils/copy-to-clipboard"
 
-const CodeBlock = ({ codeString, language }) => {
+const CodeBlock = ({ codeString, language, preview }) => {
     const [copied, setCopied] = useState(false)
 
     const clickHandler = (e) => {
@@ -21,7 +21,7 @@ const CodeBlock = ({ codeString, language }) => {
             <span className="dot"></span>
             <span className="dot"></span>
             <span className="tooltip">{language}</span>
-            <ScrollWrapper height="270px">
+            <ScrollWrapper height={preview ? "270px" : undefined}>
                 <CodeHighlight codeString={codeString} language={language.toLowerCase()} wrapLines={true} wrapLongLines={false}/>
             </ScrollWrapper>
             {

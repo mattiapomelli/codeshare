@@ -39,11 +39,11 @@ const SnippetCard = ({ code, programmingLang, title, id, likes_aggregate, likes,
 
     return (
         <article>
-            <CodeBlock codeString={code + "\n"} language={programmingLang}/>
+            <CodeBlock codeString={code + "\n"} language={programmingLang} preview={true}/>
             <SnippetTitle h="space-between" v="center">
                 <div className="info">
-                    <Link href="/">
-                        <h5 className="title">{title}</h5>						
+                    <Link href={`/snippet/${id}`}>
+                        <a className="title">{title}</a>						
                     </Link>
                     <span className="user">{user.username}</span>
                 </div>

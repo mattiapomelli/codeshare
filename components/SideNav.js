@@ -14,7 +14,7 @@ export default function SideNav() {
             <Flex dir="column" v="center" h="center" as="nav" auto>
                 <ul>
                     <NavItem>
-                        <Link href="/">
+                        <Link href="/snippets">
                             <a>
                                 <span className="material-icons icon">home</span>
                                 <span className="menu-text">Home</span>
@@ -22,7 +22,7 @@ export default function SideNav() {
                         </Link>
                     </NavItem>     
                     <NavItem active>
-                        <Link href="/">
+                        <Link href="/snippets">
                             <a>
                                 <span className="material-icons icon">code</span>
                                 <span className="menu-text">Snippets</span>
@@ -30,7 +30,7 @@ export default function SideNav() {
                         </Link>
                     </NavItem>
                     <NavItem>
-                        <Link href="/">
+                        <Link href="/snippets">
                             <a>
                                 <span className="material-icons icon">person</span>
                                 <span className="menu-text">Profile</span>

@@ -90,6 +90,9 @@ export const SnippetTitle = styled(Flex)`
         flex: 1;
         min-width: 0;
         .title {
+            color: ${props => props.theme.colors.text};
+            text-decoration: none;
+            display: block;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

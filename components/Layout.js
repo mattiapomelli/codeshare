@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useState } from "react"
 import { Header, Sidebar, Page, Main } from "../components/elements/LayoutElements"
 import { Button, IconButton } from "./elements/BaseElements"
@@ -20,7 +21,9 @@ const Layout = ({ children }) => {
                     <IconButton  onClick={clickHandler}>
                         <span className="material-icons">menu</span>
                     </IconButton>
-                    <Button type="primary">Share code</Button>
+                    <Link href="/editor">
+                        <Button type="primary">Share code</Button>
+                    </Link>
                 </Header>
                 <Main>
                     { children }

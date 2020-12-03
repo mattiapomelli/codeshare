@@ -1,6 +1,8 @@
 import { request } from "graphql-request"
 import { useRouter } from "next/router"
-import SnippetCard from "../../components/SnippetCard" 
+import CodeBlock from "../../components/CodeBlock"
+import { H2, Label } from "../../components/elements/BaseElements"
+import { Flex } from "../../components/elements/MainElements"
 import { GET_ALL_SNIPPETS_ID_QUERY, GET_SINGLE_SNIPPET_QUERY } from "../../graphql/queries"
 
 const endpoint = process.env.NEXT_PUBLIC_HASURA_URL
@@ -13,9 +15,23 @@ const SnippetPage = ({ snippet }) => {
     }
 
     return (
-        <div>
-            <SnippetCard {...snippet} preview={false}/>
-        </div>
+        <>  
+            <H2>{snippet.title}</H2>
+            <Flex h="space-between" v="center">
+                <span>{snippet.user.username} &middot; {snippet.createdAt.slice(0, 10)}</span>
+                <Flex v="center">
+                    <span>54</span>
+                    <span className="material-icons">star</span>
+                </Flex>
+            </Flex>
+            <CodeBlock codeString={snippet.code + "\n"} language={snippet.programmingLang}/>    
+            <Label>
+                Description
+            </Label>
+            <pre>
+                {snippet.description}
+            </pre>
+        </>
     )
 }
 
