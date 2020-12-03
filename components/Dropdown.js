@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { Button, DropdownMenu } from "./elements/MainElements"
+import { Button, DropdownMenu } from "./elements/BaseElements"
 
 export default function Dropdown({ options, onSelect, value, nullValue }) {
     const [open, setOpen] = useState(false)

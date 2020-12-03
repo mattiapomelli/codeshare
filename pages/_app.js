@@ -31,31 +31,12 @@ const GlobalStyle = createGlobalStyle`
 
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
-
-	.javascript {
-		background-color: #f7de1e70 !important;
-	}
-	.css {
-		background-color: #5fa9d470 !important;
-	}
-	.html {
-		background-color: #d45f5f70 !important;
-	}
-	.java {
-		background-color: #c2452f70 !important;
-	}
-	.c {
-		background-color: #5968B870 !important;
-	}
-	.sql {
-		background-color: #31648C70 !important;
-	}
 `
 
 export default function App({ Component, pageProps }) {
 	const apolloClient = useApollo(pageProps.initialApolloState)
 	const router = useRouter()
-	const paths = ["/", "/login"]
+	const paths = ["/", "/login", "/signup"]
 
   	return (
 		<Provider session={pageProps.session}>

@@ -2,7 +2,8 @@ import { useState } from "react"
 import { useMutation } from '@apollo/client'
 import { CREATE_SNIPPET_MUTATION } from '../graphql/mutations'
 import CodeEditor from "../components/CodeEditor"
-import { EditorForm, TextArea, H1, Input, Label, Button } from '../components/elements/MainElements'
+import { H1, Input, Label, Button, TextArea } from "../components/elements/BaseElements"
+import { EditorForm } from '../components/elements/MainElements'
 import Dropdown from "../components/Dropdown"
 
 const defaultCode = `public void yourAwesomeFunction() {

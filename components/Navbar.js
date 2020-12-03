@@ -1,54 +1,38 @@
+import {  NavMenu, List, Logo } from "./elements/MainElements"
+import { Button } from "./elements/BaseElements"
 import Link from "next/link"
-import styled from "styled-components"
+import { useSession, signOut } from "next-auth/client"
 
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem 0;
-    align-items: center;
-    margin-bottom: 2rem;
-
-    & nav {
-        font-weight: 700;
-
-        & a:not(:last-of-type) {
-            margin-right: 1rem;
-        }
-    }
-
-    & .logo {
-        font-weight: 900;
-        font-size: 1.2em;
-    }
-
-    & .cta {
-        color: white;
-        background-color: black;
-        border-radius: 3em;
-        width: 120px;
-        padding: 0.5em 0.8em;
-
-        &:hover {
-            background-color: #222;
-        }
-    }
-`
-
-const Navbar = () => {
+export default function Navbar() {
+    const [session] = useSession();
 
     return (
-        <Header>
+        <NavMenu h="space-between" v="center" as="header" auto>
             <Link href="/">
-                <a className="logo">&lt;CodeShare/&gt;</a>
+                <Logo v="center" h="center">
+                    <span className="material-icons">change_history</span>
+                    <h1 className="menu-text">Codeshare</h1>
+                </Logo>
             </Link>
             <nav>
-                <Link href="/snippets">Snippets</Link>
-                <Link href="/editor">
-                    <a className="cta">Share code</a>
-                </Link>
+                <List horizontal margin="2rem">
+                    <Link href="/snippets">
+                        <li><a>Snippets</a></li>
+                    </Link>
+                    <Link href="/snippets">
+                        <li><a>Snippets</a></li>
+                    </Link>
+                    {
+                        session ?
+                        <Button type="primary" onClick={signOut}>Logout</Button>
+                        : 
+                        <Link href="/signup">
+                            <Button type="primary">Sign up</Button>
+                        </Link>
+                    }
+
+                </List>
             </nav>
-        </Header>
+        </NavMenu>
     )
 }
-
-export default Navbar

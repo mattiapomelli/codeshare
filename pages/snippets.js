@@ -1,6 +1,7 @@
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
-import { InputField, Grid, Skeleton, H1 } from "../components/elements/MainElements"
+import { SnippetsGrid } from "../components/elements/MainElements"
+import { InputField, Skeleton, H1 } from "../components/elements/BaseElements"
 import Dropdown from "../components/Dropdown"
 import useSnippets from '../hooks/useSnippets'
 
@@ -18,7 +19,7 @@ export default function Home() {
 				<input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)}/>
 			</InputField>
 			<Dropdown options={languages} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
-			<Grid>
+			<SnippetsGrid>
 				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
 					data.map((snippet, index) => (
@@ -35,7 +36,7 @@ export default function Home() {
 						</div>		
 					</article>
 				))}
-			</Grid>
+			</SnippetsGrid>
 			<button onClick={() => setSize(size => size + 1)} id="loadMoreButton" style={{display: "none"}}>Load More</button>
 		</div>
 	)

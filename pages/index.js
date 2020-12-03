@@ -1,25 +1,27 @@
-import { useSession, signOut } from 'next-auth/client'
 import Link from "next/link"
+import Navbar from "../components/Navbar"
+import { Hero } from "../components/elements/MainElements"
+import { Button } from "../components/elements/BaseElements"
+import Image from "next/image"
 
 export default function Home() {
-	const [session] = useSession()
-	
-	const handleLogout = (e) => {
-		e.preventDefault()
-		signOut()
-	}
 
 	return (
-		<div>
-			<div>CodeShare</div>
-			{session? (
-				<>
-					<img src={session.user.image}/>
-					<a href="#" onClick={handleLogout}>Logout</a>
-				</>
-				) : (
-				<Link href="/login">Login</Link>
-			)}
-		</div>
+		<>
+			<Navbar/>
+			<Hero>
+				<h1>Share the code you are proud of</h1>
+				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
+				<div>
+					<Link href="/signup">
+						<Button>GET STARTED</Button>
+					</Link>
+					<Link href="/signup">
+						<Button type="primary">GET STARTED</Button>
+					</Link>
+				</div>
+				<Image src="/hero.svg" width={612} height={392} layout="responsive" className="image"/>
+			</Hero>
+		</>
 	)
 }

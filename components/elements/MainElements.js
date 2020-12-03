@@ -1,182 +1,6 @@
 import styled, { css } from "styled-components"
 
-export const H1 = styled.h1`
-    font-size: 3.3rem;
-    letter-spacing: -2px;
-    font-weight: 400;
-    color: white;
-    margin-bottom: 1.5rem;
-`
-
-const baseStyles = css`
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 1.4em 2.6em;
-`
-
-export const Button = styled.button`
-    ${baseStyles}
-    cursor: pointer;
-    border-radius: 10em;
-
-    background: ${props => {
-        switch(props.type) {
-            case "primary":
-                return props.theme.colors.primary
-            default:
-                return props.theme.colors.elements
-        }
-    }};
-
-    color: ${props => {
-        switch(props.type) {
-            case "primary":
-                return "white"
-            default:
-                return props.theme.colors.text
-        }
-    }};
-
-    ${props => props.flex && css`
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        & > :last-child {margin-left: 8px}
-    `}  
-`
-
-export const IconButton = styled.button`
-    border: none;
-    outline: none;
-    background-color: ${props => props.theme.colors.elements};
-    color: ${props => props.theme.colors.text};
-    border-radius: 1.2em;
-    padding: 0.9em;
-    cursor: pointer;
-
-    span { font-size: 1.1rem; line-height: 1;}
-
-    &:hover {
-        background-color: ${props => props.theme.colors.details};
-    }
-`
-
-export const Input = styled.input`
-    ${baseStyles}
-    padding: 1.1em 1.4em 1.1em 20px;
-    border-radius: 10em;
-    background-color: ${props => props.theme.colors.elements};
-    color: ${props => props.theme.colors.text};
-
-    ::placeholder {
-        color: ${props => props.theme.colors.details};
-    }
-`
-
-export const InputField = styled.div`
-    display: inline-block;
-    border-radius: 10em;
-    background-color: ${props => props.theme.colors.elements};
-    font-size: 0.8rem;
-    padding: 1.1em 1.4em;
-    position: relative;
-
-    input {
-        border: none;
-        outline: none;
-        font-family: inherit;
-        background-color: transparent;
-        font-size: 0.8rem;
-        font-weight: 500;
-        padding-left: 2rem;
-        color: ${props => props.theme.colors.text};
-
-        ::placeholder { color: ${props => props.theme.colors.text}; }
-    }
-
-    span {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        color: ${props => props.theme.colors.details};
-    }
-`
-
-export const DropdownMenu = styled.div`
-    position: relative;
-    display: inline-block;
-
-    ${Button} {
-        padding: 1.1em 1.4em;
-        min-width: 9.2em;
-
-        &:hover { background-color: ${props => props.theme.colors.details}; }
-
-        svg {
-            width: 0.8em;
-            height: 0.57em;
-            color: ${props => props.theme.colors.details};
-        }
-    }
-
-    ul {
-        /* box-shadow: 2px 2px 2px 2px #222; */
-        list-style-type: none;
-        position: absolute;
-        top: 110%;
-        border-radius: ${props => props.theme.borderRadius};
-        background-color: ${props => props.theme.colors.elements};
-        border: 1px solid ${props => props.theme.colors.details};
-        padding: 0.5em;
-        z-index: 3;
-
-        li {
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 0.7em 2.6em;
-            cursor: pointer;
-            background-color: ${props => props.theme.colors.elements};
-            border-radius: ${props => props.theme.borderRadius};
-            &:hover { background-color: ${props => props.theme.colors.details}; }
-        }
-    }
-`
-
-export const NavItem = styled.li`
-    font-size: 0.9rem;
-    font-weight: 600;
-    width: 100%;
-    border-radius: 10em;
-    margin-bottom: 0.6rem;
-
-    a {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        color: ${props => props.theme.colors.text};
-        text-decoration: none;
-        line-height: 1;
-    }
-    .icon {
-        color: ${props => props.theme.colors.details};
-        font-size: 1.2rem;
-    }
-    .menu-text {   //span
-        margin-left: 10px;
-    }
-    ${props => props.active && css`
-        background: ${props => props.theme.colors.primary};
-        .icon { color: ${props => props.theme.colors.text}; }
-    `}
-
-    &:hover { background-color: ${props => props.theme.colors.elements}}
-`
-
-
-export const Grid = styled.div`
+export const SnippetsGrid = styled.div`
 	width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -187,28 +11,6 @@ export const Grid = styled.div`
 	@media ${props => props.theme.breakpoints.tablet} {
         grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 	}
-`
-
-export const Flex = styled.div`
-    display: flex;
-    justify-content: ${props => props.h};
-    align-items: ${props => props.v};
-    flex-direction: ${props => props.dir};
-    width: ${props => props.w || "auto"};
-    margin: auto;
-`
-
-export const Logo = styled(Flex)`
-    color: white;
-    cursor: pointer;
-    h1 { line-height: 1; margin-left: 5px;}
-    span { font-size: 30px}
-`
-
-export const NavMenu = styled(Flex)`
-    padding-top: 1.5rem;
-    width: 90%;
-    max-width: 1200px;
 `
 
 export const List = styled.ul`
@@ -232,32 +34,24 @@ export const Hero = styled.section`
     flex-direction: column;
     width: 90%;
     max-width: 1200px;
-    margin: 1rem auto;
+    margin: 4rem auto 0 auto;
 
-    .hero-left {
-        flex: 1;
-        text-align: center; 
-
-        h1 {
-            font-size: 4rem;
-            line-height: 1;
-        }
-        p { margin: 20px 0;}
-        button:first-of-type { margin-right: 10px; }
+    h1 {
+        font-size: 3rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        text-align: center;
     }
-
-    .hero-right {
-        flex: 2;
-        position: relative;
-        text-align: right;
-        width: 100%;
-        /* margin-left: -80px; */
+    p {
+        font-size: 1rem;
+        font-weight: 300;
+        color: ${props => props.theme.colors.text};
+        width: 50%;
+        text-align: center;
+        margin-bottom: 2rem;
     }
-
-    @media ${props => props.theme.breakpoints.desktop} {
-        flex-direction: row;
-        & .hero-left { text-align: left; }
-    }
+    button:first-of-type { margin-right: 10px; }
+    button { margin-bottom: 2rem; }
 `
 
 export const Bubble = styled.span`
@@ -273,22 +67,21 @@ export const Bubble = styled.span`
     background-color: ${props => props.theme.colors.primary};
 `
 
-export const Form = styled(Flex).attrs(props => ({
-    as: "form"
-}))`
-    width: 80%;
-    max-width: 260px;
-    margin-top: 5rem;
+export const Flex = styled.div`
+    display: flex;
+    justify-content: ${props => props.h};
+    align-items: ${props => props.v};
+    flex-direction: ${props => props.dir};
+    width: ${props => props.w || "auto"};
+    margin: ${props => props.auto ? "auto" : 0};
+`
 
-    input { margin-bottom: 1rem; }
-    hr {
-        margin: 1rem auto;
-        border: none;
-        background-color: #B8B8B8;
-        height: 2px;
-        width: 95%;
-    }
-`    
+export const Logo = styled(Flex)`
+    color: white;
+    cursor: pointer;
+    h1 { line-height: 1; margin-left: 5px; font-size: 1.5rem}
+    span { font-size: 30px}
+`
 
 export const SnippetTitle = styled(Flex)`
     padding: 0 20px;
@@ -319,58 +112,6 @@ export const SnippetTitle = styled(Flex)`
     }
 `
 
-export const Skeleton = styled.div`
-    border-radius: ${props => props.theme.borderRadius};
-    display: block;
-    height: ${props => props.h || "100%"};
-    width: ${props => props.w || "100%"};
-    background: linear-gradient(-90deg,
-        ${props => props.theme.colors.elements} 0%,
-        ${props => props.theme.colors.details} 50%,
-        ${props => props.theme.colors.elements} 100% );
-    background-size: 400% 400%;
-    animation: pulse 1.2s ease-in-out infinite;
-    margin-bottom: 5px;
-    @keyframes pulse {
-        0% {
-            background-position: 0% 0%;
-        }
-        100% {
-            background-position: -135% 0%;
-        }
-    }
-`
-
-export const TextArea = styled.textarea`
-    ${baseStyles}
-    padding: 20px;
-    border-radius: ${props => props.theme.borderRadius};
-    background-color: ${props => props.theme.colors.elements};
-    color: ${props => props.theme.colors.text};
-    resize: none;
-    display: block;
-    width: 100%;
-
-    ::placeholder {
-        color: ${props => props.theme.colors.details};
-    }
-
-    &::-webkit-scrollbar {
-        height: 10px;
-        width: 10px;
-    }
-    &::-webkit-scrollbar-track {
-        background-color: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: rgba(124, 124, 124, 0.1);
-    }
-    &::-webkit-scrollbar-thumb:hover {
-        background: rgba(124, 124, 124, 0.3);
-    }
-    ::-webkit-scrollbar-corner { background: transparent }
-`
-  
 export const EditorForm = styled.form`
     display: grid;
     grid-template-columns: 1fr;
@@ -445,11 +186,59 @@ export const EditorForm = styled.form`
     }
 `
 
-export const Label = styled.label`
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    display: block;
+export const LoginForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 260px;
+    margin: 6rem auto 0 auto;
+
+    h3 {
+        margin-bottom: 2rem;
+    }
+
+    .input-field {
+        width: 100%; margin-bottom: 1rem;
+        padding: 1.4em 2em
+    }
+
+    button {
+        width: 100%;
+    }
+
+    hr {
+        margin: 1rem 0;
+        width: 90%;
+    }
+
+    p {
+        margin-top: 2rem;
+        font-size: 0.8rem;
+        a {
+            color: #0880B9;
+            text-decoration: none;
+            &:hover { text-decoration: underline; }
+        }
+    }
 `
 
+export const NavMenu = styled(Flex)`
+    padding-top: 1.5rem;
+    width: 90%;
+    max-width: 1200px;
+    a {
+        cursor: pointer;
+    }
+    nav {
+        animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+`

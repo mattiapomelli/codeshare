@@ -1,4 +1,5 @@
-import { Flex, NavItem, Logo } from "./elements/MainElements"
+import { NavItem } from "./elements/BaseElements"
+import { Flex, Logo } from "./elements/MainElements"
 import Link from "next/link"
 
 export default function SideNav() {
@@ -10,7 +11,7 @@ export default function SideNav() {
                     <h1 className="menu-text">Codeshare</h1>
                 </Logo>
             </Link>
-            <Flex dir="column" v="center" h="center" as="nav">
+            <Flex dir="column" v="center" h="center" as="nav" auto>
                 <ul>
                     <NavItem>
                         <Link href="/">

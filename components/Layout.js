@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Header, Sidebar, Page, Main } from "../components/elements/LayoutElements"
-import { Button, IconButton } from "../components/elements/MainElements"
+import { Button, IconButton } from "./elements/BaseElements"
 import SideNav from "./SideNav"
 
 const Layout = ({ children }) => {
