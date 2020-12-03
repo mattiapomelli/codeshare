@@ -343,14 +343,13 @@ export const Skeleton = styled.div`
 
 export const TextArea = styled.textarea`
     ${baseStyles}
-    padding-left: 20px;
+    padding: 20px;
     border-radius: ${props => props.theme.borderRadius};
     background-color: ${props => props.theme.colors.elements};
     color: ${props => props.theme.colors.text};
     resize: none;
     display: block;
     width: 100%;
-    height: 300px;
 
     ::placeholder {
         color: ${props => props.theme.colors.details};
@@ -375,7 +374,7 @@ export const TextArea = styled.textarea`
 export const EditorForm = styled.form`
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 200px auto;
+    grid-template-rows: auto 1fr 300px auto;
     grid-template-areas:
         "info"
         "editor"
@@ -405,7 +404,30 @@ export const EditorForm = styled.form`
         grid-area: description;
         display: flex;
         flex-direction: column;
-        div { flex: 1; }
+        div {
+            border-radius: ${props => props.theme.borderRadius};
+            overflow: hidden;
+            position: relative;
+            flex: 1;
+            &::after {  /* Square to hide corner of scrollbars */
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                content: "";
+                background-color: ${props => props.theme.colors.elements};;
+            }
+            &::before {  /* Square to hide corner of scrollbars */
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                content: "";
+                background-color: ${props => props.theme.colors.elements};;
+            } 
+        }
         textarea { height: 100% }
     };
     .submit {
@@ -413,7 +435,7 @@ export const EditorForm = styled.form`
         text-align: right;
     }
 
-    @media ${props => props.theme.breakpoints.desktop} {
+    @media only screen and (min-width: 1200px){
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto 1fr auto;
         grid-template-areas:
