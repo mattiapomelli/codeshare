@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { Header, Sidebar, Page, Main } from "../components/elements/LayoutElements"
-import { Button, IconButton } from "./elements/BaseElements"
+import { Button, IconButton } from "./Button"
 import SideNav from "./SideNav"
 
 const Layout = ({ children }) => {
@@ -18,9 +18,7 @@ const Layout = ({ children }) => {
             </Sidebar>
             <Page collapsed={collapsed}>
                 <Header collapsed={collapsed}>
-                    <IconButton  onClick={clickHandler}>
-                        <span className="material-icons">menu</span>
-                    </IconButton>
+                    <IconButton  onClick={clickHandler} icon="menu"/>
                     <Link href="/editor">
                         <Button type="primary">Share code</Button>
                     </Link>

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Navbar from "../components/Navbar"
 import { Hero } from "../components/elements/MainElements"
-import { Button } from "../components/elements/BaseElements"
+import { Button, IconButton } from "../components/Button"
 import Image from "next/image"
 
 export default function Home() {
@@ -9,6 +9,7 @@ export default function Home() {
 	return (
 		<>
 			<Navbar/>
+			<IconButton icon="menu" type="primary"></IconButton>
 			<Hero>
 				<h1>Share the code you are proud of</h1>
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>

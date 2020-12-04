@@ -25,53 +25,6 @@ const baseStyles = css`
     padding: 1.4em 2.6em;
 `
 
-export const Button = styled.button`
-    ${baseStyles}
-    cursor: pointer;
-    border-radius: 10em;
-
-    background: ${props => {
-        switch(props.type) {
-            case "primary":
-                return props.theme.colors.primary
-            default:
-                return props.theme.colors.elements
-        }
-    }};
-
-    color: ${props => {
-        switch(props.type) {
-            case "primary":
-                return "white"
-            default:
-                return props.theme.colors.text
-        }
-    }};
-
-    ${props => props.flex && css`
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        & > :last-child {margin-left: 8px}
-    `}  
-`
-
-export const IconButton = styled.button`
-    border: none;
-    outline: none;
-    background-color: ${props => props.theme.colors.elements};
-    color: ${props => props.theme.colors.text};
-    border-radius: 1.2em;
-    padding: 0.9em;
-    cursor: pointer;
-
-    span { font-size: 1.1rem; line-height: 1;}
-
-    &:hover {
-        background-color: ${props => props.theme.colors.details};
-    }
-`
-
 export const Input = styled.input`
     ${baseStyles}
     padding: 1.1em 1.4em 1.1em 20px;
@@ -110,46 +63,6 @@ export const InputField = styled.div`
         top: 50%;
         transform: translateY(-50%);
         color: ${props => props.theme.colors.details};
-    }
-`
-
-export const DropdownMenu = styled.div`
-    position: relative;
-    display: inline-block;
-
-    ${Button} {
-        padding: 1.1em 1.4em;
-        min-width: 9.2em;
-
-        &:hover { background-color: ${props => props.theme.colors.details}; }
-
-        svg {
-            width: 0.8em;
-            height: 0.57em;
-            color: ${props => props.theme.colors.details};
-        }
-    }
-
-    ul {
-        /* box-shadow: 2px 2px 2px 2px #222; */
-        list-style-type: none;
-        position: absolute;
-        top: 110%;
-        border-radius: ${props => props.theme.borderRadius};
-        background-color: ${props => props.theme.colors.elements};
-        border: 1px solid ${props => props.theme.colors.details};
-        padding: 0.5em;
-        z-index: 3;
-
-        li {
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 0.7em 2.6em;
-            cursor: pointer;
-            background-color: ${props => props.theme.colors.elements};
-            border-radius: ${props => props.theme.borderRadius};
-            &:hover { background-color: ${props => props.theme.colors.details}; }
-        }
     }
 `
 

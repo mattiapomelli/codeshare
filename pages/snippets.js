@@ -2,7 +2,7 @@ import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import { SnippetsGrid } from "../components/elements/MainElements"
 import { InputField, Skeleton, H1 } from "../components/elements/BaseElements"
-import Dropdown from "../components/Dropdown"
+import Dropdown from "../components/Dropdown/Dropdown"
 import useSnippets from '../hooks/useSnippets'
 
 const languages = ["All", "Java", "JavaScript", "CSS", "HTML", "SQL", "C"]

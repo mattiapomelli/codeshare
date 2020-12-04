@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
-import { Button, DropdownMenu } from "./elements/BaseElements"
+import { FlexButton } from "../Button"
+import { DropdownWrapper, DropdownMenu, DropdownItem } from './DropdownElements'
 
 export default function Dropdown({ options, onSelect, value, nullValue }) {
     const [open, setOpen] = useState(false)
@@ -24,23 +25,20 @@ export default function Dropdown({ options, onSelect, value, nullValue }) {
     }
 
     return (
-        <DropdownMenu ref={dropdownRef}>
-            <Button onClick={() => { setOpen(open => !open)}} flex>
+        <DropdownWrapper ref={dropdownRef}>
+            <FlexButton onClick={() => { setOpen(open => !open)}} icon="arrowdown">
                 {value || nullValue}
-                <svg viewBox="0 0 14 9" fill="none">
-                    <path d="M2 2L7 7L12 2" stroke="#83878E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-            </Button>
+            </FlexButton>
             {
                 open &&
-                <ul>
+                <DropdownMenu>
                     {
                         options.map(option => (
-                            <li key={option} onClick={() => clickHandler(option)}>{option}</li>
+                            <DropdownItem key={option} onClick={() => clickHandler(option)}>{option}</DropdownItem>
                         ))
                     }
-                </ul>
+                </DropdownMenu>
             }
-        </DropdownMenu>
+        </DropdownWrapper>
     )
 }

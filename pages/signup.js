@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
 import { usePopup } from "../contexts/PopupContext"
-import { InputField, Button} from "../components/elements/BaseElements"
+import { InputField } from "../components/elements/BaseElements"
+import { Button, FlexButton } from "../components/Button"
 import { LoginForm, Logo } from "../components/elements/MainElements"
 import Link from "next/link"
 
@@ -75,10 +76,10 @@ const Login = () => {
                 SIGN UP
             </Button>
             <hr/>
-            <Button onClick={signInWithGitHub} flex>
+            <FlexButton onClick={signInWithGitHub} type="inverted">
                 Sign in with GitHub
                 <span className="material-icons">facebook</span>
-            </Button>
+            </FlexButton>
             <p>
                 Already have an account? <Link href="/login"><a>Sign in</a></Link>
             </p>

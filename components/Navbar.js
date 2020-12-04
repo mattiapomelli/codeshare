@@ -1,5 +1,5 @@
 import {  NavMenu, List, Logo } from "./elements/MainElements"
-import { Button } from "./elements/BaseElements"
+import { Button } from "../components/Button"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/client"
 

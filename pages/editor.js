@@ -4,7 +4,7 @@ import { CREATE_SNIPPET_MUTATION } from '../graphql/mutations'
 import CodeEditor from "../components/CodeEditor"
 import { H1, Input, Label, Button, TextArea } from "../components/elements/BaseElements"
 import { EditorForm } from '../components/elements/MainElements'
-import Dropdown from "../components/Dropdown"
+import Dropdown from "../components/Dropdown/Dropdown"
 
 const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
