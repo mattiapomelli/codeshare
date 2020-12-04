@@ -1,5 +1,3 @@
-import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../graphql/apolloClient'
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
 import PopupProvider from '../contexts/PopupContext'
@@ -34,28 +32,25 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export default function App({ Component, pageProps }) {
-	const apolloClient = useApollo(pageProps.initialApolloState)
 	const router = useRouter()
 	const paths = ["/", "/login", "/signup"]
 
   	return (
 		<Provider session={pageProps.session}>
-			<ApolloProvider client={apolloClient}>
-				<SearchProvider>
-					<ThemeProvider theme={theme}>
-						<PopupProvider>
-							<GlobalStyle />
-							{
-								paths.includes(router.pathname) ? <Component {...pageProps} /> : (
-									<Layout>
-									<Component {...pageProps} />
-									</Layout>
-								)
-							}
-						</PopupProvider>
-					</ThemeProvider>
-				</SearchProvider>
-			</ApolloProvider>
+			<SearchProvider>
+				<ThemeProvider theme={theme}>
+					<PopupProvider>
+						<GlobalStyle />
+						{
+							paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+								<Layout>
+								<Component {...pageProps} />
+								</Layout>
+							)
+						}
+					</PopupProvider>
+				</ThemeProvider>
+			</SearchProvider>
 		</Provider>
   	)
 }

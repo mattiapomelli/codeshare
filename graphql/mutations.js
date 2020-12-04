@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from 'graphql-request'
 
 export const CREATE_SNIPPET_MUTATION = gql`
     mutation MyMutation ($code: String!, $description: String, $programmingLang: String!, $title: String!, $userId: uuid!){
