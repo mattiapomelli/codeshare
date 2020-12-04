@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
 import { usePopup } from "../contexts/PopupContext"
-import { InputField } from "../components/elements/BaseElements"
+import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
 import { LoginForm, Logo } from "../components/elements/MainElements"
 import Link from "next/link"
@@ -56,29 +56,48 @@ const Login = () => {
         </Link>
         <LoginForm>
             <h3>Sign up</h3>
-            <InputField className="input-field">
-                <span className="material-icons">person</span>
-                <input value={credentials.email} onChange={onChange} name="email" type="text" placeholder="email"/>
-            </InputField>
-            <InputField className="input-field">
-                <span className="material-icons">person</span>
-                <input value={credentials.username} onChange={onChange} name="username" type="text" placeholder="username"/>
-            </InputField>
-            <InputField className="input-field">
-                <span className="material-icons">lock</span>
-                <input value={credentials.password} onChange={onChange} name="password" type="password" placeholder="password"/>
-            </InputField>
-            <InputField className="input-field">
-                <span className="material-icons">lock</span>
-                <input value={credentials.password2} onChange={onChange} name="password2" type="password" placeholder="confirm password"/>
-            </InputField>
+            <IconInput
+                className="input-field"
+                icon="user"
+                value={credentials.email}
+                onChange={onChange}
+                name="email"
+                type="text"
+                placeholder="email"
+            />
+            <IconInput
+                className="input-field"
+                icon="user"
+                value={credentials.username}
+                onChange={onChange}
+                name="username"
+                type="text"
+                placeholder="username"
+            />
+            <IconInput
+                className="input-field"
+                icon="lock"
+                value={credentials.password}
+                onChange={onChange}
+                name="password"
+                type="password"
+                placeholder="password"
+            />
+            <IconInput
+                className="input-field"
+                icon="lock"
+                value={credentials.password2}
+                onChange={onChange}
+                name="password2"
+                type="password"
+                placeholder="confirm password"
+            />
             <Button onClick={signUp} type="primary">
                 SIGN UP
             </Button>
             <hr/>
-            <FlexButton onClick={signInWithGitHub} type="inverted">
+            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github">
                 Sign in with GitHub
-                <span className="material-icons">facebook</span>
             </FlexButton>
             <p>
                 Already have an account? <Link href="/login"><a>Sign in</a></Link>

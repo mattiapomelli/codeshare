@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
 import { usePopup } from "../contexts/PopupContext"
-import { InputField } from "../components/elements/BaseElements"
+import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
 import { LoginForm, Logo } from "../components/elements/MainElements"
 import Link from "next/link"
@@ -45,21 +45,30 @@ const Login = () => {
         </Link>
         <LoginForm>
             <h3>Login</h3>
-            <InputField className="input-field">
-                <span className="material-icons">person</span>
-                <input value={credentials.email} onChange={onChange} name="email" type="text" placeholder="email"/>
-            </InputField>
-            <InputField className="input-field">
-                <span className="material-icons">lock</span>
-                <input value={credentials.password} onChange={onChange} name="password" type="password" placeholder="password"/>
-            </InputField>
+            <IconInput
+                className="input-field"
+                icon="user"
+                value={credentials.email}
+                onChange={onChange}
+                name="email"
+                type="text"
+                placeholder="email"
+            />
+            <IconInput
+                className="input-field"
+                icon="lock"
+                value={credentials.password}
+                onChange={onChange}
+                name="password"
+                type="password"
+                placeholder="password"
+            />
             <Button onClick={signInWithCredentials} type="primary">
                 LOGIN
             </Button>
             <hr/>
-            <FlexButton onClick={signInWithGitHub} type="inverted">
+            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github">
                 Sign in with GitHub
-                <span className="material-icons">facebook</span>
             </FlexButton>
             <p>
                 Don't have an account? <Link href="/signup"><a>Sign up</a></Link>

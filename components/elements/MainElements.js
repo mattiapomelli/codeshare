@@ -202,8 +202,9 @@ export const LoginForm = styled.form`
     }
 
     .input-field {
-        width: 100%; margin-bottom: 1rem;
-        padding: 1.4em 2em
+        width: 100%;
+        margin-bottom: 1rem;
+        //padding: 1.4em 2em
     }
 
     button {

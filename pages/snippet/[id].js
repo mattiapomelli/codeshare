@@ -1,7 +1,8 @@
 import { request } from "graphql-request"
 import { useRouter } from "next/router"
 import CodeBlock from "../../components/CodeBlock"
-import { H2, Label } from "../../components/elements/BaseElements"
+import { Label } from "../../components/elements/BaseElements"
+import { H2 } from '../../components/Typography'
 import { Flex } from "../../components/elements/MainElements"
 import { GET_ALL_SNIPPETS_ID_QUERY, GET_SINGLE_SNIPPET_QUERY } from "../../graphql/queries"
 

@@ -80,7 +80,6 @@ export const CodeWrapper = styled.div`
 
 export const ScrollWrapper = styled.div`
     overflow: auto;
-    /* height: 260px; */
     height: ${props => props.height || "100%" };
     
     &::-webkit-scrollbar {
@@ -100,7 +99,6 @@ export const ScrollWrapper = styled.div`
 `
 
 export const EditorWrapper = styled(CodeWrapper)` 
-    /* padding-bottom: 20px; */
 
     & > div > * {   //editor
         border-right: 10px solid ${props => props.theme.colors.elements};
@@ -114,7 +112,6 @@ export const EditorWrapper = styled(CodeWrapper)`
         caret-color: white;
         overflow-x: scroll;
         font-size: 0.9rem !important;
-        /* color: transparent !important; */
 
         &::selection { background-color: ${props => props.theme.colors.text} !important; }
     }

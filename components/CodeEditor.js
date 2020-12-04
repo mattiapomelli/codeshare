@@ -6,7 +6,6 @@ import { EditorWrapper, ScrollWrapper } from "./elements/CodeElements"
 const editorStyles = {
     fontFamily: '"Dank Mono", "Fira Code", monospace',
     minHeight: '100%',
-    // fontSize: "1.1rem"
 };
 
 const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
@@ -26,13 +25,13 @@ const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
         return () => window.removeEventListener('keydown', scrollOnNewLine)
     }, [])
 
-    const CodeWrapper = ({ children}) => (
+    const Pre = ({ children}) => (
         <Fragment>
             {children}
         </Fragment>
     )
 
-    const highlight = (codeString) => <CodeHighlight language={language} codeString={codeString} pre={CodeWrapper} wrapLongLines/>
+    const highlight = (codeString) => <CodeHighlight language={language} codeString={codeString} pre={Pre} wrapLongLines/>
 
     return (
         <EditorWrapper language={language.toLowerCase()}>

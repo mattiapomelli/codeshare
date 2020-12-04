@@ -2,8 +2,11 @@ import { useState } from "react"
 import { useMutation } from '@apollo/client'
 import { CREATE_SNIPPET_MUTATION } from '../graphql/mutations'
 import CodeEditor from "../components/CodeEditor"
-import { H1, Input, Label, Button, TextArea } from "../components/elements/BaseElements"
+import { TextArea } from "../components/elements/BaseElements"
+import { Input } from '../components/Input'
+import { H1, Label } from '../components/Typography'
 import { EditorForm } from '../components/elements/MainElements'
+import { Button } from '../components/Button'
 import Dropdown from "../components/Dropdown/Dropdown"
 
 const defaultCode = `public void yourAwesomeFunction() {

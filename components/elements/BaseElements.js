@@ -1,71 +1,5 @@
 import styled, { css } from "styled-components"
 
-export const H1 = styled.h1`
-    font-size: 3.3rem;
-    letter-spacing: -2px;
-    font-weight: 400;
-    color: white;
-    margin-bottom: 1.5rem;
-`
-
-export const H2 = styled.h1`
-    font-size: 2.5rem;
-    letter-spacing: -2px;
-    font-weight: 400;
-    color: white;
-    margin-bottom: 1.5rem;
-`
-
-const baseStyles = css`
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 1.4em 2.6em;
-`
-
-export const Input = styled.input`
-    ${baseStyles}
-    padding: 1.1em 1.4em 1.1em 20px;
-    border-radius: 10em;
-    background-color: ${props => props.theme.colors.elements};
-    color: ${props => props.theme.colors.text};
-
-    ::placeholder {
-        color: ${props => props.theme.colors.details};
-    }
-`
-
-export const InputField = styled.div`
-    display: inline-block;
-    border-radius: 10em;
-    background-color: ${props => props.theme.colors.elements};
-    font-size: 0.8rem;
-    padding: 1.1em 1.4em;
-    position: relative;
-
-    input {
-        border: none;
-        outline: none;
-        font-family: inherit;
-        background-color: transparent;
-        font-size: 0.8rem;
-        font-weight: 500;
-        padding-left: 2rem;
-        color: ${props => props.theme.colors.text};
-
-        ::placeholder { color: ${props => props.theme.colors.details}; }
-    }
-
-    span {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        color: ${props => props.theme.colors.details};
-    }
-`
-
 export const NavItem = styled.li`
     font-size: 0.9rem;
     font-weight: 600;
@@ -97,7 +31,11 @@ export const NavItem = styled.li`
 `
 
 export const TextArea = styled.textarea`
-    ${baseStyles}
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
     padding: 20px;
     border-radius: ${props => props.theme.borderRadius};
     background-color: ${props => props.theme.colors.elements};
@@ -148,11 +86,5 @@ export const Skeleton = styled.div`
     }
 `
 
-export const Label = styled.label`
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    display: block;
-`
+
 
