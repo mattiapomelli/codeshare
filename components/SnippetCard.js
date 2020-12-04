@@ -1,7 +1,7 @@
 import { useState } from "react"
 import CodeBlock from "./CodeBlock"
 import Link from "next/link"
-import { Flex } from "./elements/MainElements"
+import Flex from "./Flex"
 import Likes from './Likes'
 import styled from "styled-components"
 

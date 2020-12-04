@@ -1,5 +1,5 @@
-import {createContext, useState, useContext, useEffect, useCallback } from 'react'
-import { PopupsContainer, Popup } from "../components/elements/PopupElements"
+import { createContext, useState, useContext, useEffect, useCallback } from 'react'
+import { PopupsContainer, Popup } from "../components/Popup"
 
 export const PopupContext = createContext()
 

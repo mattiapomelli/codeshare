@@ -1,5 +1,6 @@
 import { SidebarLayout, SideNavItem } from './SidebarElements'
-import { Flex, Logo } from "../elements/MainElements"
+import Flex from "../Flex"
+import Logo from '../Logo'
 import { Icon } from '../Icon/Icon'
 import { useRouter } from 'next/router'
 import Link from "next/link"
@@ -23,12 +24,7 @@ export default function Sidebar({ collapsed }) {
     return (
         <SidebarLayout collapsed={collapsed}>
             <header>
-                <Link href="/">
-                    <Logo v="center" h="center">
-                        <span className="material-icons">change_history</span>
-                        <h1 className="menu-text">Codeshare</h1>
-                    </Logo>
-                </Link>
+                <Logo size={32}/>
                 <Flex dir="column" v="center" h="center" as="nav" auto>
                     <ul>
                         <NavLink href="/" icon="home">Home</NavLink>     

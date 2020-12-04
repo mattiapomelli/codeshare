@@ -4,7 +4,8 @@ import { signIn } from 'next-auth/client'
 import { usePopup } from "../contexts/PopupContext"
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
-import { LoginForm, Logo } from "../components/elements/MainElements"
+import { LoginForm } from "../components/LoginForm"
+import Logo from '../components/Logo'
 import Link from "next/link"
 
 const Login = () => {
@@ -37,12 +38,7 @@ const Login = () => {
 
     return (
         <>
-        <Link href="/">
-            <Logo v="center" h="center" style={{paddingTop: '3rem'}}>
-                <span className="material-icons">change_history</span>
-                <h1 className="menu-text">Codeshare</h1>
-            </Logo>
-        </Link>
+        <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
             <h3>Login</h3>
             <IconInput

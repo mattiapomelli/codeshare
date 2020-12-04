@@ -1,4 +1,4 @@
-import { Flex, Logo } from "./elements/MainElements"
+import Flex from "./Flex"
 import { Icon } from './Icon/Icon'
 import Link from "next/link"
 import styled from "styled-components"

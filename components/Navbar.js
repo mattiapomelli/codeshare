@@ -1,24 +1,48 @@
-import {  NavMenu, List, Logo } from "./elements/MainElements"
+import Logo from './Logo'
 import { Button } from "../components/Button"
+import Flex from './Flex'
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/client"
+import styled from "styled-components"
+
+const List = styled.ul`
+    list-style-type: none;
+    
+    li { display: inline-block;}
+
+    & > *:not(:last-child){
+        margin-right: ${props => props.horizontal ? props.margin : "0"};
+    }
+`
+
+const NavMenu = styled(Flex)`
+    padding-top: 1.5rem;
+    width: 90%;
+    max-width: 1200px;
+    a {
+        cursor: pointer;
+    }
+    nav {
+        animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+`
 
 export default function Navbar() {
     const [session] = useSession();
 
     return (
         <NavMenu h="space-between" v="center" as="header" auto>
-            <Link href="/">
-                <Logo v="center" h="center">
-                    <span className="material-icons">change_history</span>
-                    <h1 className="menu-text">Codeshare</h1>
-                </Logo>
-            </Link>
+            <Logo size={30}/>
             <nav>
                 <List horizontal margin="2rem">
-                    <Link href="/snippets">
-                        <li><a>Snippets</a></li>
-                    </Link>
                     <Link href="/snippets">
                         <li><a>Snippets</a></li>
                     </Link>
@@ -30,7 +54,6 @@ export default function Navbar() {
                             <Button type="primary">Sign up</Button>
                         </Link>
                     }
-
                 </List>
             </nav>
         </NavMenu>
