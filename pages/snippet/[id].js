@@ -1,9 +1,8 @@
 import { request } from "graphql-request"
 import { useRouter } from "next/router"
 import CodeBlock from "../../components/CodeBlock"
-import { Label } from "../../components/elements/BaseElements"
-import { H2 } from '../../components/Typography'
-import { Flex } from "../../components/elements/MainElements"
+import { H2, Label } from '../../components/Typography'
+import Flex from '../../components/Flex'
 import { GET_ALL_SNIPPETS_ID_QUERY, GET_SINGLE_SNIPPET_QUERY } from "../../graphql/queries"
 
 const endpoint = process.env.NEXT_PUBLIC_HASURA_URL
