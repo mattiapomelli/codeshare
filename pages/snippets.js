@@ -1,7 +1,7 @@
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import { SnippetsGrid } from "../components/elements/MainElements"
-import {  Skeleton } from "../components/elements/BaseElements"
+import {  Skeleton } from "../components/Skeleton"
 import Dropdown from "../components/Dropdown/Dropdown"
 import useSnippets from '../hooks/useSnippets'
 import { IconInput } from "../components/Input"
