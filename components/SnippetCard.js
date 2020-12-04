@@ -1,16 +1,50 @@
 import { useState } from "react"
 import CodeBlock from "./CodeBlock"
 import Link from "next/link"
-import { SnippetTitle } from "./elements/MainElements"
+import { Flex } from "./elements/MainElements"
 import { request, GraphQLClient } from "graphql-request"
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
 import { useSession } from "next-auth/client"
+import styled from "styled-components"
+import { Icon } from "./Icon/Icon"
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
     headers: {
         "x-hasura-admin-secret": "UNIMI2020"
     }
 })
+
+const SnippetInfo = styled(Flex)`
+    padding: 0 20px;
+`
+
+const SnippetTitle = styled.div`
+    flex: 1;
+    min-width: 0;
+    a {
+        color: ${props => props.theme.colors.text};
+        text-decoration: none;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px;
+        font-size: 1.2rem;
+        letter-spacing: -0.7px;
+        font-weight: 500;
+    }
+    span {
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.7;
+    }
+`
+
+const Likes = styled.div`
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+`
 
 const SnippetCard = ({ code, programmingLang, title, id, likes_aggregate, likes, user }) => {
     const [session] = useSession()
@@ -40,18 +74,18 @@ const SnippetCard = ({ code, programmingLang, title, id, likes_aggregate, likes,
     return (
         <article>
             <CodeBlock codeString={code + "\n"} language={programmingLang} preview={true}/>
-            <SnippetTitle h="space-between" v="center">
-                <div className="info">
+            <SnippetInfo h="space-between" v="center">
+                <SnippetTitle>
                     <Link href={`/snippet/${id}`}>
-                        <a className="title">{title}</a>						
+                        <a>{title}</a>						
                     </Link>
-                    <span className="user">{user.username}</span>
-                </div>
-                <div className="likes">
+                    <span>{user.username}</span>
+                </SnippetTitle>
+                <Likes>
                     <span>{likesCount}</span>
-                    <span className="material-icons" onClick={addLike}>star</span>
-                </div>
-            </SnippetTitle>
+                    <Icon name="star" onClick={addLike}/>
+                </Likes>
+            </SnippetInfo>
         </article>
     )
 }
