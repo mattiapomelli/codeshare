@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { useState } from "react"
-import { Header, Sidebar, Page, Main } from "../components/elements/LayoutElements"
-import { Button, IconButton } from "./Button"
-import SideNav from "./SideNav"
+import { Header, Page, Main } from "./LayoutElements"
+import Sidebar from '../Sidebar/Sidebar'
+import { Button, IconButton } from "../Button"
 
 const Layout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false)
@@ -13,11 +13,9 @@ const Layout = ({ children }) => {
 
     return (
         <>
-            <Sidebar collapsed={collapsed}>
-                <SideNav/>
-            </Sidebar>
+            <Sidebar collapsed={collapsed}/>
             <Page collapsed={collapsed}>
-                <Header collapsed={collapsed}>
+                <Header>
                     <IconButton  onClick={clickHandler} icon="menu"/>
                     <Link href="/editor">
                         <Button type="primary">Share code</Button>
@@ -29,7 +27,6 @@ const Layout = ({ children }) => {
             </Page>      
         </>
     )
-        
 }
 
 export default Layout
