@@ -1,7 +1,31 @@
 import { useState } from "react"
-import CodeHighlight from "./CodeHighlight"
-import { CodeWrapper, ScrollWrapper } from "./elements/CodeElements"
+import CodeHighlight from "./Code/CodeHighlight"
+import { CodeLayout } from './Code/CodeLayout'
+import { ScrollWrapper } from './Code/ScrollWrapper'
+import { Icon } from './Icon/Icon'
 import copyToClipboard from "../utils/copy-to-clipboard"
+import styled from "styled-components"
+
+const CopyButton = styled.div`
+    position: absolute;
+    bottom: 18px;
+    right: 16px;
+    border-radius: 5rem;
+    padding: 0.6em;
+    cursor: pointer;
+    &:hover { 
+        background-color: ${props => props.theme.colors.background}
+    }
+    svg { display: block; }
+`
+
+const CopiedText = styled.span`
+    position: absolute;
+    font-size: 0.8rem;
+    bottom: 25px;
+    right: 20px;
+    font-family: monospace;
+`
 
 const CodeBlock = ({ codeString, language, preview }) => {
     const [copied, setCopied] = useState(false)
@@ -16,24 +40,20 @@ const CodeBlock = ({ codeString, language, preview }) => {
     }
 
     return (
-        <CodeWrapper language={language.toLowerCase()}>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="tooltip">{language}</span>
+        <CodeLayout language={language.toLowerCase()}>
             <ScrollWrapper height={preview ? "270px" : undefined}>
                 <CodeHighlight codeString={codeString} language={language.toLowerCase()} wrapLines={true} wrapLongLines={false}/>
             </ScrollWrapper>
             {
                 copied ? 
-                <span className="copied">Copied&nbsp;
-                    <svg width="14.4" height="10.72" viewBox="0 0 90 67" fill="none">
-                        <path d="M14 21.5L3 33L36.5 63.5L87 14.5L76 3.5L36.5 42.5L14 21.5Z" fill="#6BD97C" stroke="black" strokeWidth="4"/>
-                    </svg>
-                </span> :
-                <span className="material-icons copy-button" onClick={clickHandler}>content_copy</span>
+                <CopiedText>Copied&nbsp;
+                    <Icon name="checked" size={14}/>
+                </CopiedText> :
+                <CopyButton onClick={clickHandler}>
+                    <Icon name="copy" size={16}/>
+                </CopyButton>
             }
-        </CodeWrapper>
+        </CodeLayout>
     )
 }
 

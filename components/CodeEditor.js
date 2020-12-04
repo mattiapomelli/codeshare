@@ -1,12 +1,25 @@
 import { Fragment, useEffect } from "react"
 import Editor from "react-simple-code-editor";
-import CodeHighlight from "./CodeHighlight";
-import { EditorWrapper, ScrollWrapper } from "./elements/CodeElements"
+import styled from "styled-components";
+import CodeHighlight from "./Code/CodeHighlight";
+import { CodeLayout } from "./Code/CodeLayout";
+import { ScrollWrapper } from './Code/ScrollWrapper'
 
-const editorStyles = {
-    fontFamily: '"Dank Mono", "Fira Code", monospace',
-    minHeight: '100%',
-};
+const StyledEditor = styled(Editor)`
+    border-right: 10px solid ${props => props.theme.colors.elements};
+    font-family: monospace;
+    min-height: 100%;
+    textarea {
+        border: none;
+        background-color: transparent;
+        resize: none;
+        outline: none;
+        caret-color: white;
+        font-size: 0.9rem !important;
+
+        &::selection { background-color: ${props => props.theme.colors.text} !important; }
+    }
+`
 
 const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
 
@@ -34,22 +47,17 @@ const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
     const highlight = (codeString) => <CodeHighlight language={language} codeString={codeString} pre={Pre} wrapLongLines/>
 
     return (
-        <EditorWrapper language={language.toLowerCase()}>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="tooltip">{language}</span>
+        <CodeLayout language={language.toLowerCase()}>
             <ScrollWrapper id="scroller">
-                <Editor
+                <StyledEditor
                     value={valueHandler}
                     onValueChange={onChangeHandler}
                     highlight={codeString => highlight(codeString)}
                     tabSize={2}
-                    style={editorStyles}
                     textareaId="editor-textarea"
                 />
             </ScrollWrapper>
-        </EditorWrapper>
+        </CodeLayout>
     )
 }
 
