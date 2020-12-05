@@ -34,7 +34,7 @@ const InputWrapper = styled.div`
 export const IconInput = ({ icon, className, ...rest }) => {
     return (
         <InputWrapper {...rest} className={className}>
-            <Icon name={icon}/>
+            <Icon name={icon} secondary/>
             <Input {...rest}/>   
         </InputWrapper>
     )

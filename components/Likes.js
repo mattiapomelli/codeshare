@@ -1,14 +1,14 @@
-import { GraphQLClient } from "graphql-request"
+import graphQLClient from '../graphql/client'
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
 import { useSession } from "next-auth/client"
 import styled from "styled-components"
 import { Icon } from "./Icon/Icon"
 
-const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
-    headers: {
-        "x-hasura-admin-secret": "UNIMI2020"
-    }
-})
+// const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
+//     headers: {
+//         "x-hasura-admin-secret": "UNIMI2020"
+//     }
+// })
 
 const LikesWrapper = styled.div`
     display: inline-flex;

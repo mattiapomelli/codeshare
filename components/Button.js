@@ -7,7 +7,7 @@ export const Button = styled.button`
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: 500;
-    padding: 1.4em 2.6em;
+    padding: ${props => props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
     border-radius: 10em;
     cursor: pointer;
 
