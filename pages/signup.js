@@ -12,7 +12,7 @@ import withNoAuth from '../hocs/withNoAuth'
 const Login = () => {
     const router = useRouter()
     const addPopup = usePopup()
-    const [credentials, setCredentials] = useState({ email: '', password: ''})
+    const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
 
     useEffect(() => {
         if(router.query.error) {
@@ -23,26 +23,36 @@ const Login = () => {
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
 	}
-
-	const signInWithCredentials = (e) => {
-		e.preventDefault()
-		signIn('credentials', {
-			email: credentials.email,
-            password: credentials.password,
-            callbackUrl: 'http://localhost:3000/snippets'
-		}).then((res) => console.log(res))
-    }
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
 		signIn('github', { callbackUrl: 'http://localhost:3000/snippets' })
+    }
+    
+    const signUp = (e) => {
+        e.preventDefault();
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                email: credentials.email,
+                username: credentials.username,
+                password: credentials.password
+            })
+        })
+        .then(res => res.json())
+        .then(data => alert(data.message))
+        .catch(err => console.log(err))
     }
 
     return (
         <>
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
-            <h3>Login</h3>
+            <h3>Sign up</h3>
             <IconInput
                 className="input-field"
                 icon="user"
@@ -54,6 +64,15 @@ const Login = () => {
             />
             <IconInput
                 className="input-field"
+                icon="user"
+                value={credentials.username}
+                onChange={onChange}
+                name="username"
+                type="text"
+                placeholder="username"
+            />
+            <IconInput
+                className="input-field"
                 icon="lock"
                 value={credentials.password}
                 onChange={onChange}
@@ -61,15 +80,24 @@ const Login = () => {
                 type="password"
                 placeholder="password"
             />
-            <Button onClick={signInWithCredentials} type="primary">
-                LOGIN
+            <IconInput
+                className="input-field"
+                icon="lock"
+                value={credentials.password2}
+                onChange={onChange}
+                name="password2"
+                type="password"
+                placeholder="confirm password"
+            />
+            <Button onClick={signUp} type="primary">
+                SIGN UP
             </Button>
             <hr/>
             <FlexButton onClick={signInWithGitHub} type="inverted" icon="github">
                 Sign in with GitHub
             </FlexButton>
             <p>
-                Don't have an account? <Link href="/signup"><a>Sign up</a></Link>
+                Already have an account? <Link href="/login"><a>Sign in</a></Link>
             </p>
         </LoginForm>
         </>

@@ -59,3 +59,14 @@ export const GET_SNIPPET_LIKES = `
 		}
 	}
 `
+export const GET_USER_BY_EMAIL_QUERY = `
+	query GetUserByEmail ($email: String!) {
+		user(where: {email: {_eq: $email}}) {
+			id
+			verificated
+			password
+			email
+			username
+		}
+	}
+`

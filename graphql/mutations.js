@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from 'graphql-request'
 
 export const CREATE_SNIPPET_MUTATION = gql`
     mutation MyMutation ($code: String!, $description: String, $programmingLang: String!, $title: String!, $userId: uuid!){
@@ -10,19 +10,35 @@ export const CREATE_SNIPPET_MUTATION = gql`
     }
 `;
 
-export const CREATE_USER_REGISTRATION = gql`
-mutation($username:String!, $email:String!,$password:String!){
-  insert_user_one(object:{
-    email:$email
-    username:$username
-    password:$password
-  })
+export const CREATE_USER_MUTATION = gql`
+  mutation($username:String!, $email:String!,$password:String!){
+    user: insert_user_one(object:{
+      email:$email
+      username:$username
+      password:$password
+    })
     {
       id
       createdAt
     }
-}
+  } 
 `;
+
+export const CREATE_USER_FROM_GITHUB_MUTATION = gql `
+  mutation($username:String!, $email:String!,$password:String, $provider: String){
+    user: insert_user_one(object:{
+        email:$email
+        username:$username
+        password:$password
+        provider:$provider
+        verificated: true
+    })
+        {
+            id
+            createdAt
+        }
+    }
+`
 
 export const ADD_LIKE_MUTATION = `
   mutation AddLikeMutation($userId: uuid!, $snippetId: uuid!) {

@@ -1,54 +1,21 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { GraphQLClient, gql, request } from 'graphql-request'
+import graphQLClient from '../../../graphql/client'
+import { GET_USER_BY_EMAIL_QUERY } from '../../../graphql/queries'
+import { CREATE_USER_FROM_GITHUB_MUTATION } from '../../../graphql/mutations'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
-const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
 
 async function getUserByEmail(email) {
-
-    const graphQLClient = new GraphQLClient(endpoint, {
-        headers: {
-            "x-hasura-admin-secret": "UNIMI2020"
-        }
-    })
-
-    const query = gql`
-        query MyQuery ($email: String!) {
-            user(where: {email: {_eq: $email}}) {
-                id
-                verificated
-                password
-                email
-                username
-            }
-        }
-    `
     const variables = {email: email}
-    const res = await graphQLClient.request( query, variables)
-    return res.user
+    const data = await graphQLClient.request( GET_USER_BY_EMAIL_QUERY, variables)
+    return data.user
 }
 
 async function saveUser(variables) {
-    
-    const query = gql`
-        mutation($username:String!, $email:String!,$password:String, $provider: String){
-            insert_user_one(object:{
-                email:$email
-                username:$username
-                password:$password
-                provider:$provider
-                verificated: true
-            })
-                {
-                    id
-                    createdAt
-                }
-            }
-    `
-
-    const data = await request(endpoint, query, variables)
-    return JSON.stringify(data.insert_user_one.id)
+    const data = await graphQLClient.request( CREATE_USER_FROM_GITHUB_MUTATION, variables)
+    return data.user.id
 }
 
 const providers = [
@@ -79,7 +46,8 @@ const providers = [
 const callbacks = {
     signIn: async (user, account, metadata) => {
         // if user signed in with credentials validation has already been made in 'authorize' function, so skip to jwt callback
-        if(account.id === "credentials") {          
+        if(account.id === "credentials") {      
+            // metadata here contains email&password?    
             return true
         }
 
@@ -129,8 +97,9 @@ const callbacks = {
             token.id = user.id              
             token.username = user.username
             //token.email = null;                   // if don't want to save the email in the jwt
+
+            token.jwt = jwt.sign(token, process.env.JWT_SECRET, {algorithm: 'HS256'})
         }
-        console.log("promise: ", Promise.resolve(token))
         return Promise.resolve(token)               // token object gets passed to session callback
     },
 
@@ -138,6 +107,7 @@ const callbacks = {
         // attach user id and username to session object
         session.user.id = token.id                  
         session.user.username = token.username
+        session.user.jwt = token.jwt
         return Promise.resolve(session)             // session returned here will be available on the client
     }
 }

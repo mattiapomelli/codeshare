@@ -1,73 +1,56 @@
-import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../graphql/apolloClient'
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
 import PopupProvider from '../contexts/PopupContext'
-import Navbar from "../components/Navbar"
 import { Provider } from 'next-auth/client'
+import Layout from "../components/Layout/Layout"
+import theme from "../themes/theme"
+import { useRouter } from "next/router"
+
 
 const GlobalStyle = createGlobalStyle`
-	html,
-	body {
-		padding: 0;
-		margin: 0;
-		font-family: 'Raleway', sans-serif;
-	}
-
 	* {
+		margin: 0;
+		padding: 0;
 		box-sizing: border-box;
 	}
 
-	#__next {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
+	html, body, #__next {
 		min-height: 100vh;
-		background-color: #fff;
-		width: 90%;
-		max-width: 1000px;
-		margin: auto;
+	}
+	:root { font-size: 12px; }
+
+	body {
+		font-family: ${props => props.theme.fonts.main};
+		background-color: ${props => props.theme.colors.background};
+		color: ${props => props.theme.colors.text};
 	}
 
-	a {
-		color: inherit;
-		text-decoration: none;
-	}
+	ul { list-style-type: none; }
 
-	.javascript {
-		background-color: #f7de1e70 !important;
-	}
-	.css {
-		background-color: #5fa9d470 !important;
-	}
-	.html {
-		background-color: #d45f5f70 !important;
-	}
-	.java {
-		background-color: #c2452f70 !important;
-	}
-	.c {
-		background-color: #5968B870 !important;
-	}
-	.sql {
-		background-color: #31648C70 !important;
-	}
+	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
+	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
 `
 
 export default function App({ Component, pageProps }) {
-  	const apolloClient = useApollo(pageProps.initialApolloState)
+	const router = useRouter()
+	const paths = ["/", "/login", "/signup"]
 
   	return (
 		<Provider session={pageProps.session}>
-			<ApolloProvider client={apolloClient}>
-				<SearchProvider>
+			<SearchProvider>
+				<ThemeProvider theme={theme}>
 					<PopupProvider>
 						<GlobalStyle />
-						<Navbar />
-						<Component {...pageProps} />
+						{
+							paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+								<Layout>
+								<Component {...pageProps} />
+								</Layout>
+							)
+						}
 					</PopupProvider>
-				</SearchProvider>
-			</ApolloProvider>
+				</ThemeProvider>
+			</SearchProvider>
 		</Provider>
   	)
 }

@@ -1,54 +1,61 @@
+import Logo from './Logo'
+import { Button } from "../components/Button"
+import Flex from './Flex'
 import Link from "next/link"
+import { useSession, signOut } from "next-auth/client"
 import styled from "styled-components"
 
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem 0;
-    align-items: center;
-    margin-bottom: 2rem;
+const List = styled.ul`
+    list-style-type: none;
+    
+    li { display: inline-block;}
 
-    & nav {
-        font-weight: 700;
+    & > *:not(:last-child){
+        margin-right: ${props => props.horizontal ? props.margin : "0"};
+    }
+`
 
-        & a:not(:last-of-type) {
-            margin-right: 1rem;
+const NavMenu = styled(Flex)`
+    padding-top: 1.5rem;
+    width: 90%;
+    max-width: 1200px;
+    a {
+        cursor: pointer;
+    }
+    nav {
+        animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
         }
-    }
-
-    & .logo {
-        font-weight: 900;
-        font-size: 1.2em;
-    }
-
-    & .cta {
-        color: white;
-        background-color: black;
-        border-radius: 3em;
-        width: 120px;
-        padding: 0.5em 0.8em;
-
-        &:hover {
-            background-color: #222;
+        100% {
+            opacity:1;
         }
     }
 `
 
-const Navbar = () => {
+export default function Navbar() {
+    const [session] = useSession();
 
     return (
-        <Header>
-            <Link href="/">
-                <a className="logo">&lt;CodeShare/&gt;</a>
-            </Link>
+        <NavMenu h="space-between" v="center" as="header" auto>
+            <Logo size={30}/>
             <nav>
-                <Link href="/snippets">Snippets</Link>
-                <Link href="/editor">
-                    <a className="cta">Share code</a>
-                </Link>
+                <List horizontal margin="2rem">
+                    <Link href="/snippets">
+                        <li><a>Snippets</a></li>
+                    </Link>
+                    {
+                        session ?
+                        <Button type="primary" onClick={signOut}>Logout</Button>
+                        : 
+                        <Link href="/signup">
+                            <Button type="primary">Sign up</Button>
+                        </Link>
+                    }
+                </List>
             </nav>
-        </Header>
+        </NavMenu>
     )
 }
-
-export default Navbar
