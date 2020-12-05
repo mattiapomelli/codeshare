@@ -7,6 +7,7 @@ import { Button, FlexButton } from "../components/Button"
 import { LoginForm } from "../components/LoginForm"
 import Logo from '../components/Logo'
 import Link from "next/link"
+import withNoAuth from '../hocs/withNoAuth'
 
 const Login = () => {
     const router = useRouter()
@@ -103,4 +104,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withNoAuth(Login)
