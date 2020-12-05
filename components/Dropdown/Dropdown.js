@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { FlexButton } from "../Button"
 import { DropdownWrapper, DropdownMenu, DropdownItem } from './DropdownElements'
 
-export default function Dropdown({ options, onSelect, value, nullValue }) {
+export default function Dropdown({ options, onSelect, value, nullValue, as }) {
     const [open, setOpen] = useState(false)
     const dropdownRef = useRef()
 
@@ -26,7 +26,7 @@ export default function Dropdown({ options, onSelect, value, nullValue }) {
 
     return (
         <DropdownWrapper ref={dropdownRef}>
-            <FlexButton onClick={() => { setOpen(open => !open)}} icon="arrowdown" small>
+            <FlexButton onClick={() => { setOpen(open => !open)}} icon="arrowdown" small as={as}>
                 {value || nullValue}
             </FlexButton>
             {

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { CREATE_USER_MUTATION } from '../../graphql/mutations'
-import graphQLClient from '../../graphql/client'
+import graphQLClientAdmin from '../../graphql/client'
 import nodemailer from 'nodemailer';
 
 //initialization and settings of nodemailer module
@@ -21,7 +21,7 @@ export default async (req, res) => {
 	// saves user to the database
 	const execute = async (variables) => {
 		//console.log(variables)
-		const data = await graphQLClient.request( CREATE_USER_MUTATION, variables)
+		const data = await graphQLClientAdmin.request( CREATE_USER_MUTATION, variables)
 		// return: data to return have to be JSON FORMAT !!
 		return data.user;
 	};

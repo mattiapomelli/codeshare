@@ -1,7 +1,6 @@
-import { request, gql } from 'graphql-request'
+import { gql } from 'graphql-request'
 
 export default async (req, res) => {
-	const endpoint = "https://climbing-bear-85.hasura.app/v1/graphql"
 
 	// saves user to the database
 	const execute = async (variables) => {
@@ -13,7 +12,7 @@ export default async (req, res) => {
           }
                     
         `
-        const data = await request(endpoint, query, variables)
+        const data = await graphQLClientAdmin( query, variables)
         // return: data to return have to be JSON FORMAT !!
         return data;
 	};

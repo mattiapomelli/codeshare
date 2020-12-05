@@ -22,5 +22,8 @@
     "react-syntax-highlighter": "^15.3.0",
     "styled-components": "^5.2.1",
     "swr": "^0.3.8"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.12.0"
   }
 }

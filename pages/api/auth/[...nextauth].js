@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import graphQLClient from '../../../graphql/client'
+import graphQLClientAdmin from '../../../graphql/client'
 import { GET_USER_BY_EMAIL_QUERY } from '../../../graphql/queries'
 import { CREATE_USER_FROM_GITHUB_MUTATION } from '../../../graphql/mutations'
 import bcrypt from 'bcrypt'
@@ -9,12 +9,12 @@ import jwt from 'jsonwebtoken'
 
 async function getUserByEmail(email) {
     const variables = {email: email}
-    const data = await graphQLClient.request( GET_USER_BY_EMAIL_QUERY, variables)
+    const data = await graphQLClientAdmin.request( GET_USER_BY_EMAIL_QUERY, variables)
     return data.user
 }
 
 async function saveUser(variables) {
-    const data = await graphQLClient.request( CREATE_USER_FROM_GITHUB_MUTATION, variables)
+    const data = await graphQLClientAdmin.request( CREATE_USER_FROM_GITHUB_MUTATION, variables)
     return data.user.id
 }
 
