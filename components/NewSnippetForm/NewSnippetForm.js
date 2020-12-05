@@ -14,10 +14,10 @@ const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
 }`;
 
-const languages = ["Javascript", "HTML", "CSS", "C", "Python"]
+const languages = ["JavaScript", "HTML", "CSS", "C", "Python"]
 
 export default function NewSnippetForm() {
-    const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "Javascript"})
+    const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
 
     const onCodeChange = (codeString) => {
@@ -34,7 +34,7 @@ export default function NewSnippetForm() {
 
     const publishSnippet = (e) => {
         e.preventDefault();
-        executeQuery(CREATE_SNIPPET_MUTATION, {...snippet, userId: session.user.id}, session.user.jwt)
+        executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
         .then(res => console.log(res))
         //addSnippet({variables: {...snippet, userId: "26457dd0-1a1e-4102-8fd1-8315dd143a8c" }});
     }
@@ -52,7 +52,7 @@ export default function NewSnippetForm() {
                 </div>
                 <div>
                     <Label>Language</Label>
-                    <Dropdown options={languages} value={snippet.programmingLang} onSelect={onLanguageChange}/>
+                    <Dropdown options={languages} value={snippet.programmingLang} onSelect={onLanguageChange}  as="span"/>
                 </div>
             </InfoArea>
             <DescriptionArea>
