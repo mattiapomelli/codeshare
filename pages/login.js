@@ -28,8 +28,9 @@ const Login = () => {
 		e.preventDefault()
 		signIn('credentials', {
 			email: credentials.email,
-			password: credentials.password,
-		})
+            password: credentials.password,
+            callbackUrl: 'http://localhost:3000/snippets'
+		}).then((res) => console.log(res))
     }
     
     const signInWithGitHub = (e) => {
