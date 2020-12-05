@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { executeQuery } from '../../graphql/client'
+import { CREATE_SNIPPET_MUTATION } from '../../graphql/mutations'
+import { useSession } from 'next-auth/client'
 import CodeEditor from "../CodeEditor"
 import { TextArea } from "../TextArea"
 import { Input } from '../Input'
@@ -15,6 +18,7 @@ const languages = ["Javascript", "HTML", "CSS", "C", "Python"]
 
 export default function NewSnippetForm() {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "Javascript"})
+    const [session] = useSession()
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -30,6 +34,8 @@ export default function NewSnippetForm() {
 
     const publishSnippet = (e) => {
         e.preventDefault();
+        executeQuery(CREATE_SNIPPET_MUTATION, {...snippet, userId: session.user.id}, session.user.jwt)
+        .then(res => console.log(res))
         //addSnippet({variables: {...snippet, userId: "26457dd0-1a1e-4102-8fd1-8315dd143a8c" }});
     }
 

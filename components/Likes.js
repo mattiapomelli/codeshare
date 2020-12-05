@@ -1,4 +1,4 @@
-import graphQLClient from '../graphql/client'
+import { executeQuery } from '../graphql/client'
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
 import { useSession } from "next-auth/client"
 import styled from "styled-components"
@@ -26,11 +26,11 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId 
     const changeLike = () => {
         const query = isLiked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION
         const increment = isLiked ? -1 : 1
-        console.log("yo")
-        graphQLClient.request( query, {
+        executeQuery( query, {
             userId: session.user.id,
             snippetId
-        }).then(data => {
+        }, session.user.jwt
+        ).then(data => {
             if(data.action.affected_rows == 1) {
                 setIsLiked(isLiked => !isLiked);
                 setCount(count => count + increment)

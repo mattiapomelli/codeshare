@@ -4,6 +4,7 @@ import graphQLClient from '../../../graphql/client'
 import { GET_USER_BY_EMAIL_QUERY } from '../../../graphql/queries'
 import { CREATE_USER_FROM_GITHUB_MUTATION } from '../../../graphql/mutations'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 
 async function getUserByEmail(email) {
@@ -96,6 +97,8 @@ const callbacks = {
             token.id = user.id              
             token.username = user.username
             //token.email = null;                   // if don't want to save the email in the jwt
+
+            token.jwt = jwt.sign(token, process.env.JWT_SECRET, {algorithm: 'HS256'})
         }
         return Promise.resolve(token)               // token object gets passed to session callback
     },
@@ -104,6 +107,7 @@ const callbacks = {
         // attach user id and username to session object
         session.user.id = token.id                  
         session.user.username = token.username
+        session.user.jwt = token.jwt
         return Promise.resolve(session)             // session returned here will be available on the client
     }
 }
