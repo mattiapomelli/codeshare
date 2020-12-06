@@ -4,7 +4,6 @@ import { useSWRInfinite } from 'swr'
 import scrolledToBottom from "../utils/scrolled-to-bottom"
 import { GET_FILTERED_SNIPPETS_QUERY } from "../graphql/queries"
 import { useSession } from "next-auth/client"
-import { user } from '../components/Icon/icons'
 
 const fetcher = (query, offset, lang, search, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
