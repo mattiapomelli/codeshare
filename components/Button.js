@@ -31,7 +31,25 @@ export const Button = styled.button`
             default:
                 return props.theme.colors.text
         }
-    }}; 
+    }};
+
+    &:hover:not(:disabled) {
+        background: ${props => {
+            switch(props.type) {
+                case "primary":
+                    return props.theme.colors.primaryHover
+                case "inverted":
+                    return "white"
+                default:
+                    return props.theme.colors.accent
+            }
+        }};
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 60%;
+    }
 `
 
 const StyledFlexButton = styled(Button)`
@@ -47,17 +65,17 @@ const StyledIconButton = styled(Button)`
     line-height: 1;
 `
 
-export const IconButton = ({ icon, ...rest }) => (
+export const IconButton = ({ icon, iconType, ...rest }) => (
     <StyledIconButton {...rest}>
-        <Icon name={icon}/>
+        <Icon name={icon} type={iconType}/>
     </StyledIconButton>
 )
 
-export const FlexButton= ({ children, icon, ...rest }) => {
+export const FlexButton= ({ children, icon, iconType, small, ...rest }) => {
     return (
-        <StyledFlexButton {...rest}>
+        <StyledFlexButton {...rest} small={small}>
             {children}
-            <Icon name={icon} size={12}/>
+            <Icon name={icon} size={small ? 12 : 20} type={iconType}/>
         </StyledFlexButton>
     )
 }

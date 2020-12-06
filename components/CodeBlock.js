@@ -14,7 +14,7 @@ const CopyButton = styled.div`
     padding: 0.6em;
     cursor: pointer;
     &:hover { 
-        background-color: ${props => props.theme.colors.background}
+        background-color: ${props => props.theme.colors.accent}
     }
     svg { display: block; }
 `
@@ -50,7 +50,7 @@ const CodeBlock = ({ codeString, language, preview }) => {
                     <Icon name="checked" size={14}/>
                 </CopiedText> :
                 <CopyButton onClick={clickHandler}>
-                    <Icon name="copy" size={16}/>
+                    <Icon name="copy" size={16} type="primary"/>
                 </CopyButton>
             }
         </CodeLayout>

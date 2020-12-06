@@ -44,7 +44,7 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId 
         <LikesWrapper>
             {count}
             <span onClick={changeLike}>
-                <Icon name={isLiked ? "star" : "starEmpty"} />
+                <Icon name={isLiked ? "star" : "starEmpty"} type="primary"/>
             </span>
         </LikesWrapper>
     )

@@ -15,7 +15,7 @@ export const TextArea = styled.textarea`
     width: 100%;
 
     ::placeholder {
-        color: ${props => props.theme.colors.details};
+        color: ${props => props.theme.colors.secondaryText};
     }
 
     &::-webkit-scrollbar {

@@ -40,7 +40,7 @@ export default function Home() {
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
 				<div>
 					<Link href="/signup">
-						<Button>GET STARTED</Button>
+						<Button>LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>

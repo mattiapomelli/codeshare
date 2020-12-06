@@ -42,7 +42,7 @@ const Login = () => {
         <>
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
-            <h3>Login</h3>
+            <h3>Log in</h3>
             <IconInput
                 className="input-field"
                 icon="user"
@@ -51,6 +51,7 @@ const Login = () => {
                 name="email"
                 type="text"
                 placeholder="email"
+                iconSize={20}
             />
             <IconInput
                 className="input-field"
@@ -60,6 +61,7 @@ const Login = () => {
                 name="password"
                 type="password"
                 placeholder="password"
+                iconSize={20}
             />
             <Button onClick={signInWithCredentials} type="primary">
                 LOGIN

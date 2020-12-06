@@ -18,7 +18,7 @@ const SnippetsGrid = styled.div`
     margin-top: 2rem;
 	
 	@media ${props => props.theme.breakpoints.tablet} {
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
 	}
 `
 
@@ -45,6 +45,9 @@ export default function Home() {
 				onChange={(e) => setSearch(e.target.value)}
 				icon="search"
 				style={{marginRight: '15px'}}
+				minWidth="16rem"
+				double={search.length > 0}
+				secondIcon="cross"
 			/>
 			<Dropdown options={languages} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
 			<SnippetsGrid>

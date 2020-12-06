@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import extensions from '../../utils/languages-extensions'
 
 export const CodeWrapper = styled.div`
     border-radius: ${props => props.theme.borderRadius};
@@ -46,8 +47,10 @@ const Tooltip = styled.span`
     color: black;
     background-color: ${props => props.theme.colors.code[props.language]};
     font-size: 0.8rem;
-    padding: 0.3rem 0.7rem;
+    padding: 0.3rem 0.6rem;
     position: absolute;
+    min-width: 1.8rem;
+    text-align: center;
     right: 20px;
     text-transform: uppercase;
     top: 0px;
@@ -60,7 +63,7 @@ export const CodeLayout = ({ children, language }) => {
             <Dot/>
             <Dot/>
             <Dot/>
-            <Tooltip language={language}>{language}</Tooltip>
+            <Tooltip language={language}>{extensions[language]}</Tooltip>
             { children }
         </CodeWrapper>
     )

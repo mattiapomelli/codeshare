@@ -18,7 +18,7 @@ export const DropdownItem = styled.li`
     cursor: pointer;
     background-color: ${props => props.theme.colors.elements};
     border-radius: ${props => props.theme.borderRadius};
-    &:hover { background-color: ${props => props.theme.colors.details}; }
+    &:hover { background-color: ${props => props.theme.colors.accent}; }
 `
 
 export const DropdownWrapper = styled.div`

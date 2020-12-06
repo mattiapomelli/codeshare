@@ -26,7 +26,7 @@ export default function Dropdown({ options, onSelect, value, nullValue, as }) {
 
     return (
         <DropdownWrapper ref={dropdownRef}>
-            <FlexButton onClick={() => { setOpen(open => !open)}} icon="arrowdown" small as={as}>
+            <FlexButton onClick={() => { setOpen(open => !open)}} icon="arrowdown" small as={as} iconType="primary">
                 {value || nullValue}
             </FlexButton>
             {

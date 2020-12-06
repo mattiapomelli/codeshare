@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	ul { list-style-type: none; }
+	::selection { background-color: rgba(185,235,255,0.20);}
 
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }

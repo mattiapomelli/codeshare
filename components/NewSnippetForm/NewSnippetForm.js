@@ -14,7 +14,7 @@ const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
 }`;
 
-const languages = ["JavaScript", "HTML", "CSS", "C", "Python"]
+const languages = ["JavaScript", "HTML", "CSS", "C", "Python", "Java"]
 
 export default function NewSnippetForm() {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})

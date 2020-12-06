@@ -2,9 +2,18 @@ import * as icons from './icons'
 import styled from "styled-components"
 
 const SVG = styled.svg`
-    fill: ${props => props.secondary ? props.theme.colors.details :  props.theme.colors.text};
-    width: ${props => (props.size ? `${props.size}px` : '24px')};
-    height: ${props => (props.size ? `${props.size}px` : '24px')};
+    fill: ${props => {
+        switch(props.type) {
+            case "primary":
+                return "white"
+            case "inverted":
+                return props.theme.colors.background
+            default:
+                return props.theme.colors.details
+        }
+    }};
+    width: ${props => (props.size ? `${props.size/16}rem` : '1.5rem')};
+    height: ${props => (props.size ? `${props.size/16}rem` : '1.5rem')};
 `
 
 export const Icon = ({ name, ...rest }) => {

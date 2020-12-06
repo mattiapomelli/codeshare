@@ -7,12 +7,13 @@ import Link from "next/link"
 
 const NavLink = ({ children, href, icon}) => {
     const router = useRouter()
+    const active = router.pathname === href
 
     return (
-        <SideNavItem active={router.pathname === href}>
+        <SideNavItem active={active}>
             <Link href={href}>
                 <a>
-                    <Icon name={icon} size={18}/> 
+                    <Icon name={icon} size={18} type={active ? "primary" : "secondary"}/> 
                     <span className="menu-text">{children}</span>
                 </a>
             </Link>
