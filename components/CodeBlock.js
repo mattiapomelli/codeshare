@@ -47,7 +47,7 @@ const CodeBlock = ({ codeString, language, preview }) => {
             {
                 copied ? 
                 <CopiedText>Copied&nbsp;
-                    <Icon name="checked" size={14}/>
+                    <Icon name="checked" size={14} type="primary"/>
                 </CopiedText> :
                 <CopyButton onClick={clickHandler}>
                     <Icon name="copy" size={16} type="primary"/>

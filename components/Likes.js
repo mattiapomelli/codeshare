@@ -4,11 +4,6 @@ import { useSession } from "next-auth/client"
 import styled from "styled-components"
 import { Icon } from "./Icon/Icon"
 
-// const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
-//     headers: {
-//         "x-hasura-admin-secret": "UNIMI2020"
-//     }
-// })
 
 const LikesWrapper = styled.div`
     display: inline-flex;

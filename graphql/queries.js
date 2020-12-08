@@ -30,7 +30,7 @@ export const GET_ALL_SNIPPETS_ID_QUERY = `
   `
 
 export const GET_SINGLE_SNIPPET_QUERY = `
-	query SingleSnippetQuery($id: uuid!) {
+	query SingleSnippetQuery($id: uuid!, $userId: uuid, $isAuth: Boolean!) {
 	  	snippet: snippet_by_pk(id: $id) {
 			code
 			createdAt
@@ -38,6 +38,14 @@ export const GET_SINGLE_SNIPPET_QUERY = `
 			id
 			programmingLang
 			title
+			likes_aggregate {
+				aggregate {
+					count
+				}
+			}
+			likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
+				createdAt
+			}
 			user {
 				username
 			}
