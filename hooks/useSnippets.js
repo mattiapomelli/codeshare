@@ -21,6 +21,9 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 	const userId = session ? session.user.id : null
 	const loadingMore = useRef(false)
 	const reachedEnd = useRef(false)
+
+	// const fetcherWrapper = (query, offset, lang, search) => fetcher(query, offset, lang, search, userId)
+
 	const { data, error, size, setSize } = useSWRInfinite(
 		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search, userId],
 		fetcher,
@@ -28,6 +31,7 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 			revalidateAll: false,
 			revalidateOnFocus: false,
 			//revalidateOnReconnect: false,
+			revalidateOnMount: true
 		}
 	)
 
