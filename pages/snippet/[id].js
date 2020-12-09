@@ -40,10 +40,8 @@ const PageSkeleton = () => (
 	</article>
 )
 
-const Snippet = ({ code, programmingLang, title, id, likes_aggregate, likes, user, createdAt, description }) => {
-    const [likesCount, setLikesCount] = useState(() => {
-        return likes_aggregate ? likes_aggregate.aggregate.count : null
-    })
+const Snippet = ({ code, programmingLang, title, id, likes_aggregate, likes, user, createdAt, description, mutate }) => {
+    const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count);
     const [isLiked, setIsLiked] = useState(() => {
         return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
     })
@@ -59,6 +57,7 @@ const Snippet = ({ code, programmingLang, title, id, likes_aggregate, likes, use
                     setIsLiked={setIsLiked}
                     setCount={setLikesCount}
                     snippetId={id}
+                    secondMutate={mutate}
                 />
             </Info>
             <CodeBlock codeString={code + "\n"} language={programmingLang}/>    
@@ -80,12 +79,14 @@ const SnippetPage = () => {
     const router = useRouter()
     const [session] = useSession()
     const userId = session ? session.user.id : null
-    const { data } = useSWR([GET_SINGLE_SNIPPET_QUERY, router.query.id, userId], fetcher)
+    const { data, mutate } = useSWR([GET_SINGLE_SNIPPET_QUERY, router.query.id, userId], fetcher, {
+        revalidateOnMount: true
+    })
 
     if(!data) return <PageSkeleton/>
 
     return (
-        <Snippet {...data.snippet}/>
+        <Snippet {...data.snippet} mutate={mutate}/>
     )
 }
 

@@ -24,14 +24,15 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 
 	// const fetcherWrapper = (query, offset, lang, search) => fetcher(query, offset, lang, search, userId)
 
-	const { data, error, size, setSize } = useSWRInfinite(
+	const { data, error, size, setSize, mutate } = useSWRInfinite(
 		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search, userId],
 		fetcher,
 		{ 
-			revalidateAll: false,
+			revalidateAll: true,
 			revalidateOnFocus: false,
 			//revalidateOnReconnect: false,
-			revalidateOnMount: true
+			revalidateOnMount: true,
+			// refreshInterval: 5000
 		}
 	)
 
@@ -62,7 +63,8 @@ const useInfiniteScrolling = (activeLanguage, search) => {
         data: snippets,
         loading: isLoadingMore,
 		setSize,
-		noResults: snippets.length == 0 && !isLoadingMore
+		noResults: snippets.length == 0 && !isLoadingMore,
+		mutate
     }
 }
 
