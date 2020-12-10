@@ -42,11 +42,9 @@ const PageSkeleton = () => (
 	</article>
 )
 
-const Snippet = ({ code, programmingLang, title, id, likes_aggregate, likes, user, createdAt, description, mutate }) => {
-    const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count);
-    const [isLiked, setIsLiked] = useState(() => {
-        return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
-    })
+const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
+    const [likesCount, setLikesCount] = useState(likesNum)
+    const [isLiked, setIsLiked] = useState(liked)
 
     return (
         <>
@@ -97,7 +95,7 @@ const SnippetPage = () => {
     return (
         <>
         <button onClick={() => { console.log(cache)}}>cache</button>
-        <SnippetCard {...data} key={data.id}/>
+        <Snippet {...data}/>
         </>
     )
 }

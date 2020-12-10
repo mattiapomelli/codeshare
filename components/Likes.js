@@ -35,7 +35,17 @@ function mutateSWRPartialKeys(partialKey, snippetId, increment) {
     }))
 }
 
-export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId, mutate }) {
+function mutateSingleSnippetKey(partialKey, increment) {
+    cache.keys()
+    .filter(key => key.includes(partialKey) && !( key.includes("validating") || key.includes("err") || key.includes("size")))
+    .forEach(key => mutate(key, async data => {
+        console.log(data)
+        data.likesNum += increment
+        data.liked = !data.liked
+    }))
+}
+
+export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId }) {
     const [session] = useSession()
 
     const changeLike = async () => {
@@ -53,8 +63,8 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId,
                 setCount(count => count + increment)
 
                 mutateSWRPartialKeys(GET_FILTERED_SNIPPETS_QUERY, snippetId, increment)
+                mutateSingleSnippetKey(snippetId, increment)
                 console.log(cache)
-                // mutate([GET_SINGLE_SNIPPET_QUERY, snippetId])
             }
 
         } catch (err) {
