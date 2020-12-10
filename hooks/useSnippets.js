@@ -31,7 +31,7 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 			revalidateAll: false,
 			revalidateOnFocus: false,
 			//revalidateOnReconnect: false,
-			revalidateOnMount: true
+			// revalidateOnMount: true
 		}
 	)
 
@@ -46,17 +46,17 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 	}, [data, size])
 
 	useEffect(() => {
+		function handleScroll() {
+			if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
+				const button = document.getElementById("loadMoreButton");
+				button.click();
+			}
+		}
+
 		window.addEventListener("scroll", handleScroll)
 
 		return () => { window.removeEventListener('scroll', handleScroll)}
 	}, [])
-
-	const handleScroll = () => {
-		if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
-			const button = document.getElementById("loadMoreButton");
-			button.click();
-		}
-    }
     
     return {
         data: snippets,
