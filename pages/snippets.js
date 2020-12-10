@@ -6,6 +6,7 @@ import useSnippets from '../hooks/useSnippets'
 import { IconInput } from "../components/Input"
 import { H1 } from '../components/Typography'
 import styled from "styled-components"
+import { cache } from 'swr'
 
 const languages = ["All", "Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
@@ -39,6 +40,7 @@ export default function Home() {
 	return (
 		<>
 			<H1>Snippets</H1>
+			<button onClick={() => { console.log(cache)}}>cache</button>
 			<IconInput
 				placeholder="Search..."
 				value={search}
@@ -53,8 +55,8 @@ export default function Home() {
 			<SnippetsGrid>
 				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
-					data.map((snippet, index) => (
-						<SnippetCard {...snippet} key={index} mutate={mutate}/>
+					data.map((snippet) => (
+						<SnippetCard {...snippet} key={snippet.id} mutate={mutate}/>
 					))
 				}
 				{ loading &&

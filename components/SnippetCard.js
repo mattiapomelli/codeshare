@@ -32,11 +32,9 @@ const SnippetTitle = styled.div`
 `
 
 
-const SnippetCard = ({ code, programmingLang, title, id, likes_aggregate, likes, user, mutate }) => {
-    const [likesCount, setLikesCount] = useState(likes_aggregate.aggregate.count)
-    const [isLiked, setIsLiked] = useState(() => {
-        return likes ? likes.length > 0 : false      // if current logged user has liked the snippet likes.length will be greater than 0
-    })
+const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user, mutate }) => {
+    const [likesCount, setLikesCount] = useState(likesNum)
+    const [isLiked, setIsLiked] = useState(liked)
 
     return (
         <article>

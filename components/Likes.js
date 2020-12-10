@@ -38,20 +38,35 @@ function mutateSWRPartialKeys(partialKey, snippetId, increment) {
     // }))
 }
 
-export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId, mutate, secondMutate }) {
+export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId, mutate }) {
     const [session] = useSession()
 
-    const changeLike = () => {
+    const changeLike = async () => {
         const query = isLiked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION
         const increment = isLiked ? -1 : 1
-        executeQuery( query, {
-            userId: session.user.id,
-            snippetId
-        }, session.user.jwt
-        ).then(data => {
-            if(data.action.affected_rows == 1) {
-                setIsLiked(isLiked => !isLiked);
+
+        try {
+            const res = await executeQuery( query, {
+                userId: session.user.id,
+                snippetId
+            }, session.user.jwt)
+
+            if(res.action.affected_rows == 1) {
+                // mutate(async data => {
+                //     data.forEach(set => {
+                //         console.log(set)
+                //         set.forEach(snippet => {
+                //             if(snippet.id == snippetId) {
+                //                 console.log(snippet)
+                //                 snippet.likesNum += increment
+                //                 snippet.liked = !snippet.liked
+                //             }
+                //         })
+                //     })
+                //     return data
+                // }, false)
                 // mutate()
+                setIsLiked(isLiked => !isLiked);
                 setCount(count => count + increment)
                 // mutate(data => {
                 //     data.forEach(set => {
@@ -67,19 +82,20 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId,
                 //     return data
                 // })
                 // secondMutate()
-                mutateSWRPartialKeys(GET_FILTERED_SNIPPETS_QUERY, snippetId, increment)
+                // mutateSWRPartialKeys(GET_FILTERED_SNIPPETS_QUERY, snippetId, increment)
                 console.log(cache)
                 // mutate([GET_SINGLE_SNIPPET_QUERY, snippetId])
             }
-        }).catch(err => {
+
+        } catch (err) {
             console.log(err)
-        })
+        }
     }
 
     return (
         <LikesWrapper>
             {count}
-            <span onClick={async () => {mutate(changeLike(),{...isLiked,isIt:!isLiked})}}>
+            <span onClick={changeLike}>
                 <Icon name={isLiked ? "star" : "starEmpty"} type="primary"/>
             </span>
         </LikesWrapper>
