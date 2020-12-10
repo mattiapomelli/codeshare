@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import {  Skeleton } from "../components/Skeleton"
@@ -37,14 +38,19 @@ export default function Home() {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { data, loading, setSize, noResults, mutate } = useSnippets(activeLanguage, search)
 
+	useEffect(() => {
+		cache.clear();
+	}, [search])
+
 	return (
 		<>
 			<H1>Snippets</H1>
 			<button onClick={() => { console.log(cache)}}>cache</button>
+			<button onClick={() => { cache.clear(); }}>clear</button>
 			<IconInput
 				placeholder="Search..."
 				value={search}
-				onChange={(e) => setSearch(e.target.value)}
+				onChange={(e) => { setSearch(e.target.value)}}
 				icon="search"
 				style={{marginRight: '15px'}}
 				minWidth="16rem"
