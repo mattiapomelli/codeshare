@@ -4,7 +4,6 @@ import { GET_FILTERED_SNIPPETS_QUERY, GET_SINGLE_SNIPPET_QUERY } from "../graphq
 import { useSession } from "next-auth/client"
 import styled from "styled-components"
 import { Icon } from "./Icon/Icon"
-// import { mutate } from 'swr'
 import { mutate, cache } from 'swr'
 
 const LikesWrapper = styled.div`
@@ -19,23 +18,21 @@ const LikesWrapper = styled.div`
 
 function mutateSWRPartialKeys(partialKey, snippetId, increment) {
     cache.keys()
-    .filter(key => key.includes(cache.serializeKey([partialKey])))
-    .forEach(key => cache.delete(key))
-    // cache
-    // .keys()
-    // .filter(key => key.includes(partialKey))
-    // .forEach(key => mutate(key, async data => {
-    //     if(typeof data == 'object') {
-    //         data.forEach(item => {
-    //             if(item.id == snippetId) {
-    //                 item.likes_aggregate.aggregate.count ++;
-    //                 // item.likes.push({ createdAt: Date.now()})
-    //             }
-    //         })
-    //         // console.log(data)
-    //     }
-    //     return data
-    // }))
+    .filter(key => key.includes(partialKey) && !( key.includes("validating") || key.includes("err") || key.includes("size")))
+    .forEach(key => mutate(key, async data => {
+        if(Array.isArray(data) && !Array.isArray(data[0])) {
+            for(let item of data) {
+                console.log(item)
+                if(item.id == snippetId) {
+                    item.likesNum += increment;
+                    item.liked = !item.liked
+                    break;
+                }
+            }
+        }
+        console.log(data,  typeof data)
+        return data
+    }))
 }
 
 export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId, mutate }) {
@@ -52,37 +49,10 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId,
             }, session.user.jwt)
 
             if(res.action.affected_rows == 1) {
-                // mutate(async data => {
-                //     data.forEach(set => {
-                //         console.log(set)
-                //         set.forEach(snippet => {
-                //             if(snippet.id == snippetId) {
-                //                 console.log(snippet)
-                //                 snippet.likesNum += increment
-                //                 snippet.liked = !snippet.liked
-                //             }
-                //         })
-                //     })
-                //     return data
-                // }, false)
-                // mutate()
                 setIsLiked(isLiked => !isLiked);
                 setCount(count => count + increment)
-                // mutate(data => {
-                //     data.forEach(set => {
-                //         set.forEach(item => {
-                //             if(item.id == snippetId) {
-                //                 item.likes_aggregate.aggregate.count += increment
-                //                 console.log(cache)
-                //                 // item.likes.push({ createdAt: Date.now()})
-                //             }
-                //         })
-                //     })
-                //     console.log(data)
-                //     return data
-                // })
-                // secondMutate()
-                // mutateSWRPartialKeys(GET_FILTERED_SNIPPETS_QUERY, snippetId, increment)
+
+                mutateSWRPartialKeys(GET_FILTERED_SNIPPETS_QUERY, snippetId, increment)
                 console.log(cache)
                 // mutate([GET_SINGLE_SNIPPET_QUERY, snippetId])
             }

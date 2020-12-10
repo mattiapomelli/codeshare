@@ -10,6 +10,8 @@ import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
+import SnippetCard from '../../components/SnippetCard'
+import { cache } from 'swr'
 
 const Description = styled.pre`
     font-size: 0.9rem;
@@ -73,20 +75,30 @@ const fetcher = (query, snippetId, userId) => request(process.env.NEXT_PUBLIC_HA
     id: snippetId,
     userId: userId,
 	isAuth: userId ? true : false
+}).then(data => {
+	const { snippet } = data
+    snippet.likesNum = snippet.likes_aggregate.aggregate.count
+    snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
+    delete snippet.likes_aggregate
+    delete snippet.likes
+    return snippet
 })
 
 const SnippetPage = () => {
     const router = useRouter()
     const [session] = useSession()
     const userId = session ? session.user.id : null
-    const { data, mutate } = useSWR([GET_SINGLE_SNIPPET_QUERY, router.query.id, userId], fetcher, {
+    const { data } = useSWR([GET_SINGLE_SNIPPET_QUERY, router.query.id, userId], fetcher, {
         revalidateOnMount: true
     })
 
     if(!data) return <PageSkeleton/>
 
     return (
-        <Snippet {...data.snippet} mutate={mutate}/>
+        <>
+        <button onClick={() => { console.log(cache)}}>cache</button>
+        <SnippetCard {...data} key={data.id}/>
+        </>
     )
 }
 
