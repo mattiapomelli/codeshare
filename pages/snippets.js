@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import SnippetCard from "../components/SnippetCard"
 import { useSearch } from '../contexts/SearchContext'
 import {  Skeleton } from "../components/Skeleton"
@@ -6,6 +7,7 @@ import useSnippets from '../hooks/useSnippets'
 import { IconInput } from "../components/Input"
 import { H1 } from '../components/Typography'
 import styled from "styled-components"
+import { IconButton } from "../components/Button"
 
 const languages = ["All", "Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
 
@@ -31,6 +33,40 @@ const SnippetSkeleton = () => (
 		</div>		
 	</article>
 )
+
+const ScrollButton = styled(IconButton)`
+	position: fixed;
+	bottom: 0.6rem;
+	right: 0.6rem;
+	animation: opacity 200ms;
+`
+
+const ScrollToTopButton = () => {
+	const [scrolled, setScrolled] = useState(false)
+
+	useEffect(() => {
+		function checkScroll() {
+			if(document.documentElement.scrollTop > 0)
+				setScrolled(true)
+			else
+				setScrolled(false)
+
+		}
+		window.addEventListener("scroll", checkScroll)
+		return () => { window.removeEventListener('scroll', checkScroll)}
+	}, [])
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+
+	return (
+		<>{
+			scrolled &&  
+			<ScrollButton icon="arrowUp" type="primary" iconType="primary" small onClick={scrollToTop}/>
+		}</>
+	)
+}
 
 export default function Home() {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
@@ -62,6 +98,7 @@ export default function Home() {
 					<SnippetSkeleton key={key}/>
 				))}
 			</SnippetsGrid>
+			<ScrollToTopButton/>
 			<button onClick={() => setSize(size => size + 1)} id="loadMoreButton" style={{display: "none"}}>Load More</button>
 		</>
 	)

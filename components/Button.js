@@ -61,7 +61,7 @@ const StyledFlexButton = styled(Button)`
 
 const StyledIconButton = styled(Button)`
     border-radius: 1.2em;
-    padding: 0.9em;
+    padding: ${props => props.small ? "0.5em" : "0.9em"};
     line-height: 1;
 `
 

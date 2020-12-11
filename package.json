@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.5",
     "bcrypt": "^5.0.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.3.0",
