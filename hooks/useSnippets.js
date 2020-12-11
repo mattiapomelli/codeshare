@@ -32,7 +32,7 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 
 	// const fetcherWrapper = (query, offset, lang, search) => fetcher(query, offset, lang, search, userId)
 
-	const { data, error, size, setSize, mutate } = useSWRInfinite(
+	const { data, error, size, setSize } = useSWRInfinite(
 		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search, userId],
 		fetcher,
 		{ 
@@ -72,7 +72,6 @@ const useInfiniteScrolling = (activeLanguage, search) => {
         loading: isLoadingMore,
 		setSize,
 		noResults: snippets.length == 0 && !isLoadingMore,
-		mutate
     }
 }
 

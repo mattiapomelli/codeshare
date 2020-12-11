@@ -36,11 +36,15 @@ const SnippetSkeleton = () => (
 
 export default function Home() {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
-	const { data, loading, setSize, noResults, mutate } = useSnippets(activeLanguage, search)
+	const { data, loading, setSize, noResults } = useSnippets(activeLanguage, search)
 
 	useEffect(() => {
 		cache.clear();
 	}, [search])
+
+	// useEffect(() => {
+	// 	return () => { cache.clear(); }
+	// }, [])
 
 	return (
 		<>
@@ -62,7 +66,7 @@ export default function Home() {
 				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
 					data.map((snippet) => (
-						<SnippetCard {...snippet} key={snippet.id} mutate={mutate}/>
+						<SnippetCard {...snippet} key={snippet.id}/>
 					))
 				}
 				{ loading &&
