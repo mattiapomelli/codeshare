@@ -6,6 +6,8 @@ import { useSession } from "next-auth/client"
 import styled from "styled-components"
 import { Icon } from "./Icon/Icon"
 import { mutate, cache } from 'swr'
+import { likesCache } from "../utils/cache"
+import useCache from '../hooks/useCache'
 
 const LikesWrapper = styled.div`
     display: inline-flex;
@@ -46,6 +48,7 @@ function mutateSingleSnippetKey(partialKey, increment) {
 export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId }) {
     const [session] = useSession()
     const fetching = useRef(false);
+    const { value, changeCache } = useCache(snippetId, { count: count, liked: isLiked })
 
     const changeLike = async () => { 
         if(!fetching.current) {
@@ -77,11 +80,33 @@ export default function Likes({ isLiked, setIsLiked, count, setCount, snippetId 
         }
     }
 
+    const changeLikeWithCache = async () => { 
+        if(!fetching.current) {
+            fetching.current = true;
+            
+            const query = value.liked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION 
+            changeCache()
+    
+            try {
+                await executeQuery( query, {
+                    userId: session.user.id,
+                    snippetId
+                }, session.user.jwt)
+                
+                fetching.current = false;
+    
+            } catch (err) {
+                fetching.current = false;
+            }
+        }
+    }
+
     return (
         <LikesWrapper>
-            {count}
+            <button onClick={() => {changeLikeWithCache()}}>Set</button>
+            {value.count}
             <span onClick={changeLike}>
-                <Icon name={isLiked ? "star" : "starEmpty"} type="primary"/>
+                <Icon name={value.liked ? "star" : "starEmpty"} type="primary"/>
             </span>
         </LikesWrapper>
     )

@@ -12,6 +12,7 @@ import { useSession } from 'next-auth/client'
 import request from "graphql-request"
 import SnippetCard from '../../components/SnippetCard'
 import { cache } from 'swr'
+import { likesCache } from '../../utils/cache'
 
 const Description = styled.pre`
     font-size: 0.9rem;
@@ -94,7 +95,7 @@ const SnippetPage = () => {
 
     return (
         <>
-        <button onClick={() => { console.log(cache)}}>cache</button>
+        <button onClick={() => { console.log(likesCache)}}>cache</button>
         <Snippet {...data}/>
         </>
     )
