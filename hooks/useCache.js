@@ -7,10 +7,9 @@ export const useCache = (key, initialValue) => {
         return typeof cachedValue !== 'undefined' ? cachedValue : initialValue
     })
 
-    const changeCache = () => {
-        const increment = value.liked ? -1 : 1
-        setValue({ liked: !value.liked, count: value.count + increment})
-        likesCache.set(key, { liked: !value.liked, count: value.count + increment});
+    const changeCache = (newValue) => {
+        setValue(newValue)
+        likesCache.set(key, newValue);
     }
 
     return {

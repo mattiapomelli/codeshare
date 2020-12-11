@@ -33,8 +33,6 @@ const SnippetTitle = styled.div`
 
 
 const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user, mutate }) => {
-    const [likesCount, setLikesCount] = useState(likesNum)
-    const [isLiked, setIsLiked] = useState(liked)
 
     return (
         <article>
@@ -47,10 +45,8 @@ const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user, 
                     <span>{user.username}</span>
                 </SnippetTitle>
                 <Likes
-                    isLiked={isLiked}
-                    count={likesCount}
-                    setIsLiked={setIsLiked}
-                    setCount={setLikesCount}
+                    isLiked={liked}
+                    count={likesNum}
                     snippetId={id}
                     mutate={mutate}
                 />

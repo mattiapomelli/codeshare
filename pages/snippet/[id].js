@@ -44,8 +44,8 @@ const PageSkeleton = () => (
 )
 
 const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
-    const [likesCount, setLikesCount] = useState(likesNum)
-    const [isLiked, setIsLiked] = useState(liked)
+    // const [likesCount, setLikesCount] = useState(likesNum)
+    // const [isLiked, setIsLiked] = useState(liked)
 
     return (
         <>
@@ -53,10 +53,10 @@ const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, crea
             <Info h="space-between" v="center">
                 <span>{user.username} &middot; {createdAt.slice(0, 10)}</span>
                 <Likes
-                    isLiked={isLiked}
-                    count={likesCount}
-                    setIsLiked={setIsLiked}
-                    setCount={setLikesCount}
+                    isLiked={liked}
+                    count={likesNum}
+                    // setIsLiked={setIsLiked}
+                    // setCount={setLikesCount}
                     snippetId={id}
                     secondMutate={mutate}
                 />
@@ -95,7 +95,7 @@ const SnippetPage = () => {
 
     return (
         <>
-        <button onClick={() => { console.log(likesCache)}}>cache</button>
+        <button onClick={() => { console.log(cache)}}>cache</button>
         <Snippet {...data}/>
         </>
     )
