@@ -16,7 +16,7 @@ const defaultCode = `public void yourAwesomeFunction() {
 
 const languages = ["JavaScript", "HTML", "CSS", "C", "Python", "Java"]
 
-export default function NewSnippetForm() {
+export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
 
@@ -52,7 +52,7 @@ export default function NewSnippetForm() {
                 </div>
                 <div>
                     <Label>Language</Label>
-                    <Dropdown options={languages} value={snippet.programmingLang} onSelect={onLanguageChange}  as="span"/>
+                    <Dropdown options={langs} value={snippet.programmingLang} onSelect={onLanguageChange} as="span" right/>
                 </div>
             </InfoArea>
             <DescriptionArea>

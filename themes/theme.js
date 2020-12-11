@@ -15,12 +15,15 @@ export default {
         text: "#f6f6f6",
         code: {
             javascript: "#EFF196",
-            java: "#EBBC75",
-            sql: "#75EBE6",
+            java: "#edbb6f",
+            sql: "#CDD0E3",
             c: "#E7A7D9",
             css: "#7BC3DA",
             html: "#E58484",
-            python: "#336E9C"
+            python: "#336E9C",
+            "c++": "#eb7195",
+            go: "#00ADD8",
+            php: "#4F5D95"
         }
     },
     breakpoints: {

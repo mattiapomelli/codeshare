@@ -50,8 +50,8 @@ export default function Sidebar({ collapsed, setCollapsed }) {
                 <Flex dir="column" v="center" h="center" as="nav" auto>
                     <ul>
                         <NavLink href="/" icon="home">Home</NavLink>     
-                        <NavLink href="/snippets" icon="code" onClick={closeSidebar}>Snippets</NavLink>     
-                        <NavLink href="/editor" icon="user" onClick={closeSidebar}>Editor</NavLink>     
+                        <NavLink href="/snippets" icon="feed" onClick={closeSidebar}>Snippets</NavLink>     
+                        <NavLink href="/editor" icon="code" onClick={closeSidebar}>Editor</NavLink>     
                     </ul>
                 </Flex>
             </header>

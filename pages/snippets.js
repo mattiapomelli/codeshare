@@ -8,8 +8,8 @@ import { IconInput } from "../components/Input"
 import { H1 } from '../components/Typography'
 import styled from "styled-components"
 import { IconButton } from "../components/Button"
-
-const languages = ["All", "Java", "JavaScript", "CSS", "HTML", "SQL", "C"]
+import graphQLClientAdmin from '../graphql/client'
+import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
 
 const SnippetsGrid = styled.div`
 	width: 100%;
@@ -68,7 +68,7 @@ const ScrollToTopButton = () => {
 	)
 }
 
-export default function Home() {
+export default function Home({ langs }) {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
 	const { data, loading, setSize, noResults } = useSnippets(activeLanguage, search)
 
@@ -85,7 +85,7 @@ export default function Home() {
 				double={search.length > 0}
 				secondIcon="cross"
 			/>
-			<Dropdown options={languages} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
+			<Dropdown options={["All"].concat(langs)} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
 			<SnippetsGrid>
 				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
@@ -102,4 +102,17 @@ export default function Home() {
 			<button onClick={() => setSize(size => size + 1)} id="loadMoreButton" style={{display: "none"}}>Load More</button>
 		</>
 	)
+}
+
+export async function getStaticProps() {
+	const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
+	
+	const langs = []
+	data.langs.forEach(lang => {
+		langs.push(lang.name)
+	})
+
+	return {
+		props: { langs }
+	}
 }

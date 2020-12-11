@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const DropdownMenu = styled.ul`
     list-style-type: none;
@@ -9,6 +9,9 @@ export const DropdownMenu = styled.ul`
     border: 1px solid ${props => props.theme.colors.details};
     padding: 0.5em;
     z-index: 3;
+    ${props => props.right && css`
+        right: 0;
+    `}
 `
 
 export const DropdownItem = styled.li`

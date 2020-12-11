@@ -92,3 +92,10 @@ export const arrowUp = () => (
         <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
     </g>
 )
+
+export const feed = () => (
+    <g>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+    </g>
+)

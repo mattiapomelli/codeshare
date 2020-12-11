@@ -78,3 +78,11 @@ export const GET_USER_BY_EMAIL_QUERY = `
 		}
 	}
 `
+
+export const GET_PROGRAMMING_LANGS_QUERY = `
+	query ProgrammingLangsQuery {
+		langs: programming_lang {
+			name
+		}
+	}
+`
