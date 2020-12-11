@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
 
     return (
         <>
-            <Sidebar collapsed={collapsed}/>
+            <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}/>
             <Page collapsed={collapsed}>
                 <Header>
                     <IconButton  onClick={clickHandler} icon="menu" iconType="primary" />
