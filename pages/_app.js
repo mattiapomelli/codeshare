@@ -1,6 +1,5 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
-import PopupProvider from '../contexts/PopupContext'
 import { Provider } from 'next-auth/client'
 import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
@@ -40,16 +39,14 @@ export default function App({ Component, pageProps }) {
 		<Provider session={pageProps.session}>
 			<SearchProvider>
 				<ThemeProvider theme={theme}>
-					<PopupProvider>
-						<GlobalStyle />
-						{
-							paths.includes(router.pathname) ? <Component {...pageProps} /> : (
-								<Layout>
-								<Component {...pageProps} />
-								</Layout>
-							)
-						}
-					</PopupProvider>
+					<GlobalStyle />
+					{
+						paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+							<Layout>
+							<Component {...pageProps} />
+							</Layout>
+						)
+					}
 				</ThemeProvider>
 			</SearchProvider>
 		</Provider>

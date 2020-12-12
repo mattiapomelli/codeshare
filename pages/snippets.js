@@ -46,9 +46,9 @@ const ScrollToTopButton = () => {
 
 	useEffect(() => {
 		function checkScroll() {
-			if(document.documentElement.scrollTop > 0)
+			if( !scrolled && document.documentElement.scrollTop > 0)
 				setScrolled(true)
-			else
+			else if(scrolled)
 				setScrolled(false)
 
 		}

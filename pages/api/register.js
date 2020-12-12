@@ -54,14 +54,14 @@ export default async (req, res) => {
 				`
 			},(err,info)=>{
 				if (err){
-					return res.status(500).send({message: err})
+					return res.status(500).send({message: "Something went wrong"})
 				}
 				return res.status(201).send({ message: "Check your email to verify your account"})
 			})
 		}
 		catch (err) {
 			console.log(err)
-			res.status(500).send({ message: err})
+			res.status(500).send({ message: "Something went wrong"})
 		}
 
 	} else {	// Any method that is not POST

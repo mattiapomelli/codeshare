@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useState } from "react"
 import { signIn } from 'next-auth/client'
-import { usePopup } from "../contexts/PopupContext"
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
 import { LoginForm } from "../components/LoginForm"
 import Logo from '../components/Logo'
+import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
 
 const Login = () => {
-    const router = useRouter()
-    const addPopup = usePopup()
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
-
-    useEffect(() => {
-        if(router.query.error) {
-            addPopup(router.query.error)
-        }
-    }, [router.query])
+    const [messages, setMessages] = useState([])
 
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
@@ -44,8 +36,11 @@ const Login = () => {
             })
         })
         .then(res => res.json())
-        .then(data => alert(data.message))
-        .catch(err => console.log(err))
+        .then(data => {
+            setMessages(messages => [...messages, { type: 'error', text: data.message}])
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     return (
@@ -104,6 +99,7 @@ const Login = () => {
                 Already have an account? <Link href="/login"><a>Sign in</a></Link>
             </p>
         </LoginForm>
+        <Popups popups={messages} setPopups={setMessages}/>
         </>
     )
 }

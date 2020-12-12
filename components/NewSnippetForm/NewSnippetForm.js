@@ -14,8 +14,6 @@ const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
 }`;
 
-const languages = ["JavaScript", "HTML", "CSS", "C", "Python", "Java"]
-
 export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
@@ -48,7 +46,7 @@ export default function NewSnippetForm({ langs }) {
             <InfoArea>
                 <div>
                     <Label>Title</Label>
-                    <Input placeholder="Title" value={snippet.title} onChange={onChange} name="title"/>
+                    <Input placeholder="Title" value={snippet.title} onChange={onChange} name="title" spellCheck="false"/>
                 </div>
                 <div>
                     <Label>Language</Label>
@@ -64,6 +62,7 @@ export default function NewSnippetForm({ langs }) {
                         name="description"
                         onChange={onChange}
                         value={snippet.description}
+                        spellCheck="false"
                     />
                 </div>
             </DescriptionArea>

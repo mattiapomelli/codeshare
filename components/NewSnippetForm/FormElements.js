@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const EditorArea = styled.div`
     grid-area: editor;
-    height: 400px;
+    height: 55vh;
     display: flex;
     flex-direction: column;
     & > div { flex: 1; }
