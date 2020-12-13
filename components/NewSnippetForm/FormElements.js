@@ -11,6 +11,7 @@ export const EditorArea = styled.div`
 export const InfoArea = styled.div`
     grid-area: info;
     display: flex;
+    align-items: center;
     div:first-child{
         flex: 1;
         margin-right: 10px;

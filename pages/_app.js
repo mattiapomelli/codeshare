@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 	html, body, #__next {
 		min-height: 100vh;
 	}
-	:root { font-size: 12px; }
+	:root { font-size: 14px; }
 
 	body {
 		font-family: ${props => props.theme.fonts.main};
@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 	::selection { background-color: rgba(185,235,255,0.20);}
 
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
-	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
+	@media ${props => props.theme.breakpoints.desktop} { :root{font-size: 16px;} }
 `
 
 export default function App({ Component, pageProps }) {

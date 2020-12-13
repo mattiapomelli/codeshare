@@ -17,6 +17,7 @@ const Hero = styled.section`
         font-weight: 400;
         margin-bottom: 2rem;
         text-align: center;
+        line-height: 1.1;
     }
     p {
         font-size: 1rem;
