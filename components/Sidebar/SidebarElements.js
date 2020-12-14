@@ -77,7 +77,19 @@ export const SidebarLayout = styled.aside`
     ${normalSidebarStyles};
 
     header{ margin-top: 35px; }
-    nav { margin-top: 2rem; width: 80%;}
+    nav {
+        margin-top: 2rem;
+        width: 80%;
+        animation: fadeIn 1s;
+        @keyframes fadeIn {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }
+        }
+    }
 
     ${props => props.collapsed && css`
         left: 0;

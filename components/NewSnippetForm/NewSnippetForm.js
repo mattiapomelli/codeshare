@@ -6,9 +6,10 @@ import CodeEditor from "../CodeEditor"
 import { TextArea } from "../TextArea"
 import { Input } from '../Input'
 import { Label } from '../Typography'
-import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea } from './FormElements'
+import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon } from './FormElements'
 import { Button } from '../Button'
 import Dropdown from "../Dropdown/Dropdown"
+import InfoModal from "./InfoModal"
 
 const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
@@ -17,6 +18,7 @@ const defaultCode = `public void yourAwesomeFunction() {
 export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
+    const [showModal, setShowModal] = useState(false)
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -34,10 +36,10 @@ export default function NewSnippetForm({ langs }) {
         e.preventDefault();
         executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
         .then(res => console.log(res))
-        //addSnippet({variables: {...snippet, userId: "26457dd0-1a1e-4102-8fd1-8315dd143a8c" }});
     }
 
     return (
+        <>
         <EditorForm dir="column" h="center" v="stretch">        
             <EditorArea>
                 <Label>Code</Label>
@@ -54,7 +56,9 @@ export default function NewSnippetForm({ langs }) {
                 </div>
             </InfoArea>
             <DescriptionArea>
-                <Label>Description</Label>
+                <Label>Description
+                    <InfoIcon name="info" size={16} type="primary" onClick={() => setShowModal(true)}/>
+                </Label>
                 <div>
                     <TextArea
                         placeholder="Describe your snippet"
@@ -75,5 +79,7 @@ export default function NewSnippetForm({ langs }) {
                 </Button>
             </SubmitArea>
         </EditorForm>
+        { showModal && <InfoModal/> }
+        </>
     )
 }

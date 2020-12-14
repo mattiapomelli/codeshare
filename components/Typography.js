@@ -21,5 +21,6 @@ export const Label = styled.label`
     font-weight: 500;
     margin-left: 5px;
     margin-bottom: 5px;
-    display: block;
+    display: ${props => props.inline ? "inline-block" : "block"};
+    cursor: inherit;
 `

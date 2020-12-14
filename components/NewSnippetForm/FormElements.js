@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Icon } from "../Icon/Icon"
 
 export const EditorArea = styled.div`
     grid-area: editor;
@@ -50,6 +51,7 @@ export const DescriptionArea = styled.div`
         } 
     }
     textarea { height: 100% }
+    label { position: relative } 
 `
 
 export const SubmitArea = styled.div`
@@ -78,3 +80,10 @@ export const EditorForm = styled.form`
     }
 `
 
+export const InfoIcon = styled(Icon)`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+    cursor: pointer;
+`

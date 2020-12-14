@@ -48,7 +48,7 @@ export default function Navbar() {
                     </Link>
                     {
                         session ?
-                        <Button type="primary" onClick={signOut}>Logout</Button>
+                        <Button type="primary" onClick={signOut}>Share code</Button>
                         : 
                         <Link href="/signup">
                             <Button type="primary">Sign up</Button>

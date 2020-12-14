@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
 import { SidebarLayout, SideNavItem } from './SidebarElements'
 import Flex from "../Flex"
 import Logo from '../Logo'
 import { Icon } from '../Icon/Icon'
 import { useRouter } from 'next/router'
 import Link from "next/link"
+import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 
 const CloseIcon = styled(Icon)`
@@ -33,12 +33,11 @@ const NavLink = ({ children, href, icon, onClick}) => {
 }
 
 export default function Sidebar({ collapsed, setCollapsed }) {
+    const [session] = useSession()
 
     const closeSidebar = () => {
-        console.log('yo')
         if(window.matchMedia("(max-width: 600px)").matches) {
             setCollapsed(false)
-            console.log('h')
         }
     }
 
@@ -48,10 +47,14 @@ export default function Sidebar({ collapsed, setCollapsed }) {
             <header>
                 <Logo size={32}/>
                 <Flex dir="column" v="center" h="center" as="nav" auto>
-                    <ul>
-                        <NavLink href="/" icon="home">Home</NavLink>     
-                        <NavLink href="/snippets" icon="feed" onClick={closeSidebar}>Snippets</NavLink>     
-                        <NavLink href="/editor" icon="code" onClick={closeSidebar}>Editor</NavLink>     
+                    <ul>   
+                        <NavLink href="/snippets" icon="feed" onClick={closeSidebar}>Snippets</NavLink>               
+                        { session &&
+                        <>
+                            <NavLink href="/editor" icon="code" onClick={closeSidebar}>Editor</NavLink>
+                            <NavLink href="/profile" icon="user" onClick={closeSidebar}>Profile</NavLink> 
+                        </>
+                        }     
                     </ul>
                 </Flex>
             </header>

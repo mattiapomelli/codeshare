@@ -54,7 +54,7 @@ export default function Home() {
             heading.innerText = titles[j].substring(0, i)
 
             if(i > titles[j].length) {
-                delta = 2000
+                delta = 2500
                 i = 1
                 j = (j + 1) % titles.length
             } else {
