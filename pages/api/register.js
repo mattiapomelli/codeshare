@@ -48,7 +48,7 @@ export default async (req, res) => {
 				to: user.email,
 				subject: 'Email verification',
 				//html code to display on user screen
-				html: emailVerification(username,userData.id);
+				html: emailVerification(username,userData.id)
 			},(err,info)=>{
 				if (err){
 					return res.status(500).send({message: "Something went wrong"})

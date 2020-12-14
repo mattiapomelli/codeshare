@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useRouter } from "next/router"
 import CodeBlock from "../../components/CodeBlock"
 import { H2, Label } from '../../components/Typography'
@@ -10,9 +9,6 @@ import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
-import SnippetCard from '../../components/SnippetCard'
-import { cache } from 'swr'
-import { likesCache } from '../../utils/cache'
 
 const Description = styled.pre`
     font-size: 0.9rem;
@@ -44,9 +40,7 @@ const PageSkeleton = () => (
 )
 
 const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
-    // const [likesCount, setLikesCount] = useState(likesNum)
-    // const [isLiked, setIsLiked] = useState(liked)
-
+    
     return (
         <>
             <H2>{title}</H2>
@@ -55,8 +49,6 @@ const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, crea
                 <Likes
                     isLiked={liked}
                     count={likesNum}
-                    // setIsLiked={setIsLiked}
-                    // setCount={setLikesCount}
                     snippetId={id}
                     secondMutate={mutate}
                 />
@@ -95,7 +87,6 @@ const SnippetPage = () => {
 
     return (
         <>
-        <button onClick={() => { console.log(cache)}}>cache</button>
         <Snippet {...data}/>
         </>
     )
