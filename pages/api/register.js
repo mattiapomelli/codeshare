@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt'
 import { CREATE_USER_MUTATION } from '../../graphql/mutations'
 import graphQLClientAdmin from '../../graphql/client'
 import nodemailer from 'nodemailer';
+import {emailVerification, verificationEmail} from '../../utils/emailHTML';
+
 
 //initialization and settings of nodemailer module
 let transporter = nodemailer.createTransport({
@@ -42,16 +44,11 @@ export default async (req, res) => {
 			//if error in query the @try@catch block will catch the error
 			//all sensitive data are located in process.env file
 			transporter.sendMail({
-				from: 'CodeShare',
+				from: 'hello@codeshare.tech',
 				to: user.email,
 				subject: 'Email verification',
 				//html code to display on user screen
-				html: `
-				Hello ${username}<br />
-				Welcome to CodeShare!
-				To verify your email please click the button below <br />
-				<a href=${process.env.NEXTAUTH_URL}/api/emailVerification/?id=${userData.id}><button>Verify</button></a>
-				`
+				html: emailVerification(username,userData.id);
 			},(err,info)=>{
 				if (err){
 					return res.status(500).send({message: "Something went wrong"})
