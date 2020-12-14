@@ -10,7 +10,6 @@ import styled from "styled-components"
 import { IconButton } from "../components/Button"
 import graphQLClientAdmin from '../graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
-import { likesCache } from '../utils/cache'
 
 const SnippetsGrid = styled.div`
 	width: 100%;
@@ -76,7 +75,6 @@ export default function Home({ langs }) {
 	return (
 		<>
 			<H1>Snippets</H1>
-			<button onClick={() => { console.log(likesCache)}}>cache</button>
 			<IconInput
 				placeholder="Search..."
 				value={search}
