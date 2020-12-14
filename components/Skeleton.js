@@ -7,7 +7,7 @@ export const Skeleton = styled.div`
     width: ${props => props.w || "100%"};
     background: linear-gradient(-90deg,
         ${props => props.theme.colors.elements} 0%,
-        ${props => props.theme.colors.details} 50%,
+        ${props => props.theme.colors.accent} 50%,
         ${props => props.theme.colors.elements} 100% );
     background-size: 400% 400%;
     animation: pulse 1.2s ease-in-out infinite;

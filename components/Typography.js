@@ -8,12 +8,12 @@ export const H1 = styled.h1`
     margin-bottom: 1.5rem;
 `
 
-export const H2 = styled.h1`
+export const H2 = styled.h2`
     font-size: 2.5rem;
     letter-spacing: -2px;
     font-weight: 400;
     color: white;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 `
 
 export const Label = styled.label`
@@ -21,5 +21,6 @@ export const Label = styled.label`
     font-weight: 500;
     margin-left: 5px;
     margin-bottom: 5px;
-    display: block;
+    display: ${props => props.inline ? "inline-block" : "block"};
+    cursor: inherit;
 `

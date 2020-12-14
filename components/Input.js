@@ -11,9 +11,10 @@ export const Input = styled.input`
     border-radius: 10em;
     background-color: ${props => props.theme.colors.elements};
     color: ${props => props.theme.colors.text};
+    min-width: ${props => props.minWidth || "auto"};
 
     ::placeholder {
-        color: ${props => props.theme.colors.details};
+        color: ${props => props.theme.colors.secondaryText};
     }
 `
 
@@ -31,10 +32,10 @@ const InputWrapper = styled.div`
     ${Input} { padding-left: 2.8rem; width: 100% }
 `
 
-export const IconInput = ({ icon, className, ...rest }) => {
+export const IconInput = ({ icon, className, iconSize, ...rest }) => {
     return (
         <InputWrapper {...rest} className={className}>
-            <Icon name={icon} secondary/>
+            <Icon name={icon} size={iconSize}/>
             <Input {...rest}/>   
         </InputWrapper>
     )

@@ -4,7 +4,6 @@ import { useSWRInfinite } from 'swr'
 import scrolledToBottom from "../utils/scrolled-to-bottom"
 import { GET_FILTERED_SNIPPETS_QUERY } from "../graphql/queries"
 import { useSession } from "next-auth/client"
-import { user } from '../components/Icon/icons'
 
 const fetcher = (query, offset, lang, search, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
@@ -14,7 +13,15 @@ const fetcher = (query, offset, lang, search, userId) => request( process.env.NE
 	search: search,
 	userId: userId,
 	isAuth: userId ? true : false
-}).then(data => {return data.snippets});
+}).then(data => {
+	data.snippets.forEach(snippet => {
+		snippet.likesNum = snippet.likes_aggregate.aggregate.count
+		snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
+		delete snippet.likes_aggregate
+		delete snippet.likes
+	})
+	return data.snippets
+});
 
 
 const useInfiniteScrolling = (activeLanguage, search) => {
@@ -22,6 +29,9 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 	const userId = session ? session.user.id : null
 	const loadingMore = useRef(false)
 	const reachedEnd = useRef(false)
+
+	// const fetcherWrapper = (query, offset, lang, search) => fetcher(query, offset, lang, search, userId)
+
 	const { data, error, size, setSize } = useSWRInfinite(
 		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search, userId],
 		fetcher,
@@ -29,6 +39,8 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 			revalidateAll: false,
 			revalidateOnFocus: false,
 			//revalidateOnReconnect: false,
+			// revalidateOnMount: true,
+			// refreshInterval: 5000
 		}
 	)
 
@@ -43,23 +55,23 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 	}, [data, size])
 
 	useEffect(() => {
+		function handleScroll() {
+			if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
+				const button = document.getElementById("loadMoreButton");
+				button.click();
+			}
+		}
+
 		window.addEventListener("scroll", handleScroll)
 
 		return () => { window.removeEventListener('scroll', handleScroll)}
 	}, [])
-
-	const handleScroll = () => {
-		if ( scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
-			const button = document.getElementById("loadMoreButton");
-			button.click();
-		}
-    }
     
     return {
         data: snippets,
         loading: isLoadingMore,
 		setSize,
-		noResults: snippets.length == 0 && !isLoadingMore
+		noResults: snippets.length == 0 && !isLoadingMore,
     }
 }
 

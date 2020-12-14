@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Link from "next/link"
 import Navbar from "../components/Navbar"
 import { Button } from "../components/Button"
@@ -17,12 +18,23 @@ const Hero = styled.section`
         font-weight: 400;
         margin-bottom: 2rem;
         text-align: center;
+        line-height: 1.1;
+        height: 9rem;
+
+        @media only screen and (min-width: 400px) {
+            height: 6rem;
+        }
+
+        @media only screen and (min-width: 900px) {
+            height: auto;
+        }
     }
     p {
         font-size: 1rem;
         font-weight: 300;
         color: ${props => props.theme.colors.text};
-        width: 50%;
+        width: 90%;
+        max-width: 500px;
         text-align: center;
         margin-bottom: 2rem;
     }
@@ -30,17 +42,45 @@ const Hero = styled.section`
     button { margin-bottom: 2rem; }
 `
 
+const titles = ["Find the code you need", "Share the code you are proud of"]
+
 export default function Home() {
+
+    useEffect(() => {
+        const heading = document.getElementById("heading")
+        let i = 1, j = 0, timeout, delta
+
+        function typeEffect() {
+            heading.innerText = titles[j].substring(0, i)
+
+            if(i > titles[j].length) {
+                delta = 2500
+                i = 1
+                j = (j + 1) % titles.length
+            } else {
+                delta = 100
+                i++
+            }
+
+            timeout = setTimeout(typeEffect, delta);
+        }
+
+        typeEffect()
+        
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [])
 
 	return (
 		<>
 			<Navbar/>
 			<Hero>
-				<h1>Share the code you are proud of</h1>
+				<h1 id="heading"></h1>
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
 				<div>
 					<Link href="/signup">
-						<Button>GET STARTED</Button>
+						<Button>LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>

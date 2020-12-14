@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
-import { usePopup } from "../contexts/PopupContext"
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
 import { LoginForm } from "../components/LoginForm"
 import Logo from '../components/Logo'
+import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
 
 const Login = () => {
-    const router = useRouter()
-    const addPopup = usePopup()
+    // const router = useRouter()
     const [credentials, setCredentials] = useState({ email: '', password: ''})
+    const [messages, setMessages] = useState([])
 
-    useEffect(() => {
-        if(router.query.error) {
-            addPopup(router.query.error)
-        }
-    }, [router.query])
+    // useEffect(() => {
+    //     if(router.query.error) {
+    //         setErrors(errors => [...errors, router.query.error])
+    //     }
+    // }, [router.query])
 
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
@@ -30,7 +30,11 @@ const Login = () => {
 			email: credentials.email,
             password: credentials.password,
             callbackUrl: 'http://localhost:3000/snippets'
-		}).then((res) => console.log(res))
+		}).then((res) => {
+            if(res && res.error) {
+                setMessages(messages => [...messages, { type: 'error', text: decodeURIComponent(res.error)}])
+            }
+        })
     }
     
     const signInWithGitHub = (e) => {
@@ -42,7 +46,7 @@ const Login = () => {
         <>
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
-            <h3>Login</h3>
+            <h3>Log in</h3>
             <IconInput
                 className="input-field"
                 icon="user"
@@ -51,6 +55,7 @@ const Login = () => {
                 name="email"
                 type="text"
                 placeholder="email"
+                iconSize={20}
             />
             <IconInput
                 className="input-field"
@@ -60,6 +65,7 @@ const Login = () => {
                 name="password"
                 type="password"
                 placeholder="password"
+                iconSize={20}
             />
             <Button onClick={signInWithCredentials} type="primary">
                 LOGIN
@@ -72,6 +78,7 @@ const Login = () => {
                 Don't have an account? <Link href="/signup"><a>Sign up</a></Link>
             </p>
         </LoginForm>
+        <Popups popups={messages} setPopups={setMessages}/>
         </>
     )
 }

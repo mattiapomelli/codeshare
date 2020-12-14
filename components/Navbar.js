@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useSession, signOut } from "next-auth/client"
 import styled from "styled-components"
 
-const List = styled.ul`
+const List = styled(Flex)`
     list-style-type: none;
     
     li { display: inline-block;}
@@ -42,13 +42,13 @@ export default function Navbar() {
         <NavMenu h="space-between" v="center" as="header" auto>
             <Logo size={30}/>
             <nav>
-                <List horizontal margin="2rem">
+                <List horizontal margin="2rem" v="center" as="ul">
                     <Link href="/snippets">
                         <li><a>Snippets</a></li>
                     </Link>
                     {
                         session ?
-                        <Button type="primary" onClick={signOut}>Logout</Button>
+                        <Button type="primary" onClick={signOut}>Share code</Button>
                         : 
                         <Link href="/signup">
                             <Button type="primary">Sign up</Button>

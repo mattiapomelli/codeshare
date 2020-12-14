@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components"
 
 export const Main = styled.main`
-    padding: 0.5rem 3rem 4rem 3rem;
+    padding: 0.5rem 2rem 4rem 2rem;
     margin: auto;
+    @media ${props => props.theme.breakpoints.tablet} {
+        padding: 0.5rem 3rem 4rem 3rem;
+    }
 `
 
 export const Page = styled.section`
@@ -31,9 +34,12 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 3rem;
+    padding: 0 2rem;
     width: 100%;
     height: ${props => props.theme.headerHeight};
     transition: width 300ms, padding 300ms;
+    @media ${props => props.theme.breakpoints.tablet} {
+        padding: 0 3rem;
+    }
 `
 

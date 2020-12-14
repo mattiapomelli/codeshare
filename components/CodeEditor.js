@@ -17,7 +17,7 @@ const StyledEditor = styled(Editor)`
         caret-color: white;
         font-size: 0.9rem !important;
 
-        &::selection { background-color: ${props => props.theme.colors.text} !important; }
+        /* &::selection { background-color: ${props => props.theme.colors.text} !important; } */
     }
 `
 

@@ -1,8 +1,9 @@
 import styled from "styled-components"
+import { Icon } from "../Icon/Icon"
 
 export const EditorArea = styled.div`
     grid-area: editor;
-    height: 400px;
+    height: 55vh;
     display: flex;
     flex-direction: column;
     & > div { flex: 1; }
@@ -11,6 +12,7 @@ export const EditorArea = styled.div`
 export const InfoArea = styled.div`
     grid-area: info;
     display: flex;
+    align-items: center;
     div:first-child{
         flex: 1;
         margin-right: 10px;
@@ -49,6 +51,7 @@ export const DescriptionArea = styled.div`
         } 
     }
     textarea { height: 100% }
+    label { position: relative } 
 `
 
 export const SubmitArea = styled.div`
@@ -77,3 +80,10 @@ export const EditorForm = styled.form`
     }
 `
 
+export const InfoIcon = styled(Icon)`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+    cursor: pointer;
+`

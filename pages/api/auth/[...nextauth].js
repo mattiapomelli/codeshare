@@ -83,31 +83,30 @@ const callbacks = {
     },
 
     jwt: async (token, user) => {
-        if (user) {
-            // save id and username in the jwt
-            token["https://hasura.io/jwt/claims"] = {
-                "x-hasura-allowed-roles": [
-                "viewer",
-                "user"
-                ],
-                "x-hasura-default-role": "user",
-                "x-hasura-user-id": user.id
-            }
-              
+        if (user) {  
             token.id = user.id              
-            token.username = user.username
-            //token.email = null;                   // if don't want to save the email in the jwt
-
-            token.jwt = jwt.sign(token, process.env.JWT_SECRET, {algorithm: 'HS256'})
+            token.username = user.username                  
+            delete token.email                  // if don't want to save the email in the jwt
         }
         return Promise.resolve(token)               // token object gets passed to session callback
     },
 
     session: async (session, token) => {
-        // attach user id and username to session object
+
+        const hasuraToken = {}
+        hasuraToken["https://hasura.io/jwt/claims"] = {
+            "x-hasura-allowed-roles": [
+                "viewer",
+                "user"
+            ],
+            "x-hasura-default-role": "user",
+            "x-hasura-user-id": token.id
+        }
+        // attach user id, username and hasuraJWT to session object
         session.user.id = token.id                  
         session.user.username = token.username
-        session.user.jwt = token.jwt
+        session.user.jwt = await jwt.sign(hasuraToken, process.env.JWT_SECRET, {algorithm: 'HS256', expiresIn: '31d'})
+
         return Promise.resolve(session)             // session returned here will be available on the client
     }
 }

@@ -78,3 +78,38 @@ export const checked = () => (
         <path d="M19.77 5.03l1.4 1.4L8.43 19.17l-5.6-5.6 1.4-1.4 4.2 4.2L19.77 5.03m0-2.83L8.43 13.54l-4.2-4.2L0 13.57 8.43 22 24 6.43 19.77 2.2z"/>
     </g>
 )
+
+export const cross = () => (
+    <g>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </g>
+)
+
+export const arrowUp = () => (
+    <g>
+        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+    </g>
+)
+
+export const feed = () => (
+    <g>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+    </g>
+)
+
+export const error = () => (
+    <g>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+    </g>
+)
+
+export const info = () => (
+    <g>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+    </g>
+)

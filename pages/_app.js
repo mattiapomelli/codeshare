@@ -1,6 +1,5 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
-import PopupProvider from '../contexts/PopupContext'
 import { Provider } from 'next-auth/client'
 import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
@@ -17,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 	html, body, #__next {
 		min-height: 100vh;
 	}
-	:root { font-size: 12px; }
+	:root { font-size: 14px; }
 
 	body {
 		font-family: ${props => props.theme.fonts.main};
@@ -26,9 +25,10 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	ul { list-style-type: none; }
+	::selection { background-color: rgba(185,235,255,0.20);}
 
 	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
-	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
+	@media ${props => props.theme.breakpoints.desktop} { :root{font-size: 16px;} }
 `
 
 export default function App({ Component, pageProps }) {
@@ -39,16 +39,14 @@ export default function App({ Component, pageProps }) {
 		<Provider session={pageProps.session}>
 			<SearchProvider>
 				<ThemeProvider theme={theme}>
-					<PopupProvider>
-						<GlobalStyle />
-						{
-							paths.includes(router.pathname) ? <Component {...pageProps} /> : (
-								<Layout>
-								<Component {...pageProps} />
-								</Layout>
-							)
-						}
-					</PopupProvider>
+					<GlobalStyle />
+					{
+						paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+							<Layout>
+							<Component {...pageProps} />
+							</Layout>
+						)
+					}
 				</ThemeProvider>
 			</SearchProvider>
 		</Provider>
