@@ -10,6 +10,7 @@ import styled from "styled-components"
 import { IconButton } from "../components/Button"
 import graphQLClientAdmin from '../graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
+import { likesCache } from '../utils/cache'
 
 const SnippetsGrid = styled.div`
 	width: 100%;
@@ -75,10 +76,11 @@ export default function Home({ langs }) {
 	return (
 		<>
 			<H1>Snippets</H1>
+			<button onClick={() => { console.log(likesCache)}}>cache</button>
 			<IconInput
 				placeholder="Search..."
 				value={search}
-				onChange={(e) => setSearch(e.target.value)}
+				onChange={(e) => { setSearch(e.target.value)}}
 				icon="search"
 				style={{marginRight: '15px'}}
 				minWidth="16rem"
@@ -89,8 +91,8 @@ export default function Home({ langs }) {
 			<SnippetsGrid>
 				{ noResults && <span style={{marginLeft: "10px"}}>No results</span>}
 				{
-					data.map((snippet, index) => (
-						<SnippetCard {...snippet} key={index}/>
+					data.map((snippet) => (
+						<SnippetCard {...snippet} key={snippet.id}/>
 					))
 				}
 				{ loading &&

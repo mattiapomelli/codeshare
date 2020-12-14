@@ -13,7 +13,15 @@ const fetcher = (query, offset, lang, search, userId) => request( process.env.NE
 	search: search,
 	userId: userId,
 	isAuth: userId ? true : false
-}).then(data => {return data.snippets});
+}).then(data => {
+	data.snippets.forEach(snippet => {
+		snippet.likesNum = snippet.likes_aggregate.aggregate.count
+		snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
+		delete snippet.likes_aggregate
+		delete snippet.likes
+	})
+	return data.snippets
+});
 
 
 const useInfiniteScrolling = (activeLanguage, search) => {
@@ -31,7 +39,8 @@ const useInfiniteScrolling = (activeLanguage, search) => {
 			revalidateAll: false,
 			revalidateOnFocus: false,
 			//revalidateOnReconnect: false,
-			// revalidateOnMount: true
+			// revalidateOnMount: true,
+			// refreshInterval: 5000
 		}
 	)
 
@@ -62,7 +71,7 @@ const useInfiniteScrolling = (activeLanguage, search) => {
         data: snippets,
         loading: isLoadingMore,
 		setSize,
-		noResults: snippets.length == 0 && !isLoadingMore
+		noResults: snippets.length == 0 && !isLoadingMore,
     }
 }
 
