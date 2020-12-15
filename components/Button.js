@@ -7,7 +7,7 @@ export const Button = styled.button`
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: 500;
-    padding: ${props => props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
+    padding: ${props => props.padding ? props.padding : props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
     border-radius: 10em;
     cursor: pointer;
 
@@ -59,9 +59,10 @@ const StyledFlexButton = styled(Button)`
     svg { margin-left: 5px; }
 `
 
-const StyledIconButton = styled(Button)`
+const StyledIconButton = styled(Button).attrs(props => ({
+    padding: props.small ? "0.5em" : "0.9em"
+}))`
     border-radius: 1.2em;
-    padding: ${props => props.small ? "0.5em" : "0.9em"};
     line-height: 1;
 `
 

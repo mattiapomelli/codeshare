@@ -63,7 +63,7 @@ const SnippetSkeleton = () => (
 )
 
 export default function Snippets({ query, variables, fetcher }) {
-	const { data, loading, setSize, noResults } = useSnippets(query, variables, fetcher)
+    const { data, loading, setSize, noResults } = useSnippets(query, variables, fetcher)
 
     return (
         <>

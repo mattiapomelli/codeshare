@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components'
 import { H2, Label } from '../components/Typography'
 import Snippets from '../components/Snippets'
 import withAuth from '../hocs/withAuth'
-import { GET_USER_SNIPPETS_QUERY, GET_LIKED_SNIPPETS_QUERY } from '../graphql/queries'
+import { GET_USER_SNIPPETS_QUERY, GET_LIKED_SNIPPETS_QUERY, GET_USER_SNIPPET_COUNT, GET_LIKED_SNIPPETS_COUNT } from '../graphql/queries'
 import { request } from 'graphql-request'
+import useSWR from 'swr'
 
 const Tab = styled.li`
     display: inline-block;
@@ -61,16 +62,32 @@ const fetcher = (query, offset, userId) => request( process.env.NEXT_PUBLIC_HASU
 	return data.snippets
 })
 
+const countFetcher = (query, userId) => request(process.env.NEXT_PUBLIC_HASURA_URL, query, {userId}).then(res => {
+    return res.result.aggregate.count
+})
+
 function Profile() {
     const [category, setCategory] = useState("snippets")
     const [session] = useSession()
+    const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id], countFetcher)
+    const { data: likedCount } = useSWR([GET_LIKED_SNIPPETS_COUNT, session.user.id], countFetcher)
 
     return (
         <>   
             { session && <H2>{session.user.username}</H2> }
 
-            <TabItem count={50} active={category === 'snippets'} onClick={() => setCategory('snippets')}>Snippets</TabItem>
-            <TabItem count={72} active={category === 'liked'} onClick={() => setCategory('liked')}>Liked</TabItem>
+            <TabItem
+                count={snippetsCount || "-"}
+                active={category === 'snippets'}
+                onClick={() => setCategory('snippets')}
+            >Snippets
+            </TabItem>
+            <TabItem
+                count={likedCount || "-"}
+                active={category === 'liked'}
+                onClick={() => setCategory('liked')}
+            >Liked
+            </TabItem>
 
             <Snippets
                 query={category === "snippets" ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY }

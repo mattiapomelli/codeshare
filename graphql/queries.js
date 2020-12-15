@@ -99,20 +99,6 @@ export const GET_SINGLE_SNIPPET_QUERY = `
 	}
 `
 
-export const GET_SNIPPET_LIKES = `
-	query GetSnippetLikes($id: uuid!, $userId: uuid, $isAuth: Boolean!) {
-		snippet: snippet_by_pk(id: $id) {
-			likes_aggregate {
-				aggregate {
-					count
-				}
-			}
-			likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
-				createdAt
-			}
-		}
-	}
-`
 export const GET_USER_BY_EMAIL_QUERY = `
 	query GetUserByEmail ($email: String!) {
 		user(where: {email: {_eq: $email}}) {
@@ -178,4 +164,24 @@ export const GET_LIKED_SNIPPETS_QUERY = `
 		}
 	}
   
+`
+
+export const GET_USER_SNIPPET_COUNT = `
+	query CountUserSnippets($userId: uuid!) {
+		result: snippet_aggregate(where: {userId: {_eq: $userId}}) {
+			aggregate {
+				count
+			}
+		}
+	}
+`
+
+export const GET_LIKED_SNIPPETS_COUNT = `
+	query CountLikedSnippets($userId: uuid!) {
+		result: snippet_aggregate(where: {likes: {userId: {_in: [$userId]}}}) {
+			aggregate {
+				count
+			}
+		}
+	}
 `
