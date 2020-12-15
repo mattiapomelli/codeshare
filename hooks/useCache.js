@@ -8,6 +8,7 @@ export const useCache = (key, initialValue) => {
     })
 
     const changeCache = (newValue) => {
+        console.log("setting cache to: ", newValue)
         setValue(newValue)
         likesCache.set(key, newValue);
     }

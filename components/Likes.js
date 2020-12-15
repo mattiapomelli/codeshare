@@ -36,10 +36,10 @@ export default function Likes({ isLiked, count, snippetId }) {
             
             const query = value.liked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION 
             const increment = value.liked ? -1 : 1
-            const newValue = { liked: !value.liked, count: count + increment}
+            const newValue = { liked: !value.liked, count: value.count + increment}
             changeCache(newValue)
 
-            // mutate liked snippets count
+            // mutate snippets liked by logged user count, if already exists in cache
             const key = [GET_LIKED_SNIPPETS_COUNT, session.user.id]
             if(cache.has(key)) {
                 mutate(key, async data => data + increment, false)
