@@ -7,6 +7,7 @@ import withAuth from '../hocs/withAuth'
 import { GET_USER_SNIPPETS_QUERY, GET_LIKED_SNIPPETS_QUERY, GET_USER_SNIPPET_COUNT, GET_LIKED_SNIPPETS_COUNT } from '../graphql/queries'
 import { request } from 'graphql-request'
 import useSWR from 'swr'
+import processSnippet from '../utils/processSnippet'
 
 const Tab = styled.li`
     display: inline-block;
@@ -34,7 +35,7 @@ const Tab = styled.li`
 const Tag = styled.span`
     background: ${props => props.theme.colors.primary};
     border-radius: ${props => props.theme.borderRadius};
-    padding: 0.1rem 0.4rem;
+    padding: 0.1rem 0.5rem;
     margin-left: 1rem; 
     font-size: 0.9rem;
 `
@@ -53,12 +54,7 @@ const fetcher = (query, offset, userId) => request( process.env.NEXT_PUBLIC_HASU
 	offset,
 	userId: userId,
 }).then(data => {
-    data.snippets.forEach(snippet => {
-		snippet.likesNum = snippet.likes_aggregate.aggregate.count
-		snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
-		delete snippet.likes_aggregate
-		delete snippet.likes
-	})
+    data.snippets.forEach(snippet => processSnippet(snippet))
 	return data.snippets
 })
 
@@ -69,8 +65,12 @@ const countFetcher = (query, userId) => request(process.env.NEXT_PUBLIC_HASURA_U
 function Profile() {
     const [category, setCategory] = useState("snippets")
     const [session] = useSession()
-    const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id], countFetcher)
-    const { data: likedCount } = useSWR([GET_LIKED_SNIPPETS_COUNT, session.user.id], countFetcher)
+    const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id], countFetcher, {
+        revalidateOnFocus: false,
+    })
+    const { data: likedCount } = useSWR([GET_LIKED_SNIPPETS_COUNT, session.user.id], countFetcher, {
+        revalidateOnFocus: false,
+    })
 
     return (
         <>   

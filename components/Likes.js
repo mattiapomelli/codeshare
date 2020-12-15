@@ -1,10 +1,13 @@
 import { useRef } from 'react'
 import { executeQuery } from '../graphql/client'
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from "../graphql/mutations"
+import { GET_LIKED_SNIPPETS_COUNT } from '../graphql/queries'
 import { useSession } from "next-auth/client"
 import styled from "styled-components"
 import { Icon } from "./Icon/Icon"
 import useCache from '../hooks/useCache'
+import { useRouter } from 'next/router'
+import { mutate, cache } from 'swr'
 
 const LikesWrapper = styled.div`
     display: inline-flex;
@@ -18,22 +21,39 @@ const LikesWrapper = styled.div`
 
 export default function Likes({ isLiked, count, snippetId }) {
     const [session] = useSession()
+    const router = useRouter();
     const fetching = useRef(false);
     const { value, changeCache } = useCache(snippetId, { count: count, liked: isLiked })
 
-    const changeLikeWithCache = async () => { 
+    const changeLikeWithCache = async () => {
+        if(!session){
+            router.push('/login')
+            return
+        }
+
         if(!fetching.current) {
             fetching.current = true;
             
             const query = value.liked ? REMOVE_LIKE_MUTATION : ADD_LIKE_MUTATION 
-            const newValue = { liked: !value.liked, count: value.liked ? value.count - 1 : value.count + 1}
+            const increment = value.liked ? -1 : 1
+            const newValue = { liked: !value.liked, count: count + increment}
             changeCache(newValue)
+
+            // mutate liked snippets count
+            const key = [GET_LIKED_SNIPPETS_COUNT, session.user.id]
+            if(cache.has(key)) {
+                mutate(key, async data => data + increment, false)
+            }
     
             try {
                 await executeQuery( query, {
                     userId: session.user.id,
                     snippetId
                 }, session.user.jwt)
+
+                if(cache.has(key)) {
+                    mutate([GET_LIKED_SNIPPETS_COUNT, session.user.id])
+                }
                 
                 fetching.current = false;
     
