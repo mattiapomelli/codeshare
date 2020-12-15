@@ -79,7 +79,7 @@ export default function NewSnippetForm({ langs }) {
                 </Button>
             </SubmitArea>
         </EditorForm>
-        { showModal && <InfoModal/> }
+        { showModal && <InfoModal close={() => setShowModal(false)}/> }
         </>
     )
 }

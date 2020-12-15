@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { Icon } from './Icon/Icon'
 
 const ModalWrapper = styled.div`
     position: fixed;
@@ -23,11 +25,32 @@ const ModalContent = styled.div`
     position: relative;
 `
 
-export default function Modal({ children }) {
+const CloseIcon = styled(Icon)`
+    position: absolute;
+    right: 0.7rem;
+    top: 0.7rem;
+    cursor: pointer;
+`
+
+export default function Modal({ children, close }) {
+    const modalRef = useRef()
+
+    useEffect(() => {
+        function handleClick(event) {
+            if(modalRef.current && !modalRef.current.contains(event.target)) {
+                close()
+            }
+        }
+
+        window.addEventListener('click', handleClick)
+        
+        return () => window.removeEventListener('click', handleClick)
+    }, [])
 
     return (
         <ModalWrapper>
-            <ModalContent>
+            <ModalContent ref={modalRef}>
+                <CloseIcon name="cross" type="primary" size={18} onClick={close}/>
                 { children }
             </ModalContent>  
         </ModalWrapper>

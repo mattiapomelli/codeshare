@@ -24,3 +24,9 @@ export const Label = styled.label`
     display: ${props => props.inline ? "inline-block" : "block"};
     cursor: inherit;
 `
+
+export const P = styled.p`
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0.7rem 0;
+`
