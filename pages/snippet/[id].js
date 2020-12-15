@@ -9,6 +9,7 @@ import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
+import processSnippet from '../../utils/processSnippet'
 
 const Description = styled.pre`
     font-size: 0.9rem;
@@ -68,11 +69,7 @@ const fetcher = (query, snippetId, userId) => request(process.env.NEXT_PUBLIC_HA
 	isAuth: userId ? true : false
 }).then(data => {
 	const { snippet } = data
-    snippet.likesNum = snippet.likes_aggregate.aggregate.count
-    snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
-    delete snippet.likes_aggregate
-    delete snippet.likes
-    return snippet
+    return processSnippet(snippet)
 })
 
 const SnippetPage = () => {
@@ -87,7 +84,7 @@ const SnippetPage = () => {
 
     return (
         <>
-        <Snippet {...data}/>
+            <Snippet {...data}/>
         </>
     )
 }

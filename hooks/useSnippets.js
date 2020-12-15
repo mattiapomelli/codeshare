@@ -1,46 +1,20 @@
 import {  useEffect, useRef } from 'react'
-import { request } from "graphql-request"
 import { useSWRInfinite } from 'swr'
 import scrolledToBottom from "../utils/scrolled-to-bottom"
-import { GET_FILTERED_SNIPPETS_QUERY } from "../graphql/queries"
 import { useSession } from "next-auth/client"
 
-const fetcher = (query, offset, lang, search, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
-	limit: 6,
-	order: search.length > 0 ? null : "desc",
-	offset,
-	programmingLang: lang,
-	search: search,
-	userId: userId,
-	isAuth: userId ? true : false
-}).then(data => {
-	data.snippets.forEach(snippet => {
-		snippet.likesNum = snippet.likes_aggregate.aggregate.count
-		snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
-		delete snippet.likes_aggregate
-		delete snippet.likes
-	})
-	return data.snippets
-});
-
-
-const useInfiniteScrolling = (activeLanguage, search) => {
+const useInfiniteScrolling = (query, variables, fetcher) => {
 	const [session] = useSession()
 	const userId = session ? session.user.id : null
 	const loadingMore = useRef(false)
 	const reachedEnd = useRef(false)
 
-	// const fetcherWrapper = (query, offset, lang, search) => fetcher(query, offset, lang, search, userId)
-
 	const { data, error, size, setSize } = useSWRInfinite(
-		index => [GET_FILTERED_SNIPPETS_QUERY, index*6, activeLanguage, search, userId],
+		index => [query, index*6, userId, ...Object.values(variables)],
 		fetcher,
 		{ 
 			revalidateAll: false,
 			revalidateOnFocus: false,
-			//revalidateOnReconnect: false,
-			// revalidateOnMount: true,
-			// refreshInterval: 5000
 		}
 	)
 

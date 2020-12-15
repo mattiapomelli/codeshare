@@ -1,4 +1,3 @@
-import { useState } from "react"
 import CodeBlock from "./CodeBlock"
 import Link from "next/link"
 import Flex from "./Flex"

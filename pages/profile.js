@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 import { H2, Label } from '../components/Typography'
+import Snippets from '../components/Snippets'
 import withAuth from '../hocs/withAuth'
+import { GET_USER_SNIPPETS_QUERY, GET_LIKED_SNIPPETS_QUERY } from '../graphql/queries'
+import { request } from 'graphql-request'
 
 const Tab = styled.li`
     display: inline-block;
@@ -44,6 +47,20 @@ const TabItem = ({ children, count, active, onClick }) => {
     )
 }
 
+const fetcher = (query, offset, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
+	limit: 6,
+	offset,
+	userId: userId,
+}).then(data => {
+    data.snippets.forEach(snippet => {
+		snippet.likesNum = snippet.likes_aggregate.aggregate.count
+		snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
+		delete snippet.likes_aggregate
+		delete snippet.likes
+	})
+	return data.snippets
+})
+
 function Profile() {
     const [category, setCategory] = useState("snippets")
     const [session] = useSession()
@@ -54,6 +71,12 @@ function Profile() {
 
             <TabItem count={50} active={category === 'snippets'} onClick={() => setCategory('snippets')}>Snippets</TabItem>
             <TabItem count={72} active={category === 'liked'} onClick={() => setCategory('liked')}>Liked</TabItem>
+
+            <Snippets
+                query={category === "snippets" ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY }
+                variables={{}}
+                fetcher={fetcher}
+            />
         </>
     )
 }

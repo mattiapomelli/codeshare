@@ -21,6 +21,52 @@ export const GET_FILTERED_SNIPPETS_QUERY = `
 	}
 `
 
+export const GET_LATEST_SNIPPETS_QUERY = `
+	query SearchSnippetsQuery( $programmingLang: String, $limit: Int!, $offset: Int!, $userId: uuid, $isAuth: Boolean!) {
+	snippets: snippet( where: {programmingLang: {_eq: $programmingLang}}, order_by: {createdAt: desc}, limit: $limit, offset: $offset) {
+		title
+		code
+		createdAt
+		programmingLang
+		id
+		likes_aggregate {
+			aggregate {
+				count
+			}
+		}
+		likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
+			createdAt
+		}
+		user {
+			username
+		}
+	  }
+	}
+`
+
+export const SEARCH_SNIPPETS_QUERY = `
+	query SearchSnippetsQuery($search: String, $programmingLang: String, $limit: Int!, $offset: Int!, $userId: uuid, $isAuth: Boolean!) {
+	snippets: search_snippet(args: {search: $search}, where: {programmingLang: {_eq: $programmingLang}}, limit: $limit, offset: $offset) {
+		title
+		code
+		createdAt
+		programmingLang
+		id
+		likes_aggregate {
+			aggregate {
+				count
+			}
+		}
+		likes(where: {userId: {_eq: $userId}}) @include(if: $isAuth){
+			createdAt
+		}
+		user {
+			username
+		}
+	  }
+	}
+`
+
 export const GET_ALL_SNIPPETS_ID_QUERY = `
 	query SnippetsIdQuery {
 		snippets: snippet {
@@ -85,4 +131,51 @@ export const GET_PROGRAMMING_LANGS_QUERY = `
 			name
 		}
 	}
+`
+
+export const GET_USER_SNIPPETS_QUERY = `
+	query GetUserSnippets($userId: uuid!, $limit: Int!, $offset: Int!) {
+		snippets: snippet(where: {userId: {_eq: $userId}}, order_by: {createdAt: desc}, limit: $limit, offset: $offset) {
+			code
+			description
+			id
+			title
+			programmingLang
+			likes {
+				createdAt
+			}
+			likes_aggregate {
+				aggregate {
+					count
+				}
+			}
+			user {
+				username
+			}
+		}
+	}
+`
+
+export const GET_LIKED_SNIPPETS_QUERY = `
+	query GetLikedSnippets($userId: uuid!, $limit: Int!, $offset: Int!) {
+		snippets: snippet(where: {likes: {userId: {_in: [$userId]}}}, order_by: {createdAt: desc}, limit: $limit, offset: $offset) {
+			code
+			description
+			id
+			title
+			programmingLang
+			likes {
+				createdAt
+			}
+			likes_aggregate {
+				aggregate {
+					count
+				}
+			}
+			user {
+				username
+			}
+		}
+	}
+  
 `
