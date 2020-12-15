@@ -47,7 +47,13 @@ export default function Home({ langs }) {
 				double={search.length > 0}
 				secondIcon="cross"
 			/>
-			<Dropdown options={["All"].concat(langs)} onSelect={setActiveLanguage} value={activeLanguage} nullValue="All"/>
+			<Dropdown
+				options={["All"].concat(langs)}
+				onSelect={setActiveLanguage}
+				value={activeLanguage}
+				nullValue="All"
+				minWidth="7rem"
+			/>
 			
 			<Snippets
 				query={search.length > 0 ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY}

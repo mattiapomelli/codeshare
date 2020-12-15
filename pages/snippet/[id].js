@@ -18,7 +18,10 @@ const Description = styled.pre`
     margin-left: 5px;
     padding-left: 1.5rem;
     color: #ccc;
-    border-left: 1px solid ${props => props.theme.colors.secondaryText};
+    border-left: 3px solid ${props => props.theme.colors.secondaryText};
+    /* border-right: 3px solid ${props => props.theme.colors.secondaryText}; */
+    /* background-color: ${props => props.theme.colors.sidebar}; */
+    /* border-radius: ${props => props.theme.borderRadius}; */
 `
 
 const Info = styled(Flex)`
@@ -28,6 +31,18 @@ const Info = styled(Flex)`
         font-weight: 300;
         color: #ccc;
     }
+`
+
+const CategoryTag = styled.span`
+    background: ${props => props.theme.colors.code[props.language]};
+    border-radius: ${props => props.theme.borderRadius};
+    font-family: monospace;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    margin-left: 1rem; 
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: ${props => props.theme.colors.background};
 `
 
 const PageSkeleton = () => (
@@ -43,8 +58,11 @@ const PageSkeleton = () => (
 const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
     
     return (
-        <>
-            <H2>{title}</H2>
+        <>  
+            <Flex v="center">
+                <H2>{title}</H2>
+                <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>
+            </Flex>
             <Info h="space-between" v="center">
                 <span>{user.username} &middot; {createdAt.slice(0, 10)}</span>
                 <Likes

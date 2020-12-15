@@ -56,7 +56,8 @@ const StyledFlexButton = styled(Button)`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    svg { margin-left: 5px; }
+    svg { margin-left: 5px; };
+    min-width: ${props => props.minWidth || 'auto'};
 `
 
 const StyledIconButton = styled(Button).attrs(props => ({
@@ -73,6 +74,7 @@ export const IconButton = ({ icon, iconType, ...rest }) => (
 )
 
 export const FlexButton= ({ children, icon, iconType, small, ...rest }) => {
+    console.log(rest)
     return (
         <StyledFlexButton {...rest} small={small}>
             {children}

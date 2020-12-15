@@ -59,7 +59,7 @@ export default function NewSnippetForm({ langs }) {
                 </div>
                 <div>
                     <Label>Language</Label>
-                    <Dropdown options={langs} value={snippet.programmingLang} onSelect={onLanguageChange} as="span" right/>
+                    <Dropdown options={langs} value={snippet.programmingLang} onSelect={onLanguageChange} as="span" right minWidth="7rem"/>
                 </div>
             </InfoArea>
             <DescriptionArea>

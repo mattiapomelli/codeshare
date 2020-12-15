@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const ScrollWrapper = styled.div`
     overflow: auto;
     height: ${props => props.height || "100%" };
+    min-height: 200px;
     
     &::-webkit-scrollbar {
         height: 10px;
