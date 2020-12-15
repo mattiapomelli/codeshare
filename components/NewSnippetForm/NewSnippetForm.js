@@ -10,6 +10,7 @@ import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon
 import { Button } from '../Button'
 import Dropdown from "../Dropdown/Dropdown"
 import InfoModal from "./InfoModal"
+import Popups from '../Popup/Popup'
 
 const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
@@ -19,6 +20,7 @@ export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
     const [showModal, setShowModal] = useState(false)
+    const [messages, setMessages] = useState([])
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -35,7 +37,12 @@ export default function NewSnippetForm({ langs }) {
     const publishSnippet = (e) => {
         e.preventDefault();
         executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
-        .then(res => console.log(res))
+        .then(res => {
+            setMessages(messages => [...messages, { type: 'success', text: "Snippet published!"}])
+            setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
+        }).catch(err => {
+            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong"}])
+        })
     }
 
     return (
@@ -80,6 +87,7 @@ export default function NewSnippetForm({ langs }) {
             </SubmitArea>
         </EditorForm>
         { showModal && <InfoModal close={() => setShowModal(false)}/> }
+        <Popups popups={messages} setPopups={setMessages}/>
         </>
     )
 }
