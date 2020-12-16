@@ -3,11 +3,15 @@ import NewSnippetForm from '../components/NewSnippetForm/NewSnippetForm'
 import withAuth from '../hocs/withAuth'
 import graphQLClientAdmin from '../graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
+import Head from 'next/head'
 
 function EditorPage({ langs }) {
 
     return (
         <>
+			<Head>
+                <title>Editor – Codeshare</title>
+            </Head>
             <H1>Editor</H1>
             <NewSnippetForm langs={langs}/>
         </> 

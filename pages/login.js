@@ -8,6 +8,7 @@ import Logo from '../components/Logo'
 import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
+import Head from 'next/head'
 
 const Login = () => {
     // const router = useRouter()
@@ -44,6 +45,9 @@ const Login = () => {
 
     return (
         <>
+        <Head>
+            <title>Login – Codeshare</title>
+        </Head>
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
             <h3>Log in</h3>

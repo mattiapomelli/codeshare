@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar"
 import { Button } from "../components/Button"
 import Image from "next/image"
 import styled from "styled-components"
+import Flex from '../components/Flex'
+import Head from 'next/head'
 
 const Hero = styled.section`
     display: flex;
@@ -38,8 +40,7 @@ const Hero = styled.section`
         text-align: center;
         margin-bottom: 2rem;
     }
-    button:first-of-type { margin-right: 10px; }
-    button { margin-bottom: 2rem; }
+    button { margin: 0 5px 2rem 5px; }
 `
 
 const titles = ["Find the code you need", "Share the code you are proud of"]
@@ -74,18 +75,21 @@ export default function Home() {
 
 	return (
 		<>
+            <Head>
+                <title>Codeshare</title>
+            </Head>
 			<Navbar/>
 			<Hero>
 				<h1 id="heading"></h1>
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
-				<div>
+				<Flex wrap h="center">
 					<Link href="/signup">
 						<Button>LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>
 					</Link>
-				</div>
+				</Flex>
 				<Image src="/hero.svg" width={612} height={392} layout="responsive" className="image"/>
 			</Hero>
 		</>

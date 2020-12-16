@@ -10,8 +10,10 @@ import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
 import processSnippet from '../../utils/processSnippet'
+import Head from 'next/head'
 
 const Description = styled.pre`
+    white-space: pre-wrap;
     font-size: 0.9rem;
     font-family: inherit;
     font-weight: 300;
@@ -33,17 +35,16 @@ const Info = styled(Flex)`
     }
 `
 
-const CategoryTag = styled.span`
-    background: ${props => props.theme.colors.code[props.language]};
-    border-radius: ${props => props.theme.borderRadius};
-    font-family: monospace;
-    text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    margin-left: 1rem; 
-    margin-bottom: 0.3rem;
-    font-size: 0.9rem;
-    color: ${props => props.theme.colors.background};
-`
+// const CategoryTag = styled.span`
+//     background: ${props => props.theme.colors.code[props.language]};
+//     border-radius: ${props => props.theme.borderRadius};
+//     font-family: monospace;
+//     text-transform: uppercase;
+//     padding: 0.3rem 0.8rem;
+//     display: inline-block;
+//     font-size: 0.9rem;
+//     color: ${props => props.theme.colors.background} !important;
+// `
 
 const PageSkeleton = () => (
 	<article>	
@@ -59,12 +60,12 @@ const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, crea
     
     return (
         <>  
-            <Flex v="center">
-                <H2>{title}</H2>
-                <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>
-            </Flex>
+
+            <H2>{title}</H2>
+            {/* <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>s */}
             <Info h="space-between" v="center">
-                <span>{user.username} &middot; {createdAt.slice(0, 10)}</span>
+                <span>{user.username} &middot; {createdAt.slice(0, 10)}
+                </span>
                 <Likes
                     isLiked={liked}
                     count={likesNum}
@@ -101,7 +102,10 @@ const SnippetPage = () => {
     if(!data) return <PageSkeleton/>
 
     return (
-        <>
+        <>  
+            <Head>
+                <title>{data.title}</title>
+            </Head>
             <Snippet {...data}/>
         </>
     )

@@ -7,6 +7,7 @@ import { GET_PROGRAMMING_LANGS_QUERY, GET_LATEST_SNIPPETS_QUERY, SEARCH_SNIPPETS
 import { request } from "graphql-request"
 import Snippets from '../components/Snippets'
 import processSnippet from '../utils/processSnippet'
+import Head from 'next/head'
 
 const fetcher = (query, offset, userId, lang) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
@@ -36,6 +37,9 @@ export default function Home({ langs }) {
 
 	return (
 		<>
+			<Head>
+                <title>Code Snippets – Codeshare</title>
+            </Head>
 			<H1>Snippets</H1>
 			<IconInput
 				placeholder="Search..."
