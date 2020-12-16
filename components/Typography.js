@@ -14,6 +14,8 @@ export const H2 = styled.h2`
     font-weight: 400;
     color: white;
     margin-bottom: 0.5rem;
+    line-height: 1;
+
 `
 
 export const Label = styled.label`

@@ -74,7 +74,6 @@ export const IconButton = ({ icon, iconType, ...rest }) => (
 )
 
 export const FlexButton= ({ children, icon, iconType, small, ...rest }) => {
-    console.log(rest)
     return (
         <StyledFlexButton {...rest} small={small}>
             {children}

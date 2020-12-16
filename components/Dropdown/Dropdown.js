@@ -3,7 +3,6 @@ import { FlexButton } from "../Button"
 import { DropdownWrapper, DropdownMenu, DropdownItem } from './DropdownElements'
 
 export default function Dropdown({ options, onSelect, value, nullValue, as, right, minWidth }) {
-    console.log('def: ', minWidth)
     const [open, setOpen] = useState(false)
     const dropdownRef = useRef()
 

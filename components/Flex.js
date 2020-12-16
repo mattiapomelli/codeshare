@@ -7,6 +7,7 @@ const Flex = styled.div`
     flex-direction: ${props => props.dir || "row"};
     width: ${props => props.w || "auto"};
     margin: ${props => props.auto ? "auto" : 0};
+    flex-wrap: ${props => props.wrap ? "wrap" : "nowrap"};
 `
 
 export default Flex

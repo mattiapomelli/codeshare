@@ -10,7 +10,7 @@ const LogoWrapper = styled(Flex).attrs(props => ({
     h1 {
         line-height: 1;
         margin-left: 5px;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         margin-top: ${props => props.vertical ? "0.5rem" : 0}
     }
     span { font-size: 30px}
