@@ -5,7 +5,7 @@ import { Button } from "../components/Button"
 import Image from "next/image"
 import styled from "styled-components"
 import Flex from '../components/Flex'
-import Head from 'next/head'
+import PageHead from '../components/PageHead'
 
 const Hero = styled.section`
     display: flex;
@@ -75,9 +75,7 @@ export default function Home() {
 
 	return (
 		<>
-            <Head>
-                <title>Codeshare</title>
-            </Head>
+            <PageHead title="Codeshare"/>
 			<Navbar/>
 			<Hero>
 				<h1 id="heading"></h1>

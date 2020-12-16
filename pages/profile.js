@@ -8,7 +8,7 @@ import { GET_USER_SNIPPETS_QUERY, GET_LIKED_SNIPPETS_QUERY, GET_USER_SNIPPET_COU
 import { request } from 'graphql-request'
 import useSWR from 'swr'
 import processSnippet from '../utils/processSnippet'
-import Head from 'next/head'
+import PageHead from '../components/PageHead'
 
 const Tab = styled.li`
     display: inline-block;
@@ -75,9 +75,7 @@ function Profile() {
 
     return (
         <> 
-            <Head>
-                <title>Profile – Codeshare</title>
-            </Head>
+            <PageHead title="Sign Up – Codeshare"/>
 
             { session && <H2>{session.user.username}</H2> }
 

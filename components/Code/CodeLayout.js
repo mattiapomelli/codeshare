@@ -27,7 +27,8 @@ export const CodeWrapper = styled.div`
         height: 20px;
         content: "";
         background-color: ${props => props.theme.colors.elements};
-    } 
+        border-radius: 0 0 ${props => props.theme.borderRadius} 0; 
+    }
 `
 
 const Dot = styled.span`

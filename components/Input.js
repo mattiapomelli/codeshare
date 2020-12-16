@@ -11,7 +11,10 @@ export const Input = styled.input`
     border-radius: 10em;
     background-color: ${props => props.theme.colors.elements};
     color: ${props => props.theme.colors.text};
-    min-width: ${props => props.minWidth || "auto"};
+
+    @media ${props => props.theme.breakpoints.tablet} {
+        min-width: ${props => props.minWidth || "auto"};
+    }
 
     ::placeholder {
         color: ${props => props.theme.colors.secondaryText};

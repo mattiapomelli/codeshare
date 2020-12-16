@@ -7,7 +7,7 @@ import Logo from '../components/Logo'
 import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
-import Head from 'next/head'
+import PageHead from '../components/PageHead'
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
@@ -46,9 +46,8 @@ const Login = () => {
 
     return (
         <>
-        <Head>
-            <title>Sign Up – Codeshare</title>
-        </Head>
+        <PageHead title="Sign Up – Codeshare"/>
+
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
             <h3>Sign up</h3>

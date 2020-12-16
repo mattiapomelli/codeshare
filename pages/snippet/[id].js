@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
 import processSnippet from '../../utils/processSnippet'
-import Head from 'next/head'
+import PageHead from '../../components/PageHead'
 
 const Description = styled.pre`
     white-space: pre-wrap;
@@ -103,9 +103,7 @@ const SnippetPage = () => {
 
     return (
         <>  
-            <Head>
-                <title>{data.title}</title>
-            </Head>
+            <PageHead title={data.title}/>
             <Snippet {...data}/>
         </>
     )

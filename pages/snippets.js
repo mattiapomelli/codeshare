@@ -1,13 +1,14 @@
 import { useSearch } from '../contexts/SearchContext'
 import Dropdown from "../components/Dropdown/Dropdown"
 import { IconInput } from "../components/Input"
+import Flex from '../components/Flex'
 import { H1 } from '../components/Typography'
 import graphQLClientAdmin from '../graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY, GET_LATEST_SNIPPETS_QUERY, SEARCH_SNIPPETS_QUERY } from '../graphql/queries'
 import { request } from "graphql-request"
 import Snippets from '../components/Snippets'
 import processSnippet from '../utils/processSnippet'
-import Head from 'next/head'
+import PageHead from '../components/PageHead'
 
 const fetcher = (query, offset, userId, lang) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
@@ -37,27 +38,29 @@ export default function Home({ langs }) {
 
 	return (
 		<>
-			<Head>
-                <title>Code Snippets – Codeshare</title>
-            </Head>
+			<PageHead title="Code Snippets – Codeshare"/>
+
 			<H1>Snippets</H1>
-			<IconInput
-				placeholder="Search..."
-				value={search}
-				onChange={(e) => { setSearch(e.target.value)}}
-				icon="search"
-				style={{marginRight: '15px'}}
-				minWidth="16rem"
-				double={search.length > 0}
-				secondIcon="cross"
-			/>
-			<Dropdown
-				options={["All"].concat(langs)}
-				onSelect={setActiveLanguage}
-				value={activeLanguage}
-				nullValue="All"
-				minWidth="7rem"
-			/>
+
+			<Flex>
+				<IconInput
+					placeholder="Search..."
+					value={search}
+					onChange={(e) => { setSearch(e.target.value)}}
+					icon="search"
+					style={{marginRight: '15px'}}
+					minWidth="16rem"
+					double={search.length > 0}
+					secondIcon="cross"
+				/>
+				<Dropdown
+					options={["All"].concat(langs)}
+					onSelect={setActiveLanguage}
+					value={activeLanguage}
+					nullValue="All"
+					minWidth="7rem"
+				/>
+			</Flex>
 			
 			<Snippets
 				query={search.length > 0 ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY}

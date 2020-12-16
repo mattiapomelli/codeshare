@@ -22,6 +22,10 @@ const SnippetTitle = styled.div`
         font-size: 1.2rem;
         letter-spacing: -0.7px;
         font-weight: 500;
+
+        &:hover {
+            color: #ccc;
+        }
     }
     span {
         font-size: 0.8rem;
