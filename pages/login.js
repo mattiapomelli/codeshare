@@ -58,6 +58,7 @@ const Login = () => {
                 type="text"
                 placeholder="email"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -68,6 +69,7 @@ const Login = () => {
                 type="password"
                 placeholder="password"
                 iconSize={20}
+                big
             />
             <Button onClick={signInWithCredentials} type="primary">
                 LOGIN

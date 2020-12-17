@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components"
 
 export const Main = styled.main`
-    padding: 0.5rem 2rem 4rem 2rem;
+    padding: 0.5rem 1.2rem 4rem 1.2rem;
     margin: auto;
     @media ${props => props.theme.breakpoints.tablet} {
         padding: 0.5rem 3rem 4rem 3rem;
@@ -34,7 +34,7 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 1.2rem;
     width: 100%;
     height: ${props => props.theme.headerHeight};
     transition: width 300ms, padding 300ms;

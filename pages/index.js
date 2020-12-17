@@ -23,7 +23,7 @@ const Hero = styled.section`
         line-height: 1.1;
         height: 9rem;
 
-        @media only screen and (min-width: 400px) {
+        @media only screen and (min-width: 450px) {
             height: 6rem;
         }
 

@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 	html, body, #__next {
 		min-height: 100vh;
 	}
-	:root { font-size: 14px; }
+	:root { font-size: 16px; }
 
 	body {
 		font-family: ${props => props.theme.fonts.main};

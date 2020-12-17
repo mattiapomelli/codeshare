@@ -19,6 +19,10 @@ const Tab = styled.li`
         border-bottom: 3px solid;
         border-image-slice: 1;
         border-image-source: ${props => props.theme.colors.primary};
+        // needed for safari bug that keeps all borders
+        border-left: 0px;
+        border-right: 0px;
+        border-top: 0px;
     `}
 
     ${props => props.secondary && css`

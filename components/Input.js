@@ -5,7 +5,7 @@ export const Input = styled.input`
     border: none;
     outline: none;
     font-family: inherit;
-    font-size: 0.8rem;
+    font-size: ${props => props.big ? "0.9rem" : "0.8rem"};
     font-weight: 500;
     padding: 1.1em 1.4em 1.1em 20px;
     border-radius: 10em;

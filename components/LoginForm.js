@@ -5,8 +5,8 @@ export const LoginForm = styled.form`
     flex-direction: column;
     align-items: center;
     width: 90%;
-    max-width: 16.25rem;
-    margin: 4rem auto 0 auto;
+    max-width: 17.25rem;
+    margin: 3.2rem auto 0 auto;
 
     h3 {
         margin-bottom: 2rem;

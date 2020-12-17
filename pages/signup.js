@@ -60,6 +60,7 @@ const Login = () => {
                 type="text"
                 placeholder="email"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -70,6 +71,7 @@ const Login = () => {
                 type="text"
                 placeholder="username"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -80,6 +82,7 @@ const Login = () => {
                 type="password"
                 placeholder="password"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -90,6 +93,7 @@ const Login = () => {
                 type="password"
                 placeholder="confirm password"
                 iconSize={20}
+                big
             />
             <Button onClick={signUp} type="primary">
                 SIGN UP

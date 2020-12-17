@@ -48,7 +48,7 @@ export default function Home({ langs }) {
 					value={search}
 					onChange={(e) => { setSearch(e.target.value)}}
 					icon="search"
-					style={{marginRight: '15px'}}
+					style={{marginRight: '0.9rem'}}
 					minWidth="16rem"
 					double={search.length > 0}
 					secondIcon="cross"
