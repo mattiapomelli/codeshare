@@ -24,12 +24,12 @@ const LogoSVG = ({ size }) => (
     </svg>
 )
 
-export default function Logo({ size, ...rest }) {
+export default function Logo({ size, noText, ...rest }) {
     return (
         <Link href="/">
             <LogoWrapper v="center" h="center" {...rest}>
                 <LogoSVG size={size || "42px"}/>
-                <h1 className="menu-text">Codeshare</h1>
+                {!noText && <h1 className="menu-text">Codeshare</h1>}
             </LogoWrapper>
         </Link>
     )
