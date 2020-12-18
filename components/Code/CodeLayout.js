@@ -4,13 +4,14 @@ import extensions from '../../utils/languages-extensions'
 export const CodeWrapper = styled.div`
     border-radius: ${props => props.theme.borderRadius};
     background-color: ${props => props.theme.colors.elements};
-    padding: 40px 0px 0px 20px;
+    padding: 40px 0px 0px 0px;
     position: relative;
     overflow: hidden;
 
     pre {
         font-size: 0.9rem !important;
         border-bottom: 20px solid transparent !important;    // !important if want for editor    
+        padding-left: 20px !important;
     }
 
     code span {
@@ -28,6 +29,16 @@ export const CodeWrapper = styled.div`
         content: "";
         background-color: ${props => props.theme.colors.elements};
         border-radius: 0 0 ${props => props.theme.borderRadius} 0; 
+    }
+    &::before {  /* Square to hide corner of scrollbars */
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        content: "";
+        background-color: ${props => props.theme.colors.elements};
+        border-radius: 0 0 0 ${props => props.theme.borderRadius}; 
     }
 `
 

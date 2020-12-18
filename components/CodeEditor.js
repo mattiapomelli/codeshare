@@ -16,6 +16,7 @@ const StyledEditor = styled(Editor)`
         outline: none;
         caret-color: white;
         font-size: 0.9rem !important;
+        padding-left: 20px !important;
 
         /* &::selection { background-color: ${props => props.theme.colors.text} !important; } */
     }
