@@ -32,7 +32,7 @@ const providers = [
 
             // check if user exists and is verificated
             if(!user) return Promise.reject(new Error('User not found'))
-            if(!user.verificated) return Promise.reject(new Error('User not verificated'))
+            if(!user.verificated) return Promise.reject(new Error('User not verificated, check your email to verify your account'))
 
             // check if password matches
             const matched = await bcrypt.compare(credentials.password, user.password)

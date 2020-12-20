@@ -9,7 +9,7 @@ import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 
-const Login = () => {
+const Signup = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
     const [messages, setMessages] = useState([])
 
@@ -120,4 +120,4 @@ const Login = () => {
     )
 }
 
-export default withNoAuth(Login)
+export default withNoAuth(Signup)

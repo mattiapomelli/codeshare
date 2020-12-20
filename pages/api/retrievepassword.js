@@ -1,5 +1,5 @@
-import { gql } from 'graphql-request'
 import {MODIFY_USER_PASSWORD} from '../../graphql/mutations'
+import { GET_USER_BY_EMAIL_QUERY } from '../../graphql/queries'
 import graphQLClientAdmin from '../../graphql/client'
 import bcrypt from 'bcrypt'
 
@@ -13,34 +13,24 @@ function makeNewPassword(length) {
     return result;
  }
 
+async function getUserByEmail(email) {
+  const data = await graphQLClientAdmin.request( GET_USER_BY_EMAIL_QUERY, { email })
+  return data.user
+}
 
 export default async (req, res) => {
-
-	// saves user to the database
-	const execute = async (variables) => {
-		const query = gql`
-        mutation ($id: uuid!) {
-            update_user_by_pk(pk_columns: {id: $id}, _set: {verificated: true}){
-              verificated
-            }
-          }
-                    
-        `
-        const data = await graphQLClientAdmin( query, variables)
-        // return: data to return have to be JSON FORMAT !!
-        return data;
-	};
-
 
   	if (req.method === 'POST') {
 		try {
             const {email} = req.body;
             //check if email exists
-
+            const emails = await getUserByEmail(email)
+            if(emails.length == 0) throw new Error("No account associated to this email")
 
             //
             //create new password
             const newPassword = makeNewPassword(10);
+            console.log(newPassword)
             //modify password
             const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -53,12 +43,12 @@ export default async (req, res) => {
             //call mutation query
             const data = await graphQLClientAdmin.request(MODIFY_USER_PASSWORD,variables);
 
-            return ;
+            return res.status(201).send({ message: "Check your email to complete password reset", type: 'success'})
 
             
 		}
 		catch (err) {
-			res.status(500).json({ message: err})
+			res.status(err.status || 500).send({ message: err.message})
 		}
 
 	} else {	// Any method that is not POST

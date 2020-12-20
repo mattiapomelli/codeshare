@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App({ Component, pageProps }) {
 	const router = useRouter()
-	const paths = ["/", "/login", "/signup"]
+	const paths = ["/", "/login", "/signup", "/resetpassword"]
 
   	return (
 		<Provider session={pageProps.session}>
