@@ -24,11 +24,15 @@ export const LoginForm = styled.form`
     hr {
         margin: 1rem 0;
         width: 90%;
+        background-color: ${props => props.theme.colors.text};
+        height: 1px;
+        border: none;
     }
 
     p {
         margin-top: 2rem;
         font-size: 0.8rem;
+        text-align: center;
         a {
             color: #0880B9;
             text-decoration: none;

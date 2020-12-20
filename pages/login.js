@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-// import { useRouter } from "next/router"
+import { useRouter } from "next/router"
 import { signIn } from 'next-auth/client'
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
@@ -11,15 +11,15 @@ import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 
 const Login = () => {
-    // const router = useRouter()
+    const router = useRouter()
     const [credentials, setCredentials] = useState({ email: '', password: ''})
     const [messages, setMessages] = useState([])
 
-    // useEffect(() => {
-    //     if(router.query.error) {
-    //         setErrors(errors => [...errors, router.query.error])
-    //     }
-    // }, [router.query])
+    useEffect(() => {
+        if(router.query.error) {
+            setMessages(messages => [...messages, { type: 'error', text: router.query.error }])
+        }
+    }, [router.query])
 
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
@@ -79,7 +79,8 @@ const Login = () => {
                 Sign in with GitHub
             </FlexButton>
             <p>
-                Don't have an account? <Link href="/signup"><a>Sign up</a></Link>
+                Don't have an account? <Link href="/signup"><a>Sign up</a></Link><br/>
+                <Link href="/resetpassword"><a>Forgot your password?</a></Link>
             </p>
         </LoginForm>
         <Popups popups={messages} setPopups={setMessages}/>

@@ -107,6 +107,7 @@ export const GET_USER_BY_EMAIL_QUERY = `
 			password
 			email
 			username
+			provider
 		}
 	}
 `

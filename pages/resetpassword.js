@@ -23,6 +23,7 @@ export default function ForgotPassword() {
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data)
             setMessages(messages => [...messages, { type: data.type || 'error', text: data.message}])
             if(data.type == 'success') {
                 setEmail('')
@@ -50,7 +51,8 @@ export default function ForgotPassword() {
             />
             <Button onClick={sendResetPassword} type="primary">
                 Reset Password
-            </Button>         
+            </Button>      
+            <p>Well'send password reset instructions to the email address associated with your account</p>   
         </LoginForm>
         <Popups popups={messages} setPopups={setMessages}/>
         </>

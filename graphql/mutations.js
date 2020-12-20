@@ -57,8 +57,8 @@ export const REMOVE_LIKE_MUTATION = `
 `
 
 export const MODIFY_USER_PASSWORD = `
-  mutation ModifyUserPassword($email: String!,$password:String!) {
-    update_user(where: {email: {_eq: $email}}, _set: {password: $password}){
+  mutation ModifyUserPassword($id: uuid!,$password:String!) {
+    update_user(where: {id: {_eq: $id}}, _set: {password: $password}){
       affected_rows
     }
   }

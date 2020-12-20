@@ -2,6 +2,8 @@ import {MODIFY_USER_PASSWORD} from '../../graphql/mutations'
 import { GET_USER_BY_EMAIL_QUERY } from '../../graphql/queries'
 import graphQLClientAdmin from '../../graphql/client'
 import bcrypt from 'bcrypt'
+import sendMail from '../../utils/mailer'
+import { retrieveMail, newPasswordEmail } from '../../utils/emailHTML'
 
 function makeNewPassword(length) {
     var result           = '';
@@ -24,34 +26,41 @@ export default async (req, res) => {
 		try {
             const {email} = req.body;
             //check if email exists
-            const emails = await getUserByEmail(email)
-            if(emails.length == 0) throw new Error("No account associated to this email")
+            const userData = await getUserByEmail(email)
+            if(userData.length == 0) throw new Error("No account associated to this email") 
 
-            //
-            //create new password
-            const newPassword = makeNewPassword(10);
-            console.log(newPassword)
-            //modify password
-            const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-            //create variable object
-            const variables={
-                email: email,
-                password:hashedPassword
-            }
-
-            //call mutation query
-            const data = await graphQLClientAdmin.request(MODIFY_USER_PASSWORD,variables);
+            await sendMail(email, 'Email verification', retrieveMail(email, userData[0].id))
 
             return res.status(201).send({ message: "Check your email to complete password reset", type: 'success'})
-
-            
 		}
 		catch (err) {
 			res.status(err.status || 500).send({ message: err.message})
 		}
 
-	} else {	// Any method that is not POST
+  } else if (req.method === 'GET') {
+
+    const { id, email } = req.query
+
+    //create new password
+    const newPassword = makeNewPassword(10);
+    console.log(newPassword)
+    //modify password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    //create variable object
+    const variables={
+        id,
+        password:hashedPassword
+    }
+
+    //call mutation query
+    const data = await graphQLClientAdmin.request(MODIFY_USER_PASSWORD,variables);
+
+    sendMail(email, 'New Password', newPasswordEmail(newPassword))
+
+    res.status(301).redirect('/login')
+
+  } else  {	// Any method that is not POST or GET
 		res.status(401).send("Method unauthorized");
 	}
 }

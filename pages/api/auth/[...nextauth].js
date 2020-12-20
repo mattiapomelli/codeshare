@@ -66,6 +66,9 @@ const callbacks = {
         const userData = res[0]
 
         if(userData) {                              // user already exists
+            if(userData.provider !== "github") {
+                return Promise.reject(new Error('Email is already associated to an account'))
+            }
             user.id = userData.id
             user.username = userData.username
             return true
