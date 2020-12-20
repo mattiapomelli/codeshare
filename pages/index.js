@@ -80,7 +80,7 @@ export default function Home() {
 			<Hero>
 				<h1 id="heading"></h1>
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
-				<Flex wrap h="center">
+				<Flex h="center" wrap={true}>
 					<Link href="/signup">
 						<Button>LEARN MORE</Button>
 					</Link>

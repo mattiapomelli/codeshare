@@ -42,7 +42,7 @@ const ScrollToTopButton = () => {
 const SnippetsGrid = styled.div`
 	width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: auto;
     grid-gap: 25px;
     margin-top: 2rem;

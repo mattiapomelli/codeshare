@@ -24,6 +24,12 @@ const Login = () => {
     
     const signUp = (e) => {
         e.preventDefault();
+
+        if(credentials.password !== credentials.password2) {
+            setMessages(messages => [...messages, { type: 'error', text: "Passwords must match"}])
+            return 
+        }
+
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -38,7 +44,10 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data => {
-            setMessages(messages => [...messages, { type: 'error', text: data.message}])
+            setMessages(messages => [...messages, { type: data.type || 'error', text: data.message}])
+            if(data.type == 'success') {
+                setCredentials({ email: '', password: '', username: '', password2: ''})
+            }
         }).catch(err => {
             console.log(err)
         })

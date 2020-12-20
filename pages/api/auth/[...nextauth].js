@@ -35,7 +35,7 @@ const providers = [
             if(!user.verificated) return Promise.reject(new Error('User not verificated'))
 
             // check if password matches
-            const matched = await bcrypt.compare(credentials.password, result[0].password)
+            const matched = await bcrypt.compare(credentials.password, user.password)
             if(!matched) return Promise.reject(new Error('Wrong password'))
 
             return Promise.resolve(user)    // user object gets passed to signIn callback

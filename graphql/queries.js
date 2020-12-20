@@ -111,6 +111,14 @@ export const GET_USER_BY_EMAIL_QUERY = `
 	}
 `
 
+export const GET_USER_BY_USERNAME_QUERY = `
+	query GetUserByUsername ($username: String!) {
+		user(where: {username: {_eq: $username}}) {
+			username
+		}
+	}
+`
+
 export const GET_PROGRAMMING_LANGS_QUERY = `
 	query ProgrammingLangsQuery {
 		langs: programming_lang {

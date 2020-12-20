@@ -27,8 +27,8 @@ export default {
         }
     },
     breakpoints: {
-        tablet: "only screen and (min-width: 600px)",
-        desktop: "only screen and (min-width: 900px)",
+        tablet: "only screen and (min-width: 800px)",
+        desktop: "only screen and (min-width: 1000px)",
     },
     borderRadius: "1.25rem",
     sidebarWidth: "270px",

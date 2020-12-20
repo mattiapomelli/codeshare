@@ -11,6 +11,7 @@ const CloseIcon = styled(Icon)`
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    cursor: pointer;
     @media ${props => props.theme.breakpoints.tablet} {
         display: none;
     }
@@ -36,7 +37,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
     const [session] = useSession()
 
     const closeSidebar = () => {
-        if(window.matchMedia("(max-width: 600px)").matches) {
+        if(window.matchMedia("(max-width: 800px)").matches) {
             setCollapsed(false)
         }
     }
