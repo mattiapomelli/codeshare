@@ -42,10 +42,14 @@ const ScrollToTopButton = () => {
 const SnippetsGrid = styled.div`
 	width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-auto-rows: auto;
     grid-gap: 25px;
     margin-top: 2rem;
+
+	@media only screen and (min-width: 400px) {
+        grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+	}
 	
 	@media ${props => props.theme.breakpoints.tablet} {
         grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
