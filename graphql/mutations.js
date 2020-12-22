@@ -63,3 +63,11 @@ export const MODIFY_USER_PASSWORD = `
     }
   }
 `
+
+export const CONFIRM_USER_EMAIL = `
+mutation ConfirmUserEmail($id: uuid!) {
+  update_user_by_pk(pk_columns: {id: $id}, _set: {verificated: true}){
+    verificated
+  }
+}
+`

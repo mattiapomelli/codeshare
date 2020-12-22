@@ -5,6 +5,7 @@ import graphQLClientAdmin from '../../graphql/client'
 import nodemailer from 'nodemailer';
 import {emailVerification} from '../../utils/emailHTML';
 import validateRegisterInput from '../../utils/registerValidation'
+import sendMail from '../../utils/mailer'
 
 
 //initialization and settings of nodemailer module
@@ -72,6 +73,7 @@ export default async (req, res) => {
 				html: emailVerification(username,userData.id)
 			},(err,info)=>{
 				if (err){
+					console.log(err)
 					return res.status(500).send({message: "Something went wrong"})
 				}
 				return res.status(201).send({ message: "Check your email to verify your account", type: 'success'})

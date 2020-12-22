@@ -15,7 +15,7 @@ let transporter = nodemailer.createTransport({
 export default async function sendMail(to, subject, html) {
     return new Promise((resolve, reject) => {
         transporter.sendMail({
-            from: 'hello@codeshare.tech',
+            from: 'CodeShare',
             to: to,
             subject,
             html
