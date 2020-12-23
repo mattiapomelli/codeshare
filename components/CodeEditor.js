@@ -39,10 +39,10 @@ const CodeEditor = ({ onChangeHandler, valueHandler, language}) => {
         return () => window.removeEventListener('keydown', scrollOnNewLine)
     }, [])
 
-    const Pre = ({ children}) => (
-        <Fragment>
+    const Pre = ({ children, ...rest }) => (
+        <div {...rest}>
             {children}
-        </Fragment>
+        </div>
     )
 
     const highlight = (codeString) => <CodeHighlight language={language} codeString={codeString} pre={Pre} wrapLongLines/>
