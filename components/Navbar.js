@@ -73,7 +73,7 @@ export default function Navbar() {
 
     return (
         <NavMenu h="space-between" v="center" as="header" auto>
-            <Logo size={30}/>
+            <Logo size={36}/>
             <nav>
                 <List horizontal margin="2rem" v="center" as="ul" show={showNavbar}>
                     <Link href="/snippets">

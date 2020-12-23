@@ -17,10 +17,10 @@ const LogoWrapper = styled(Flex).attrs(props => ({
 `
 
 const LogoSVG = ({ size }) => (
-    <svg width={size} height={size} viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 21L21.2571 10L33.5143 21L21.2571 32L9 21Z" fill="#262739" stroke="white" strokeWidth="11"/>
-        <path d="M24.4828 29.1052L33.5144 21L24.4828 12.8947" stroke="#262739" strokeWidth="4"/>
-        <path d="M18.0316 12.8947L9 20.9999L18.0316 29.1052" stroke="#262739" strokeWidth="4"/>
+    <svg width={size} height={size} viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 24.3L25.3 44.6L47.6 24.3L25.3 4L3 24.3ZM25.2 29.5L19.5 24.3L25.2 19.1L30.9 24.3L25.2 29.5ZM19.6 34.6L8.3 24.3L19.6 14L22.5 16.7L14.1 24.3L22.5 31.9L19.6 34.6ZM28.1 31.8L36.4 24.3L28 16.7L30.9 14L42.2 24.3L31.1 34.5L28.1 31.8Z"
+            fill="white"
+        />
     </svg>
 )
 
