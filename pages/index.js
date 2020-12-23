@@ -55,7 +55,7 @@ export default function Home() {
             heading.innerText = titles[j].substring(0, i)
 
             if(i > titles[j].length) {
-                delta = 2500
+                delta = 2700
                 i = 1
                 j = (j + 1) % titles.length
             } else {
@@ -82,7 +82,7 @@ export default function Home() {
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
 				<Flex h="center" flexWrap="wrap">
 					<Link href="/signup">
-						<Button>LEARN MORE</Button>
+						<Button type="secondary">LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>

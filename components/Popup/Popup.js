@@ -26,7 +26,7 @@ export default function Popups({ popups, setPopups }) {
                 popups.map((popup, index) => (
                     <Popup key={index} v="center">
                         <Icon name={popup.type} size={26}/>
-                        {popup.text}
+                        <span>{popup.text}</span>
                         <CloseButton onClick={() => {removePopup(index)}}>
                             <Icon name="cross" size={16}/>
                         </CloseButton>
