@@ -9,7 +9,7 @@ export default {
         sidebar: "#1A1A1A",
         background: "#1F1F1F",
         elements: "#262626",
-        accent: "#3b3b3b",
+        accent: "#333333",
         details: "#484848",
         secondaryText: "#646464",
         text: "#f6f6f6",

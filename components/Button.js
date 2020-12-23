@@ -17,6 +17,8 @@ export const Button = styled.button`
                 return props.theme.colors.primary
             case "inverted":
                 return props.theme.colors.text
+            case "secondary":
+                return props.theme.colors.accent
             default:
                 return props.theme.colors.elements
         }
@@ -40,6 +42,8 @@ export const Button = styled.button`
                     return props.theme.colors.primaryHover
                 case "inverted":
                     return "white"
+                case "secondary":
+                    return props.theme.colors.details
                 default:
                     return props.theme.colors.accent
             }
