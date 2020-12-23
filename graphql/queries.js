@@ -203,3 +203,13 @@ export const GET_USER_BY_ID_QUERY = `
 		}
 	}  
 `
+
+export const GET_USER_INFO_QUERY = `
+	query MyQuery($id: uuid!) {
+		user: user_by_pk(id: $id) {
+			username
+			email
+			createdAt
+		}
+	}
+`

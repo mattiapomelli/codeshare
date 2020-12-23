@@ -1,19 +1,21 @@
-import { useState } from 'react'
 import { useSession, signOut } from 'next-auth/client'
+import useSWR from 'swr'
+import { executeQuery } from '../graphql/client'
+import { GET_USER_INFO_QUERY } from '../graphql/queries'
 import { Button } from '../components/Button'
-import { H2, Label } from '../components/Typography'
 import withAuth from '../hocs/withAuth'
+import { H2, Label } from '../components/Typography'
 import PageHead from '../components/PageHead'
-import { Input } from '../components/Input'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
-import Popups from '../components/Popup/Popup'
+import ChangePasswordForm from '../components/PasswordForm'
 
-const Settings = styled(Flex)`
-    margin-top: 1.5rem;
-    > * {
-        margin-bottom: 1.5rem;
-    }
+const SettingsGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 25px;
+    margin: 1rem 0;
 `
 
 const Card = styled.div`
@@ -21,65 +23,37 @@ const Card = styled.div`
     padding: 1rem;
     border-radius: 0.8rem;
     width: 100%;
-    max-width: 500px;
-`
-
-const PasswordCard = styled(Card)`
-    ${Input} {
-        margin-bottom: 0.6rem;
-        width: 100%;
-        background-color: ${props => props.theme.colors.accent};
-    }
-    ${Button} {
-        margin-top: 1rem;
-    }
+    flex: 1;
 `
 
 const Field = styled.div`
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     span { margin-left: 5px; font-weight: 300; }
 `
 
+const SettingCard = ({ children, title }) => {
+    return (  
+        <Flex dir="column" >
+            <Label>{title}</Label>
+            <Card>
+                {children}
+            </Card>
+        </Flex>
+    )
+}
+
 const InfoField = ({ children, title}) => (
     <Field>
-        <Label>{ title} </Label>
-        <span>{ children}</span>
+        <Label>{title} </Label>
+        <span>{children}</span>
     </Field>
 )
 
 function Account() {
     const [session] = useSession()
-    const [passwords, setPasswords] = useState({ current: '', current2: '', newPassword: ''})
-    const [messages, setMessages] = useState([])
-    
-    const onChange = (e) => {
-		setPasswords({...passwords, [e.target.name]: e.target.value})
-    }
-    
-    const changePassword = (e) => {
-        e.preventDefault()
-        fetch('/api/changepassword', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({
-                id: session.user.id,
-                oldPassword: passwords.current,
-                newPassword: passwords.newPassword,
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            setMessages(messages => [...messages, { type: data.type || 'error', text: data.message}])
-            if(data.type == 'success') {
-                setPasswords({ current: '', current2: '', newPassword: ''})
-            }
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+    const { data: userData } = useSWR([GET_USER_INFO_QUERY, session.user.id, session.user.jwt], (query, id) => {
+        return executeQuery(query, {id}, session.user.jwt).then(res => res.user)
+    })
 
     return (
         <> 
@@ -87,39 +61,24 @@ function Account() {
 
             <H2>Account</H2>
 
-            <Settings h="flex-start" dir="column" stretch v="flex-start">
-                <Label>Account Settings</Label>
-                <Card>
-                    <InfoField title="Username">{session.user.username}</InfoField>
-                    <InfoField title="Email">mattiapomelli@gmail.com</InfoField>
-                    <InfoField title="Joined on">21-07-2020</InfoField>
-                </Card>
-                <Label>Change password</Label>
-                <PasswordCard as="form">
-                    <Label small>Current password</Label>
-                    <Input
-                        type="password"
-                        small
-                        name="current"
-                        value={passwords.current}
-                        onChange={onChange}
-                    />
-                    <Label small>New password</Label>
-                    <Input
-                        type="password"
-                        small
-                        name="newPassword"
-                        value={passwords.newPassword}
-                        onChange={onChange}
-                    />
-                    {/* <Label small>Confirm new password</Label>
-                    <Input type="password" small/> */}
-                    <Button small onClick={changePassword} type="primary">Change</Button>
-                </PasswordCard>
-            </Settings>
+            <SettingsGrid>
+                <SettingCard title="Account Setting">
+                    <InfoField title="Username">
+                        { userData ? userData.username : ""}
+                    </InfoField>
+                    <InfoField title="Email">
+                        { userData ? userData.email : "" }
+                    </InfoField>
+                    <InfoField title="Joined on">
+                        { userData ? new Date(userData.createdAt).toDateString().slice(4) : "" }
+                    </InfoField>
+                </SettingCard>
+                <SettingCard title="Change password">
+                    <ChangePasswordForm/>
+                </SettingCard>
+            </SettingsGrid>
             
             <Button small onClick={signOut}>Logout</Button>
-            <Popups popups={messages} setPopups={setMessages}/>
         </>
     )
 }
