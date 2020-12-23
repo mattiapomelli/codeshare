@@ -11,7 +11,7 @@ export const DropdownMenu = styled.ul`
     z-index: 3;
     right: 0;
     @media ${props => props.theme.breakpoints.tablet} {
-        left: 0;
+        /* left: 0; */
         right: auto;
         ${props => props.right && css`
             right: 0;

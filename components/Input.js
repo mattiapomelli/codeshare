@@ -7,7 +7,7 @@ export const Input = styled.input`
     font-family: inherit;
     font-size: ${props => props.big ? "0.9rem" : "0.8rem"};
     font-weight: 500;
-    padding: 1.1em 1.4em 1.1em 20px;
+    padding: ${props => props.small ? "0.7em 1.4em 0.7em 20px" : "1.1em 1.4em 1.1em 20px"};
     border-radius: 10em;
     background-color: ${props => props.theme.colors.elements};
     color: ${props => props.theme.colors.text};
