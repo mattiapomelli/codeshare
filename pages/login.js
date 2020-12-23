@@ -18,6 +18,8 @@ const Login = () => {
     useEffect(() => {
         if(router.query.error) {
             setMessages(messages => [...messages, { type: 'error', text: router.query.error }])
+        } else if(router.query.message) {
+            setMessages(messages => [...messages, { type: 'success', text: router.query.message }])
         }
     }, [router.query])
 

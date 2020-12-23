@@ -34,33 +34,36 @@ export default async (req, res) => {
             return res.status(201).send({ message: "Check your email to complete password reset", type: 'success'})
 		}
 		catch (err) {
-			res.status(err.status || 500).send({ message: err.message})
+			res.status(err.status || 500).send({ message: "Something went wrong"})
 		}
 
-  } else if (req.method === 'GET') {
+  	} else if (req.method === 'GET') {
 
-    const { id, email } = req.query
+		try {
+			const { id, email } = req.query
 
-    //create new password
-    const newPassword = makeNewPassword(10);
-    console.log(newPassword)
-    //modify password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+			//create new password
+			const newPassword = makeNewPassword(10);
+			//modify password
+			const hashedPassword = await bcrypt.hash(newPassword, 10);
+	
+			//create variable object
+			const variables={
+				id,
+				password:hashedPassword
+			}
+	
+			//call mutation query
+			const data = await graphQLClientAdmin.request(MODIFY_USER_PASSWORD,variables);
+	
+			sendMail(email, 'New Password', newPasswordEmail(newPassword))
+	
+			res.status(301).redirect(`/login?message=${"Your new password has been sent to your email"}`)
+		} catch(err) {
+			res.status(err.status || 500).redirect(`/login?error=${"Something went wrong"}`)
+		}
 
-    //create variable object
-    const variables={
-        id,
-        password:hashedPassword
-    }
-
-    //call mutation query
-    const data = await graphQLClientAdmin.request(MODIFY_USER_PASSWORD,variables);
-
-    sendMail(email, 'New Password', newPasswordEmail(newPassword))
-
-    res.status(301).redirect('/login')
-
-  } else  {	// Any method that is not POST or GET
+  	} else  {	// Any method that is not POST or GET
 		res.status(401).send("Method unauthorized");
 	}
 }

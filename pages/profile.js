@@ -84,13 +84,13 @@ function Profile() {
             { session && <H2>{session.user.username}</H2> }
 
             <TabItem
-                count={snippetsCount || "-"}
+                count={snippetsCount !== undefined ? snippetsCount : "-"}
                 active={category === 'snippets'}
                 onClick={() => setCategory('snippets')}
             >Snippets
             </TabItem>
             <TabItem
-                count={likedCount || "-"}
+                count={likedCount !== undefined ? likedCount : "-"}
                 active={category === 'liked'}
                 onClick={() => setCategory('liked')}
             >Liked
