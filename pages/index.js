@@ -5,6 +5,7 @@ import { Button } from "../components/Button"
 import Image from "next/image"
 import styled from "styled-components"
 import Flex from '../components/Flex'
+import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 
 const Hero = styled.section`
@@ -45,7 +46,7 @@ const Hero = styled.section`
 
 const titles = ["Find the code you need", "Share the code you are proud of"]
 
-export default function Home() {
+const Home = () => {
 
     useEffect(() => {
         const heading = document.getElementById("heading")
@@ -55,7 +56,7 @@ export default function Home() {
             heading.innerText = titles[j].substring(0, i)
 
             if(i > titles[j].length) {
-                delta = 2500
+                delta = 2700
                 i = 1
                 j = (j + 1) % titles.length
             } else {
@@ -82,7 +83,7 @@ export default function Home() {
 				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
 				<Flex h="center" flexWrap="wrap">
 					<Link href="/signup">
-						<Button>LEARN MORE</Button>
+						<Button type="secondary">LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>
@@ -93,3 +94,5 @@ export default function Home() {
 		</>
 	)
 }
+
+export default withNoAuth(Home)

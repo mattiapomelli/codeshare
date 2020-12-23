@@ -3,6 +3,7 @@ import useSnippets from '../hooks/useSnippets'
 import SnippetCard from "./SnippetCard"
 import {  Skeleton } from "./Skeleton"
 import { IconButton } from "../components/Button"
+import Flex from '../components/Flex'
 import styled from 'styled-components'
 
 const ScrollButton = styled(IconButton)`
@@ -66,13 +67,24 @@ const SnippetSkeleton = () => (
 	</article>
 )
 
-export default function Snippets({ query, variables, fetcher }) {
+const NoResultsContainer = styled(Flex)`
+	font-size: 1.4rem;
+	margin-top: 3rem;
+	text-align: center;
+	> * {
+		margin-bottom: 1rem;
+	}
+`
+
+export default function Snippets({ children, query, variables, fetcher }) {
     const { data, loading, setSize, noResults } = useSnippets(query, variables, fetcher)
 
     return (
         <>
+		{ noResults && 
+			<NoResultsContainer dir="column" v="center">{ children || "No results found" }</NoResultsContainer>
+		}
         <SnippetsGrid>
-            { noResults && <span style={{marginLeft: "10px"}}>No results</span>}
             {
                 data.map((snippet) => (
                     <SnippetCard {...snippet} key={snippet.id}/>

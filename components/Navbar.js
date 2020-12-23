@@ -73,7 +73,7 @@ export default function Navbar() {
 
     return (
         <NavMenu h="space-between" v="center" as="header" auto>
-            <Logo size={30}/>
+            <Logo size={36}/>
             <nav>
                 <List horizontal margin="2rem" v="center" as="ul" show={showNavbar}>
                     <Link href="/snippets">
@@ -81,7 +81,9 @@ export default function Navbar() {
                     </Link>
                     {
                         session ?
-                        <Button type="primary" onClick={signOut}>Share code</Button>
+                        <Link href="/editor">
+                            <Button type="primary">Share code</Button>
+                        </Link>
                         : 
                         <Link href="/signup">
                             <Button type="primary">Sign up</Button>
