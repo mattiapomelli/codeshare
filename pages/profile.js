@@ -9,6 +9,9 @@ import { request } from 'graphql-request'
 import useSWR from 'swr'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
+import Flex from '../components/Flex'
+import { IconButton } from '../components/Button'
+import Link from 'next/link'
 
 const Tab = styled.li`
     display: inline-block;
@@ -81,7 +84,12 @@ function Profile() {
         <> 
             <PageHead title="Sign Up – Codeshare"/>
 
-            { session && <H2>{session.user.username}</H2> }
+            <Flex v="center" h="space-between">
+                { session && <H2>{session.user.username}</H2> }
+                <Link href="/account">
+                    <IconButton icon="settings" iconType="primary"/>
+                </Link>
+            </Flex>
 
             <TabItem
                 count={snippetsCount !== undefined ? snippetsCount : "-"}

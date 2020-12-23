@@ -194,3 +194,12 @@ export const GET_LIKED_SNIPPETS_COUNT = `
 		}
 	}
 `
+
+export const GET_USER_BY_ID_QUERY = `
+	query getUserById($id: uuid!) {
+		user: user_by_pk(id: $id) {
+			password
+			username
+		}
+	}  
+`

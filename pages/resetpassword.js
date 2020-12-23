@@ -23,7 +23,6 @@ export default function ForgotPassword() {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setMessages(messages => [...messages, { type: data.type || 'error', text: data.message}])
             if(data.type == 'success') {
                 setEmail('')

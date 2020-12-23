@@ -29,12 +29,12 @@ export default async (req, res) => {
             const userData = await getUserByEmail(email)
             if(userData.length == 0) throw new Error("No account associated to this email") 
 
-            await sendMail(email, 'Email verification', retrieveMail(email, userData[0].id))
+            await sendMail(email, 'Forgot Password', retrieveMail(email, userData[0].id))
 
             return res.status(201).send({ message: "Check your email to complete password reset", type: 'success'})
 		}
 		catch (err) {
-			res.status(err.status || 500).send({ message: "Something went wrong"})
+			res.status(err.status || 500).send({ message: err.message || "Something went wrong"})
 		}
 
   	} else if (req.method === 'GET') {
