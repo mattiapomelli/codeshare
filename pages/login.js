@@ -30,9 +30,9 @@ const Login = () => {
 	const signInWithCredentials = (e) => {
 		e.preventDefault()
 		signIn('credentials', {
-			email: credentials.email,
+			email: credentials.email.toLowerCase(),
             password: credentials.password,
-            callbackUrl: 'http://localhost:3000/snippets'
+            callbackUrl: `${NEXT_AUTH_URL}/snippets`
 		}).then((res) => {
             if(res && res.error) {
                 setMessages(messages => [...messages, { type: 'error', text: decodeURIComponent(res.error)}])
@@ -42,7 +42,7 @@ const Login = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: 'http://localhost:3000/snippets' })
+		signIn('github', { callbackUrl: `${NEXT_AUTH_URL}/snippets` })
     }
 
     return (
