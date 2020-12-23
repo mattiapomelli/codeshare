@@ -5,6 +5,7 @@ import { Button } from "../components/Button"
 import Image from "next/image"
 import styled from "styled-components"
 import Flex from '../components/Flex'
+import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 
 const Hero = styled.section`
@@ -45,7 +46,7 @@ const Hero = styled.section`
 
 const titles = ["Find the code you need", "Share the code you are proud of"]
 
-export default function Home() {
+const Home = () => {
 
     useEffect(() => {
         const heading = document.getElementById("heading")
@@ -93,3 +94,5 @@ export default function Home() {
 		</>
 	)
 }
+
+export default withNoAuth(Home)

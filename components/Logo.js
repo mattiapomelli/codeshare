@@ -24,9 +24,9 @@ const LogoSVG = ({ size }) => (
     </svg>
 )
 
-export default function Logo({ size, noText, ...rest }) {
+export default function Logo({ size, noText, href, ...rest }) {
     return (
-        <Link href="/">
+        <Link href={href || "/"}>
             <LogoWrapper v="center" h="center" {...rest}>
                 <LogoSVG size={size || "42px"}/>
                 {!noText && <h1 className="menu-text">Codeshare</h1>}
