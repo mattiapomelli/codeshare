@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
-import { IconButton } from '../components/Button'
+import { Button, IconButton } from '../components/Button'
 import Link from 'next/link'
 
 const Tab = styled.li`
@@ -71,7 +71,7 @@ const countFetcher = (query, userId) => request(process.env.NEXT_PUBLIC_HASURA_U
 })
 
 function Profile() {
-    const [category, setCategory] = useState("snippets")
+    const [option, setOption] = useState("snippets")
     const [session] = useSession()
     const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id], countFetcher, {
         revalidateOnFocus: false,
@@ -93,22 +93,34 @@ function Profile() {
 
             <TabItem
                 count={snippetsCount !== undefined ? snippetsCount : "-"}
-                active={category === 'snippets'}
-                onClick={() => setCategory('snippets')}
+                active={option === 'snippets'}
+                onClick={() => setOption('snippets')}
             >Snippets
             </TabItem>
             <TabItem
                 count={likedCount !== undefined ? likedCount : "-"}
-                active={category === 'liked'}
-                onClick={() => setCategory('liked')}
+                active={option === 'liked'}
+                onClick={() => setOption('liked')}
             >Liked
             </TabItem>
 
             <Snippets
-                query={category === "snippets" ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY }
+                query={option === "snippets" ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY }
                 variables={{}}
                 fetcher={fetcher}
-            />
+            >
+                {
+                    option === "snippets" ? (
+                        <>
+                            <div>You haven't created any shots yet</div>
+                            <Link href="/editor">
+                                <Button type="primary">Create your first snippet</Button>
+                            </Link>
+                        </>
+                     ) : 
+                    "You don't have any liked snippets"
+                }
+            </Snippets>
         </>
     )
 }
