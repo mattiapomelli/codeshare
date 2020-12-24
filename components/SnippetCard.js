@@ -35,7 +35,7 @@ const SnippetTitle = styled.div`
 `
 
 
-const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user, mutate }) => {
+const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user }) => {
 
     return (
         <article>
@@ -51,7 +51,6 @@ const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user, 
                     isLiked={liked}
                     count={likesNum}
                     snippetId={id}
-                    mutate={mutate}
                 />
             </SnippetInfo>
         </article>

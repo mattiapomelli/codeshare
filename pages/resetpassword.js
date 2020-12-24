@@ -4,8 +4,9 @@ import { Button } from "../components/Button"
 import { LoginForm } from "../components/LoginForm"
 import Logo from '../components/Logo'
 import Popups from '../components/Popup/Popup'
+import withNoAuth from '../hocs/withNoAuth'
 
-export default function ForgotPassword() {
+const ForgotPassword = () => {
     const [email, setEmail] = useState("")
     const [messages, setMessages] = useState([])
 
@@ -57,3 +58,5 @@ export default function ForgotPassword() {
         </>
     )
 }
+
+export default withNoAuth(ForgotPassword)
