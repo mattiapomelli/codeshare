@@ -6,6 +6,7 @@ import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
 import { useRouter } from "next/router"
 import { initGA } from '../utils/analytics'
+import Footer from '../components/Footer'
 
 const GlobalStyle = createGlobalStyle`
 	* {
@@ -49,9 +50,17 @@ export default function App({ Component, pageProps }) {
 				<ThemeProvider theme={theme}>
 					<GlobalStyle />
 					{
-						paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+						paths.includes(router.pathname) ? 
+						( 	
+							<>
+								<Component {...pageProps} />
+								<Footer/>
+							</>
+						) :
+						(
 							<Layout>
-							<Component {...pageProps} />
+								<Component {...pageProps} />
+								<Footer/>
 							</Layout>
 						)
 					}

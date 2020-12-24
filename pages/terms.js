@@ -6,7 +6,11 @@ import Logo from '../components/Logo'
 import { logPageView } from '../utils/analytics'
 
 const FlexContainer = styled(Flex)`
-    height: 70vh;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    h3 { margin-top: 1rem }
+    ol { padding-left: 1.1rem }
+    a { color: #AF90F2 }
 `
 
 export default function terms() {
@@ -18,16 +22,15 @@ export default function terms() {
         <FlexContainer v="center" h="top" dir="column">
             <Logo
                 noText
-                style={{ marginBottom: '3rem' }}
             />
-            <H2>Terms of service</H2>
-            <FlexContainer v="top" h="top" dir="column">
+            <H2 style={{ margin: '1rem 0 3rem 0' }}>Terms of service</H2>
+            <div>
                 <h3>1. Terms</h3>
-                <p>By accessing the website at <a style={{ color:"#AF90F2"}} href="http://codeshare.tech">http://codeshare.tech</a>, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
+                <p>By accessing the website at <a href="http://codeshare.tech">http://codeshare.tech</a>, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
                 <h3>2. Use License</h3>
                 <ol type="a">
                     <li>Permission is granted to temporarily download one copy of the materials (information or software) on codeshare's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-   <ol type="i">
+                        <ol type="i">
                             <li>modify or copy the materials;</li>
                             <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
                             <li>attempt to decompile or reverse engineer any software contained on codeshare's website;</li>
@@ -52,7 +55,7 @@ export default function terms() {
                 <p>codeshare may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service.</p>
                 <h3>8. Governing Law</h3>
                 <p>These terms and conditions are governed by and construed in accordance with the laws of Italy and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.</p>
-            </FlexContainer>
+            </div>
         </FlexContainer>
     )
 }
