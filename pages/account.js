@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/client'
 import useSWR from 'swr'
 import { executeQuery } from '../graphql/client'
@@ -9,6 +10,7 @@ import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import ChangePasswordForm from '../components/PasswordForm'
+import { logPageView } from '../utils/analytics'
 
 const SettingsGrid = styled.div`
     display: grid;
@@ -55,6 +57,10 @@ function Account() {
         return executeQuery(query, {id}, session.user.jwt).then(res => res.user)
     })
 
+    useEffect(()=>{
+        logPageView()
+    },[])
+    
     return (
         <> 
             <PageHead title="Account – Codeshare"/>

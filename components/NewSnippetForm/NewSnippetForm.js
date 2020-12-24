@@ -6,7 +6,7 @@ import CodeEditor from "../CodeEditor"
 import { TextArea } from "../TextArea"
 import { Input } from '../Input'
 import { Label } from '../Typography'
-import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon } from './FormElements'
+import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon, TextLimiter } from './FormElements'
 import { Button } from '../Button'
 import Dropdown from "../Dropdown/Dropdown"
 import InfoModal from "./InfoModal"
@@ -51,6 +51,7 @@ export default function NewSnippetForm({ langs }) {
             <EditorArea>
                 <Label>Code</Label>
                 <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.programmingLang}/>
+                <TextLimiter error= {snippet.code.length>2000} >{snippet.code.length}/2000</TextLimiter>
             </EditorArea>
             <InfoArea>
                 <div>
@@ -76,7 +77,9 @@ export default function NewSnippetForm({ langs }) {
                         spellCheck="false"
                     />
                 </div>
+                <TextLimiter error= {snippet.description.length>1000} >{snippet.description.length}/1000</TextLimiter>
             </DescriptionArea>
+            
             <SubmitArea>
                 <Button
                     type="primary"

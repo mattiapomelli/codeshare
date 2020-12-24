@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { IconInput } from "../components/Input"
 import { Button } from "../components/Button"
 import { LoginForm } from "../components/LoginForm"
 import Logo from '../components/Logo'
 import Popups from '../components/Popup/Popup'
 import withNoAuth from '../hocs/withNoAuth'
+import { logPageView } from '../utils/analytics'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("")
@@ -32,6 +33,11 @@ const ForgotPassword = () => {
             console.log(err)
         })
     }
+
+    useEffect(()=>{
+        logPageView()
+    },[])
+
 
     return (
         <>

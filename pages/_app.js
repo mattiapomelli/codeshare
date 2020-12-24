@@ -1,10 +1,11 @@
+import {useEffect} from 'react'
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
 import { Provider } from 'next-auth/client'
 import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
 import { useRouter } from "next/router"
-
+import { initGA, logPageView } from '../utils/analytics'
 
 const GlobalStyle = createGlobalStyle`
 	* {
@@ -34,6 +35,13 @@ const GlobalStyle = createGlobalStyle`
 export default function App({ Component, pageProps }) {
 	const router = useRouter()
 	const paths = ["/", "/login", "/signup", "/resetpassword"]
+
+	useEffect(()=>{
+		if (!window.GA_INITIALIZED) {
+			initGA()
+			window.GA_INITIALIZED = true
+		  }
+	},[])
 
   	return (
 		<Provider session={pageProps.session}>

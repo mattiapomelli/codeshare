@@ -9,6 +9,7 @@ import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
+import { logPageView } from '../utils/analytics'
 
 const Login = () => {
     const router = useRouter()
@@ -23,6 +24,10 @@ const Login = () => {
         }
     }, [router.query])
 
+    useEffect(()=>{
+        logPageView()
+    },[])
+
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
 	}
@@ -32,7 +37,7 @@ const Login = () => {
 		signIn('credentials', {
 			email: credentials.email.toLowerCase(),
             password: credentials.password,
-            callbackUrl: `${NEXT_AUTH_URL}/snippets`
+            callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets`
 		}).then((res) => {
             if(res && res.error) {
                 setMessages(messages => [...messages, { type: 'error', text: decodeURIComponent(res.error)}])
@@ -42,7 +47,7 @@ const Login = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: `${NEXT_AUTH_URL}/snippets` })
+		signIn('github', { callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets` })
     }
 
     return (

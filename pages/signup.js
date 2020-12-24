@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { signIn } from 'next-auth/client'
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
@@ -8,6 +8,7 @@ import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
+import { logPageView } from '../utils/analytics'
 
 const Signup = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
@@ -19,7 +20,7 @@ const Signup = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: `${NEXT_AUTH_URL}/snippets`})
+		signIn('github', { callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets`})
     }
     
     const signUp = (e) => {
@@ -52,6 +53,10 @@ const Signup = () => {
             console.log(err)
         })
     }
+
+    useEffect(()=>{
+        logPageView()
+    },[])
 
     return (
         <>
