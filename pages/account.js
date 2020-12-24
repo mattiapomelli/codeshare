@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/client'
 import { Button } from '../components/Button'
 import { H2, Label } from '../components/Typography'
@@ -8,6 +8,7 @@ import { Input } from '../components/Input'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import Popups from '../components/Popup/Popup'
+import { logPageView } from '../utils/analytics'
 
 const Settings = styled(Flex)`
     margin-top: 1.5rem;
@@ -81,6 +82,10 @@ function Account() {
         })
     }
 
+    useEffect(()=>{
+        logPageView()
+    },[])
+    
     return (
         <> 
             <PageHead title="Account – Codeshare"/>

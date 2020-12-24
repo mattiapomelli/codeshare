@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect,useState } from 'react'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 import { H2, Label } from '../components/Typography'
@@ -12,6 +12,7 @@ import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
 import { Button, IconButton } from '../components/Button'
 import Link from 'next/link'
+import { logPageView } from '../utils/analytics'
 
 const Tab = styled.li`
     display: inline-block;
@@ -49,6 +50,11 @@ const Tag = styled.span`
 `
 
 const TabItem = ({ children, count, active, onClick }) => {
+
+    useEffect(()=>{
+        logPageView()
+    },[])
+
     return (
         <Tab active={active} onClick={onClick} secondary={!active}>
             <Label as="span" inline>{ children }</Label>

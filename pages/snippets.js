@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import { useSearch } from '../contexts/SearchContext'
 import Dropdown from "../components/Dropdown/Dropdown"
 import { IconInput } from "../components/Input"
@@ -9,6 +10,7 @@ import { request } from "graphql-request"
 import Snippets from '../components/Snippets'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
+import { logPageView } from '../utils/analytics'
 
 const fetcher = (query, offset, userId, lang) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,
@@ -35,7 +37,9 @@ const searchFetcher = (query, offset, userId, search, lang) => request( process.
 
 export default function Home({ langs }) {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch();
-
+    useEffect(()=>{
+        logPageView()
+    },[])
 	return (
 		<>
 			<PageHead title="Code Snippets – Codeshare"/>
