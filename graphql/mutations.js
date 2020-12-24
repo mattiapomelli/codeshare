@@ -71,3 +71,10 @@ mutation ConfirmUserEmail($id: uuid!) {
   }
 }
 `
+
+export const DELETE_SNIPPET = `mutation DeleteSnippet($id: uuid!) {
+  delete_snippet(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+`
