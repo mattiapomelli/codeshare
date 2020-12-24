@@ -5,7 +5,7 @@ import { Provider } from 'next-auth/client'
 import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
 import { useRouter } from "next/router"
-import { initGA, logPageView } from '../utils/analytics'
+import { initGA } from '../utils/analytics'
 
 const GlobalStyle = createGlobalStyle`
 	* {

@@ -118,7 +118,7 @@ function Profile() {
                 {
                     option === "snippets" ? (
                         <>
-                            <div>You haven't created any shots yet</div>
+                            <div>You haven't created any snippets yet</div>
                             <Link href="/editor">
                                 <Button type="primary">Create your first snippet</Button>
                             </Link>

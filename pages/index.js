@@ -7,6 +7,7 @@ import styled from "styled-components"
 import Flex from '../components/Flex'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
+import CookiesPopup from '../components/CookiesPopup'
 
 const Hero = styled.section`
     display: flex;
@@ -22,7 +23,7 @@ const Hero = styled.section`
         margin-bottom: 2rem;
         text-align: center;
         line-height: 1.1;
-        height: 9rem;
+        height: 11rem;
 
         @media only screen and (min-width: 450px) {
             height: 6rem;
@@ -91,6 +92,7 @@ const Home = () => {
 				</Flex>
 				<Image src="/hero.svg" width={612} height={392} layout="responsive" className="image"/>
 			</Hero>
+            <CookiesPopup/>
 		</>
 	)
 }
