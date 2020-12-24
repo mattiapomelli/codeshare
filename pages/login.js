@@ -32,7 +32,7 @@ const Login = () => {
 		signIn('credentials', {
 			email: credentials.email.toLowerCase(),
             password: credentials.password,
-            callbackUrl: `${NEXT_AUTH_URL}/snippets`
+            callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets`
 		}).then((res) => {
             if(res && res.error) {
                 setMessages(messages => [...messages, { type: 'error', text: decodeURIComponent(res.error)}])
@@ -42,7 +42,7 @@ const Login = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: `${NEXT_AUTH_URL}/snippets` })
+		signIn('github', { callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets` })
     }
 
     return (

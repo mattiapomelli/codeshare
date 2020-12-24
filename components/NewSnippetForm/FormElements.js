@@ -87,3 +87,9 @@ export const InfoIcon = styled(Icon)`
     margin-left: 5px;
     cursor: pointer;
 `
+
+export const TextLimiter = styled.p`
+    text-align: right;
+    font-size: 0.8rem;
+    color: ${props=>props.error?"red":props.theme.colors.secondaryText}
+`
