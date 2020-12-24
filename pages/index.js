@@ -80,7 +80,7 @@ const Home = () => {
 			<Navbar/>
 			<Hero>
 				<h1 id="heading"></h1>
-				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
+				<p>The place where you can find the code snippets you need and share your best code to help others  </p>
 				<Flex h="center" flexWrap="wrap">
 					<Link href="/signup">
 						<Button type="secondary">LEARN MORE</Button>

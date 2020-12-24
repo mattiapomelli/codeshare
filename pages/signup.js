@@ -19,7 +19,7 @@ const Signup = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: 'http://localhost:3000/snippets' })
+		signIn('github', { callbackUrl: `${NEXT_AUTH_URL}/snippets`})
     }
     
     const signUp = (e) => {
@@ -37,7 +37,7 @@ const Signup = () => {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                email: credentials.email,
+                email: credentials.email.toLowerCase(),
                 username: credentials.username,
                 password: credentials.password
             })
