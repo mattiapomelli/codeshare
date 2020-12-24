@@ -44,7 +44,7 @@ const CodeBlock = ({ codeString, language, preview }) => {
 
     return (
         <CodeLayout language={language.toLowerCase()}>
-            <ScrollWrapper height={preview ? "270px" : undefined}>
+            <ScrollWrapper height={preview ? "270px" : ""}>
                 <CodeHighlight codeString={codeString} language={language.toLowerCase()} wrapLines={true} wrapLongLines={false}/>
             </ScrollWrapper>
             {

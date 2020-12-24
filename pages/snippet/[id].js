@@ -105,7 +105,6 @@ const SnippetPage = () => {
         <>  
             <PageHead title={data.title}/>
             <Snippet {...data}/>
-            {session.user.username===data.user.username ? <button> delete</button>:null}
         </>
     )
 }

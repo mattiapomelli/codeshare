@@ -3,6 +3,8 @@ import Link from "next/link"
 import Flex from "./Flex"
 import Likes from './Likes'
 import styled from "styled-components"
+import { useSession } from 'next-auth/client'
+import SnippetActions from './SnippetActions'
 
 const SnippetInfo = styled(Flex)`
     padding: 0 20px;
@@ -36,6 +38,7 @@ const SnippetTitle = styled.div`
 
 
 const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user }) => {
+    const [session] = useSession()
 
     return (
         <article>
@@ -47,6 +50,9 @@ const SnippetCard = ({ code, programmingLang, title, id, likesNum, liked, user }
                     </Link>
                     <span>{user.username}</span>
                 </SnippetTitle>
+                { session?.user.username === user.username &&
+                    <SnippetActions id={id}/>
+                }
                 <Likes
                     isLiked={liked}
                     count={likesNum}

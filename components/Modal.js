@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Icon } from './Icon/Icon'
+import Flex from './Flex'
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled(Flex)`
     position: fixed;
     z-index: 10;
-    padding-top: 120px;
     left: 0;
     top: 0;
     width: 100%;
@@ -18,10 +18,11 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
     background-color: ${props => props.theme.colors.background};
     border-radius: ${props => props.theme.borderRadius};
-    margin: auto;
-    padding: 2rem;
-    width: 90%;
-    max-width: 800px;
+    /* margin: auto; */
+    margin-bottom: 4rem;
+    padding: 2rem 2.3rem;
+    width: auto;
+    max-width: 90%;
     position: relative;
 `
 
@@ -48,7 +49,7 @@ export default function Modal({ children, close }) {
     }, [])
 
     return (
-        <ModalWrapper>
+        <ModalWrapper v="center" h="center">
             <ModalContent ref={modalRef}>
                 <CloseIcon name="cross" type="primary" size={18} onClick={close}/>
                 { children }
