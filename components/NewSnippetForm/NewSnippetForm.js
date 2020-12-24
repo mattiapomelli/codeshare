@@ -6,7 +6,8 @@ import CodeEditor from "../CodeEditor"
 import { TextArea } from "../TextArea"
 import { Input } from '../Input'
 import { Label } from '../Typography'
-import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon, TextLimiter } from './FormElements'
+import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon } from './FormElements'
+import TextLimiter from './TextLimiter'
 import { Button } from '../Button'
 import Dropdown from "../Dropdown/Dropdown"
 import InfoModal from "./InfoModal"
@@ -15,6 +16,8 @@ import Popups from '../Popup/Popup'
 const defaultCode = `public void yourAwesomeFunction() {
     // copy or write your code!
 }`;
+
+const limits = { title: 10, code: 2000, description: 1000 }
 
 export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
@@ -51,12 +54,13 @@ export default function NewSnippetForm({ langs }) {
             <EditorArea>
                 <Label>Code</Label>
                 <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.programmingLang}/>
-                <TextLimiter error= {snippet.code.length>2000} >{snippet.code.length}/2000</TextLimiter>
+                <TextLimiter value={snippet.code} limit={limits.code}/>
             </EditorArea>
             <InfoArea>
                 <div>
                     <Label>Title</Label>
                     <Input placeholder="Title" value={snippet.title} onChange={onChange} name="title" spellCheck="false"/>
+                    <TextLimiter value={snippet.title} limit={limits.title}/>
                 </div>
                 <div>
                     <Label>Language</Label>
@@ -77,14 +81,21 @@ export default function NewSnippetForm({ langs }) {
                         spellCheck="false"
                     />
                 </div>
-                <TextLimiter error= {snippet.description.length>1000} >{snippet.description.length}/1000</TextLimiter>
+                <TextLimiter value={snippet.description} limit={limits.description}/>
             </DescriptionArea>
             
             <SubmitArea>
                 <Button
                     type="primary"
                     onClick={publishSnippet}
-                    disabled={!snippet.title || !snippet.code || !snippet.description}
+                    disabled={
+                        !snippet.title ||
+                        !snippet.code ||
+                        !snippet.description ||
+                        snippet.title.length > limits.title ||
+                        snippet.code.length > limits.code ||
+                        snippet.description.length > limits.description
+                    }
                 >Publish
                 </Button>
             </SubmitArea>
