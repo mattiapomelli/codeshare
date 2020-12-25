@@ -57,7 +57,6 @@ export default async (req, res) => {
 			return res.status(201).send({ message: "Check your email to verify your account", type: 'success'})
 		}
 		catch (err) {
-			// console.log(err)
 			res.status(err.status || 500).send({ message: err.message})
 		}
 
