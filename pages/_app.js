@@ -54,13 +54,11 @@ export default function App({ Component, pageProps }) {
 						( 	
 							<>
 								<Component {...pageProps} />
-								<Footer/>
 							</>
 						) :
 						(
 							<Layout>
 								<Component {...pageProps} />
-								<Footer/>
 							</Layout>
 						)
 					}

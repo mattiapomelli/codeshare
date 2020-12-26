@@ -93,7 +93,9 @@ function Profile() {
             <Flex v="center" h="space-between">
                 { session && <H2>{session.user.username}</H2> }
                 <Link href="/account">
-                    <IconButton icon="settings" iconType="primary"/>
+                    <span>
+                        <IconButton icon="settings" iconType="primary"/>
+                    </span>
                 </Link>
             </Flex>
 

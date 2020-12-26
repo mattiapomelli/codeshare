@@ -196,7 +196,7 @@ export const GET_LIKED_SNIPPETS_COUNT = `
 `
 
 export const GET_USER_BY_ID_QUERY = `
-	query getUserById($id: uuid!) {
+	query FetUserById($id: uuid!) {
 		user: user_by_pk(id: $id) {
 			password
 			username
@@ -205,7 +205,7 @@ export const GET_USER_BY_ID_QUERY = `
 `
 
 export const GET_USER_INFO_QUERY = `
-	query MyQuery($id: uuid!) {
+	query GetuserInfo($id: uuid!) {
 		user: user_by_pk(id: $id) {
 			username
 			email

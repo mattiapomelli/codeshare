@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Header, Page, Main } from "./LayoutElements"
 import Sidebar from '../Sidebar/Sidebar'
 import { Button, IconButton } from "../Button"
+import Footer from "../Footer"
 
 const Layout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false)
@@ -24,6 +25,7 @@ const Layout = ({ children }) => {
                 <Main>
                     { children }
                 </Main>
+                <Footer expanded/>
             </Page>      
         </>
     )

@@ -46,7 +46,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
         <SidebarLayout collapsed={collapsed}>
             <CloseIcon name="cross" type="primary" onClick={closeSidebar}/>
             <header>
-                <Logo size={32} href="/snippets"/>
+                <Logo size={32} href={session ? "snippets" : "/"}/>
                 <Flex dir="column" v="center" h="center" as="nav" auto>
                     <ul>   
                         <NavLink href="/snippets" icon="feed" onClick={closeSidebar}>Snippets</NavLink>               

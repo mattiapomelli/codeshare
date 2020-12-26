@@ -5,18 +5,16 @@ import styled from 'styled-components'
 
 const FooterContainer = styled.footer`
     font-size: 0.8rem;
-    padding: 2.4rem 0;
-    width: 90%;
-    max-width: 1200px;
+    padding: 2rem 0;
+    width: ${props => props.expanded ? "100%" : "90%"};
+    max-width: ${props => props.expanded ? "auto" : "1200px"};
     border-top: 1px solid ${props => props.theme.colors.details};
-    margin: auto;
-    margin-top: 3rem;
+    margin: 3rem auto 0 auto;
     ul:first-of-type{ flex: 1;}
 `
 
 const LinksList = styled(Flex)`
     list-style-type: none;
-    /* flex-flow: column wrap; */
 
     li:not(:last-of-type) {
         margin-right: 1rem;
@@ -26,9 +24,9 @@ const LinksList = styled(Flex)`
     }
 `
 
-export default function Footer() {
+export default function Footer({ expanded }) {
     return (
-        <FooterContainer>       
+        <FooterContainer expanded={expanded}>       
             <Flex h="space-between" v="center" flexWrap="wrap">
                 <LinksList as="ul" flexWrap="wrap">
                     <li>&copy; Codeshare</li>

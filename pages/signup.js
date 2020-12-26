@@ -20,7 +20,7 @@ const Signup = () => {
     
     const signInWithGitHub = (e) => {
 		e.preventDefault()
-		signIn('github', { callbackUrl: `${process.env.NEXT_AUTH_URL}/snippets`})
+		signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets`})
     }
     
     const signUp = (e) => {

@@ -17,7 +17,7 @@ const CookiesContainer = styled.div`
     font-size: 0.8rem;
     border: 1px solid #333;
     border-radius: ${props => props.theme.borderRadius};
-    position: absolute;
+    position: fixed;
     bottom: 1rem;
     right: 1rem;
     padding: 0.8rem 1.8rem;
