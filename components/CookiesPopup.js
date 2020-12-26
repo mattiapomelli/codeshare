@@ -46,7 +46,7 @@ export default function CookiesPopup() {
     return (
         <CookiesContainer dir="column" v="center" flexWrap="wrap" h="center">
             <h3>This website uses cookies</h3>
-            <div>We use cookies to provide you with a great user experience. By using CodeShare, you accenpt our use of cookies</div>
+            <div>We use cookies to provide you with a great user experience. By using CodeShare, you accept our use of cookies</div>
             <Button small onClick={consentCookies} type="primary">Accept</Button>
         </CookiesContainer>
     )
