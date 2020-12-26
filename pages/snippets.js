@@ -11,6 +11,7 @@ import Snippets from '../components/Snippets'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
 import { logPageView } from '../utils/analytics'
+import Footer from '../components/Footer'
 
 const fetcher = (query, offset, userId, lang) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
 	limit: 6,

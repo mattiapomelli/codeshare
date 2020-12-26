@@ -8,6 +8,7 @@ import Flex from '../components/Flex'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import CookiesPopup from '../components/CookiesPopup'
+import Footer from '../components/Footer'
 
 const Hero = styled.section`
     display: flex;
@@ -15,7 +16,7 @@ const Hero = styled.section`
     flex-direction: column;
     width: 90%;
     max-width: 1200px;
-    margin: 4rem auto 0 auto;
+    margin: 4rem auto 8rem auto;
 
     h1 {
         font-size: 3rem;
@@ -92,6 +93,7 @@ const Home = () => {
 				</Flex>
 				<Image src="/hero.svg" width={612} height={392} layout="responsive" className="image"/>
 			</Hero>
+            <Footer />
             <CookiesPopup/>
 		</>
 	)

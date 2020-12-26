@@ -60,6 +60,10 @@ function Account() {
     useEffect(()=>{
         logPageView()
     },[])
+
+    const logOut = () => {
+        signOut({ callbackUrl: process.env.NEXT_PUBLIC_BASE_URL })
+    }
     
     return (
         <> 
@@ -84,7 +88,7 @@ function Account() {
                 </SettingCard>
             </SettingsGrid>
             
-            <Button small onClick={signOut}>Logout</Button>
+            <Button small onClick={logOut}>Logout</Button>
         </>
     )
 }
