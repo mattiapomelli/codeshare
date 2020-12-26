@@ -9,6 +9,7 @@ import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import CookiesPopup from '../components/CookiesPopup'
 import Footer from '../components/Footer'
+import { logPageView } from '../utils/analytics'
 
 const Hero = styled.section`
     display: flex;
@@ -74,6 +75,10 @@ const Home = () => {
         return () => {
             clearTimeout(timeout)
         }
+    }, [])
+
+    useEffect(()=>{
+        logPageView()
     }, [])
 
 	return (

@@ -7,6 +7,7 @@ import { Button } from '../components/Button'
 import withAuth from '../hocs/withAuth'
 import { H2, Label } from '../components/Typography'
 import PageHead from '../components/PageHead'
+import { Skeleton } from '../components/Skeleton'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import ChangePasswordForm from '../components/PasswordForm'
@@ -47,13 +48,13 @@ const SettingCard = ({ children, title }) => {
 const InfoField = ({ children, title}) => (
     <Field>
         <Label>{title} </Label>
-        <span>{children}</span>
+        { children ? <span>{children}</span> : <Skeleton h="1.55rem" w="65%" /> }
     </Field>
 )
 
 function Account() {
     const [session] = useSession()
-    const { data: userData } = useSWR([GET_USER_INFO_QUERY, session.user.id, session.user.jwt], (query, id) => {
+    const { data: userData } = useSWR( session ? [GET_USER_INFO_QUERY, session.user.id] : null, (query, id) => {
         return executeQuery(query, {id}, session.user.jwt).then(res => res.user)
     })
 
@@ -74,7 +75,7 @@ function Account() {
             <SettingsGrid>
                 <SettingCard title="Account Setting">
                     <InfoField title="Username">
-                        { userData ? userData.username : ""}
+                        { userData ? userData.username : "" }
                     </InfoField>
                     <InfoField title="Email">
                         { userData ? userData.email : "" }
