@@ -4,9 +4,11 @@ import { Header, Page, Main } from "./LayoutElements"
 import Sidebar from '../Sidebar/Sidebar'
 import { Button, IconButton } from "../Button"
 import Footer from "../Footer"
+import { useSession } from 'next-auth/client'
 
 const Layout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false)
+    const [session] = useSession()
 
     const clickHandler = () => {
         setCollapsed(collapsed => !collapsed)
@@ -18,7 +20,7 @@ const Layout = ({ children }) => {
             <Page collapsed={collapsed}>
                 <Header>
                     <IconButton  onClick={clickHandler} icon="menu" iconType="primary" />
-                    <Link href="/editor">
+                    <Link href={session ? "/editor" : "/signup"}>
                         <Button type="primary">Share code</Button>
                     </Link>
                 </Header>

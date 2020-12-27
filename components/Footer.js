@@ -17,10 +17,12 @@ const LinksList = styled(Flex)`
     list-style-type: none;
 
     li:not(:last-of-type) {
-        margin-right: 1rem;
+        margin-right: 1.2rem;
     }
     a {
         cursor: pointer;
+        color: inherit;
+        text-decoration: none;
     }
 `
 
@@ -29,13 +31,14 @@ export default function Footer({ expanded }) {
         <FooterContainer expanded={expanded}>       
             <Flex h="space-between" v="center" flexWrap="wrap">
                 <LinksList as="ul" flexWrap="wrap">
-                    <li>&copy; Codeshare</li>
+                    <li>&copy; 2020, Codeshare</li>
                     <Link href="/privacy-policy">
-                        <li><a>Privacy & Policy</a></li>
+                        <li><a>Privacy</a></li>
                     </Link>
                     <Link href="/terms">
-                        <li><a>Terms of Service</a></li>
+                        <li><a>Terms</a></li>
                     </Link>
+                    <li><a href="mailto:hello@codeshare.tech">Contact</a></li>
                 </LinksList>
                 <LinksList as="ul" flexWrap="wrap" h="flex-end">
                     <li><Icon name="instagram" type="primary" size={18}/></li>

@@ -46,7 +46,7 @@ const Login = () => {
     }
     
     const signInWithGitHub = (e) => {
-		e.preventDefault()
+        e.preventDefault()
 		signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets` })
     }
 

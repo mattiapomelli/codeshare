@@ -24,7 +24,7 @@ export default async (req, res) => {
             }
 		}
 		catch (err) {
-			res.status(500).json({ message: err})
+			res.redirect(301, `/login?error=${"Something went wrong"}`)
 		}
 
 	} else {	// Any method that is not POST

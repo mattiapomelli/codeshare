@@ -13,7 +13,7 @@ import Dropdown from "../Dropdown/Dropdown"
 import InfoModal from "./InfoModal"
 import Popups from '../Popup/Popup'
 
-const defaultCode = `public void yourAwesomeFunction() {
+const defaultCode = `function yourAwesomeFunction() {
     // copy or write your code!
 }`;
 

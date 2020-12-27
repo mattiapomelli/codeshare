@@ -25,7 +25,7 @@ const Hero = styled.section`
         margin-bottom: 2rem;
         text-align: center;
         line-height: 1.1;
-        height: 11rem;
+        height: 12rem;
 
         @media only screen and (min-width: 450px) {
             height: 6rem;
@@ -44,7 +44,8 @@ const Hero = styled.section`
         text-align: center;
         margin-bottom: 2rem;
     }
-    button { margin: 0 5px 2rem 5px; }
+    button { margin: 0 5px 1rem 5px; }
+    img { margin-top: 1rem }
 `
 
 const titles = ["Find the code you need", "Share the code you are proud of"]
@@ -89,7 +90,7 @@ const Home = () => {
 				<h1 id="heading"></h1>
 				<p>The place where you can find the code snippets you need and share your best code to help others  </p>
 				<Flex h="center" flexWrap="wrap">
-					<Link href="/signup">
+					<Link href="/snippets">
 						<Button type="secondary">LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
