@@ -18,7 +18,7 @@ const Login = () => {
 
     useEffect(() => {
         if(router.query.error) {
-            setMessages(messages => [...messages, { type: 'error', text: router.query.error }])
+            setMessages(messages => [...messages, { type: 'error', text: router.query.error.replace("Error: ", "") }])
         } else if(router.query.message) {
             setMessages(messages => [...messages, { type: 'success', text: router.query.message }])
         }
@@ -38,11 +38,7 @@ const Login = () => {
 			email: credentials.email.toLowerCase(),
             password: credentials.password,
             callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets`
-		}).then((res) => {
-            if(res && res.error) {
-                setMessages(messages => [...messages, { type: 'error', text: decodeURIComponent(res.error)}])
-            }
-        })
+		})
     }
     
     const signInWithGitHub = (e) => {
