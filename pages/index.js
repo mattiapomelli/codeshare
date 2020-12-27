@@ -84,7 +84,7 @@ const Home = () => {
 
 	return (
 		<>
-            <PageHead title="Codeshare"/>
+            <PageHead title="Codeshare – Share the code you are proud of"/>
 			<Navbar/>
 			<Hero>
 				<h1 id="heading"></h1>
