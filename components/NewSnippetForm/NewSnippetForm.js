@@ -7,18 +7,23 @@ import { TextArea } from "../TextArea"
 import { Input } from '../Input'
 import { Label } from '../Typography'
 import { EditorForm, EditorArea, DescriptionArea, InfoArea, SubmitArea, InfoIcon } from './FormElements'
+import TextLimiter from './TextLimiter'
 import { Button } from '../Button'
 import Dropdown from "../Dropdown/Dropdown"
 import InfoModal from "./InfoModal"
+import Popups from '../Popup/Popup'
 
-const defaultCode = `public void yourAwesomeFunction() {
+const defaultCode = `function yourAwesomeFunction() {
     // copy or write your code!
 }`;
+
+const limits = { title: 10, code: 2000, description: 1000 }
 
 export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
     const [showModal, setShowModal] = useState(false)
+    const [messages, setMessages] = useState([])
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -35,7 +40,12 @@ export default function NewSnippetForm({ langs }) {
     const publishSnippet = (e) => {
         e.preventDefault();
         executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
-        .then(res => console.log(res))
+        .then(res => {
+            setMessages(messages => [...messages, { type: 'success', text: "Snippet published!"}])
+            setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
+        }).catch(err => {
+            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong"}])
+        })
     }
 
     return (
@@ -44,15 +54,17 @@ export default function NewSnippetForm({ langs }) {
             <EditorArea>
                 <Label>Code</Label>
                 <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.programmingLang}/>
+                <TextLimiter value={snippet.code} limit={limits.code}/>
             </EditorArea>
             <InfoArea>
                 <div>
                     <Label>Title</Label>
                     <Input placeholder="Title" value={snippet.title} onChange={onChange} name="title" spellCheck="false"/>
+                    <TextLimiter value={snippet.title} limit={limits.title}/>
                 </div>
                 <div>
                     <Label>Language</Label>
-                    <Dropdown options={langs} value={snippet.programmingLang} onSelect={onLanguageChange} as="span" right/>
+                    <Dropdown options={langs} value={snippet.programmingLang} onSelect={onLanguageChange} as="span" right minWidth="7rem"/>
                 </div>
             </InfoArea>
             <DescriptionArea>
@@ -69,17 +81,27 @@ export default function NewSnippetForm({ langs }) {
                         spellCheck="false"
                     />
                 </div>
+                <TextLimiter value={snippet.description} limit={limits.description}/>
             </DescriptionArea>
+            
             <SubmitArea>
                 <Button
                     type="primary"
                     onClick={publishSnippet}
-                    disabled={!snippet.title || !snippet.code || !snippet.description}
+                    disabled={
+                        !snippet.title ||
+                        !snippet.code ||
+                        !snippet.description ||
+                        snippet.title.length > limits.title ||
+                        snippet.code.length > limits.code ||
+                        snippet.description.length > limits.description
+                    }
                 >Publish
                 </Button>
             </SubmitArea>
         </EditorForm>
-        { showModal && <InfoModal/> }
+        { showModal && <InfoModal close={() => setShowModal(false)}/> }
+        <Popups popups={messages} setPopups={setMessages}/>
         </>
     )
 }

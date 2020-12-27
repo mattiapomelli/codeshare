@@ -1,18 +1,10 @@
-import { gql } from 'graphql-request'
-
+import graphQLClientAdmin from '../../graphql/client'
+import {CONFIRM_USER_EMAIL} from '../../graphql/mutations'
 export default async (req, res) => {
 
 	// saves user to the database
 	const execute = async (variables) => {
-		const query = gql`
-        mutation ($id: uuid!) {
-            update_user_by_pk(pk_columns: {id: $id}, _set: {verificated: true}){
-              verificated
-            }
-          }
-                    
-        `
-        const data = await graphQLClientAdmin( query, variables)
+        const data = await graphQLClientAdmin.request( CONFIRM_USER_EMAIL, variables)
         // return: data to return have to be JSON FORMAT !!
         return data;
 	};
@@ -28,11 +20,11 @@ export default async (req, res) => {
             const data = await execute(userId)
             // if query executes correctly redirects to homepage 
             if(data.update_user_by_pk.verificated){
-                res.redirect(301,'/') //?verificated=true
+                res.redirect(301,`/login?message=${"Accunt verificated succesfully! Please log in to get started"}`) //?verificated=true
             }
 		}
 		catch (err) {
-			res.status(500).json({ message: err})
+			res.redirect(301, `/login?error=${"Something went wrong"}`)
 		}
 
 	} else {	// Any method that is not POST

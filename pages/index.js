@@ -4,6 +4,12 @@ import Navbar from "../components/Navbar"
 import { Button } from "../components/Button"
 import Image from "next/image"
 import styled from "styled-components"
+import Flex from '../components/Flex'
+import withNoAuth from '../hocs/withNoAuth'
+import PageHead from '../components/PageHead'
+import CookiesPopup from '../components/CookiesPopup'
+import Footer from '../components/Footer'
+import { logPageView } from '../utils/analytics'
 
 const Hero = styled.section`
     display: flex;
@@ -11,7 +17,7 @@ const Hero = styled.section`
     flex-direction: column;
     width: 90%;
     max-width: 1200px;
-    margin: 4rem auto 0 auto;
+    margin: 4rem auto 8rem auto;
 
     h1 {
         font-size: 3rem;
@@ -19,9 +25,9 @@ const Hero = styled.section`
         margin-bottom: 2rem;
         text-align: center;
         line-height: 1.1;
-        height: 9rem;
+        height: 12rem;
 
-        @media only screen and (min-width: 400px) {
+        @media only screen and (min-width: 450px) {
             height: 6rem;
         }
 
@@ -38,13 +44,13 @@ const Hero = styled.section`
         text-align: center;
         margin-bottom: 2rem;
     }
-    button:first-of-type { margin-right: 10px; }
-    button { margin-bottom: 2rem; }
+    button { margin: 0 5px 1rem 5px; }
+    img { margin-top: 1rem }
 `
 
 const titles = ["Find the code you need", "Share the code you are proud of"]
 
-export default function Home() {
+const Home = () => {
 
     useEffect(() => {
         const heading = document.getElementById("heading")
@@ -54,7 +60,7 @@ export default function Home() {
             heading.innerText = titles[j].substring(0, i)
 
             if(i > titles[j].length) {
-                delta = 2500
+                delta = 2700
                 i = 1
                 j = (j + 1) % titles.length
             } else {
@@ -72,22 +78,31 @@ export default function Home() {
         }
     }, [])
 
+    useEffect(()=>{
+        logPageView()
+    }, [])
+
 	return (
 		<>
+            <PageHead title="Codeshare"/>
 			<Navbar/>
 			<Hero>
 				<h1 id="heading"></h1>
-				<p>The platform where you can find the code snippets you need for your and share you best code to help others  </p>
-				<div>
-					<Link href="/signup">
-						<Button>LEARN MORE</Button>
+				<p>The place where you can find the code snippets you need and share your best code to help others  </p>
+				<Flex h="center" flexWrap="wrap">
+					<Link href="/snippets">
+						<Button type="secondary">LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
 						<Button type="primary">GET STARTED</Button>
 					</Link>
-				</div>
+				</Flex>
 				<Image src="/hero.svg" width={612} height={392} layout="responsive" className="image"/>
 			</Hero>
+            <Footer />
+            <CookiesPopup/>
 		</>
 	)
 }
+
+export default withNoAuth(Home)

@@ -1,31 +1,32 @@
 import styled, { css } from "styled-components"
 
 export const Main = styled.main`
-    padding: 0.5rem 2rem 4rem 2rem;
-    margin: auto;
-    @media ${props => props.theme.breakpoints.tablet} {
-        padding: 0.5rem 3rem 4rem 3rem;
-    }
+    padding: 0.5rem 0 4rem 0;
+    flex: 1;
 `
 
 export const Page = styled.section`
-    padding-left: 0;
-    min-height: 100%;
-    transition: 300ms padding-left;
+    margin-left: 0;
+    min-height: 100vh;
+    transition: 300ms margin-left;
+    display: flex;
+    padding: 0 1.2rem;
+    flex-direction: column;
 
     @media ${props => props.theme.breakpoints.tablet} {
-        padding-left: ${props => props.theme.sidebarWidthCollapsed};
+        margin-left: ${props => props.theme.sidebarWidthCollapsed};
+        padding: 0 3rem;
 
         ${props => props.collapsed && css`
-            padding-left: ${props => props.theme.sidebarWidth};
+            margin-left: ${props => props.theme.sidebarWidth};
         `}
     }
 
     @media ${props => props.theme.breakpoints.desktop} {
-        padding-left: ${props => props.theme.sidebarWidth};
+        margin-left: ${props => props.theme.sidebarWidth};
 
         ${props => props.collapsed && css`
-            padding-left: ${props => props.theme.sidebarWidthCollapsed};
+            margin-left: ${props => props.theme.sidebarWidthCollapsed};
         `}
     }
 `
@@ -34,12 +35,8 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
     width: 100%;
     height: ${props => props.theme.headerHeight};
     transition: width 300ms, padding 300ms;
-    @media ${props => props.theme.breakpoints.tablet} {
-        padding: 0 3rem;
-    }
 `
 

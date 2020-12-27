@@ -3,8 +3,9 @@ import Flex from '../Flex'
 
 export const PopupsContainer = styled.div`
     position: fixed;
-    top: 12px;
-	right: 12px;
+    top: 1.4rem;
+	right: 1.4rem;
+    max-width: 90%;
 `
 
 const slideInRight = keyframes`
@@ -17,8 +18,8 @@ const slideInRight = keyframes`
 `
 
 export const Popup = styled(Flex)`
-    top: 0.7rem;
-    right: 0.7rem;
+    top: 0;
+    right: 0;
     font-size: 0.9rem;
     background: ${props => props.theme.colors.text};
 	animation: ${slideInRight} .7s;
@@ -26,10 +27,11 @@ export const Popup = styled(Flex)`
 	padding: 1.2rem 1.4rem 1.2rem 1rem;
 	margin-bottom: 0.8rem;
 	width: 19rem;
+    max-width: 100%;
 	border-radius: 10px;
     color: ${props => props.theme.colors.background};  
     line-height: 1;
-    > svg { margin-right: 10px }
+    > svg { margin-right: 10px; flex-shrink: 0}
 `
 export const CloseButton = styled.div`
     position: absolute;

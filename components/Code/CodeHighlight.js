@@ -2,6 +2,13 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import js from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript';
 import html from 'react-syntax-highlighter/dist/cjs/languages/hljs/htmlbars';
 import css from 'react-syntax-highlighter/dist/cjs/languages/hljs/css';
+import python from 'react-syntax-highlighter/dist/cjs/languages/hljs/python';
+import java from 'react-syntax-highlighter/dist/cjs/languages/hljs/java';
+import php from 'react-syntax-highlighter/dist/cjs/languages/hljs/php';
+import sql from 'react-syntax-highlighter/dist/cjs/languages/hljs/sql';
+import go from 'react-syntax-highlighter/dist/cjs/languages/hljs/go';
+import c from 'react-syntax-highlighter/dist/cjs/languages/hljs/c';
+import cpp from 'react-syntax-highlighter/dist/cjs/languages/hljs/cpp';
 import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 // theme["hljs-keyword"].fontStyle = "normal";
 // theme["hljs-built_in"].fontStyle = "normal";
@@ -10,6 +17,13 @@ import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 SyntaxHighlighter.registerLanguage('javascript', js);
 SyntaxHighlighter.registerLanguage('html', html);
 SyntaxHighlighter.registerLanguage('css', css);
+SyntaxHighlighter.registerLanguage('python', python);
+SyntaxHighlighter.registerLanguage('java', java);
+SyntaxHighlighter.registerLanguage('php', php);
+SyntaxHighlighter.registerLanguage('sql', sql);
+SyntaxHighlighter.registerLanguage('go', go);
+SyntaxHighlighter.registerLanguage('c', c);
+SyntaxHighlighter.registerLanguage('cpp', cpp);
 
 const CodeHighlight = ({ codeString, language, wrapLongLines, pre }) => {
 

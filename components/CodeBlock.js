@@ -13,6 +13,7 @@ const CopyButton = styled.div`
     border-radius: 5rem;
     padding: 0.6em;
     cursor: pointer;
+    background-color: ${props => props.theme.colors.elements};
     &:hover { 
         background-color: ${props => props.theme.colors.accent}
     }
@@ -22,9 +23,11 @@ const CopyButton = styled.div`
 const CopiedText = styled.span`
     position: absolute;
     font-size: 0.8rem;
-    bottom: 25px;
+    bottom: 22px;
     right: 20px;
     font-family: monospace;
+    background-color: ${props => props.theme.colors.elements};
+    padding: 0.3rem;
 `
 
 const CodeBlock = ({ codeString, language, preview }) => {
@@ -41,7 +44,7 @@ const CodeBlock = ({ codeString, language, preview }) => {
 
     return (
         <CodeLayout language={language.toLowerCase()}>
-            <ScrollWrapper height={preview ? "270px" : undefined}>
+            <ScrollWrapper height={preview ? "270px" : ""}>
                 <CodeHighlight codeString={codeString} language={language.toLowerCase()} wrapLines={true} wrapLongLines={false}/>
             </ScrollWrapper>
             {

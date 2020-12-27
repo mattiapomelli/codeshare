@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { Icon } from "../Icon/Icon"
 
 export const EditorArea = styled.div`
+    position: relative;
     grid-area: editor;
     height: 55vh;
     display: flex;
@@ -12,8 +13,9 @@ export const EditorArea = styled.div`
 export const InfoArea = styled.div`
     grid-area: info;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     div:first-child{
+        position: relative;
         flex: 1;
         margin-right: 10px;
         input {
@@ -23,6 +25,7 @@ export const InfoArea = styled.div`
 `
 
 export const DescriptionArea = styled.div`
+    position: relative;
     grid-area: description;
     display: flex;
     flex-direction: column;
@@ -57,6 +60,7 @@ export const DescriptionArea = styled.div`
 export const SubmitArea = styled.div`
     grid-area: submit;
     text-align: right;
+    margin-top: 0.8rem;
 `
 
 export const EditorForm = styled.form`

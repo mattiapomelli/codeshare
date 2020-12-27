@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { signIn } from 'next-auth/client'
 import { IconInput } from "../components/Input"
 import { Button, FlexButton } from "../components/Button"
@@ -7,8 +7,10 @@ import Logo from '../components/Logo'
 import Popups from '../components/Popup/Popup'
 import Link from "next/link"
 import withNoAuth from '../hocs/withNoAuth'
+import PageHead from '../components/PageHead'
+import { logPageView } from '../utils/analytics'
 
-const Login = () => {
+const Signup = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
     const [messages, setMessages] = useState([])
 
@@ -17,12 +19,18 @@ const Login = () => {
 	}
     
     const signInWithGitHub = (e) => {
-		e.preventDefault()
-		signIn('github', { callbackUrl: 'http://localhost:3000/snippets' })
+        e.preventDefault()
+		signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets` })
     }
     
     const signUp = (e) => {
         e.preventDefault();
+
+        if(credentials.password !== credentials.password2) {
+            setMessages(messages => [...messages, { type: 'error', text: "Passwords must match"}])
+            return 
+        }
+
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -30,21 +38,30 @@ const Login = () => {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                email: credentials.email,
+                email: credentials.email.toLowerCase(),
                 username: credentials.username,
                 password: credentials.password
             })
         })
         .then(res => res.json())
         .then(data => {
-            setMessages(messages => [...messages, { type: 'error', text: data.message}])
+            setMessages(messages => [...messages, { type: data.type || 'error', text: data.message}])
+            if(data.type == 'success') {
+                setCredentials({ email: '', password: '', username: '', password2: ''})
+            }
         }).catch(err => {
             console.log(err)
         })
     }
 
+    useEffect(()=>{
+        logPageView()
+    },[])
+
     return (
         <>
+        <PageHead title="Sign Up – Codeshare"/>
+
         <Logo vertical style={{paddingTop: '3rem'}}/>
         <LoginForm>
             <h3>Sign up</h3>
@@ -57,6 +74,7 @@ const Login = () => {
                 type="text"
                 placeholder="email"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -67,6 +85,7 @@ const Login = () => {
                 type="text"
                 placeholder="username"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -77,6 +96,7 @@ const Login = () => {
                 type="password"
                 placeholder="password"
                 iconSize={20}
+                big
             />
             <IconInput
                 className="input-field"
@@ -87,6 +107,7 @@ const Login = () => {
                 type="password"
                 placeholder="confirm password"
                 iconSize={20}
+                big
             />
             <Button onClick={signUp} type="primary">
                 SIGN UP
@@ -104,4 +125,4 @@ const Login = () => {
     )
 }
 
-export default withNoAuth(Login)
+export default withNoAuth(Signup)

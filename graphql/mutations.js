@@ -24,7 +24,7 @@ export const CREATE_USER_MUTATION = gql`
   } 
 `;
 
-export const CREATE_USER_FROM_GITHUB_MUTATION = gql `
+export const CREATE_USER_FROM_GITHUB_MUTATION = gql`
   mutation($username:String!, $email:String!,$password:String, $provider: String){
     user: insert_user_one(object:{
         email:$email
@@ -54,4 +54,28 @@ export const REMOVE_LIKE_MUTATION = `
       affected_rows
     }
   }
+`
+
+export const MODIFY_USER_PASSWORD = `
+  mutation ModifyUserPassword($id: uuid!,$password:String!) {
+    update_user(where: {id: {_eq: $id}}, _set: {password: $password}){
+      affected_rows
+    }
+  }
+`
+
+export const CONFIRM_USER_EMAIL = `
+mutation ConfirmUserEmail($id: uuid!) {
+  update_user_by_pk(pk_columns: {id: $id}, _set: {verificated: true}){
+    verificated
+  }
+}
+`
+
+export const DELETE_SNIPPET = `
+mutation DeleteSnippet($id: uuid!) {
+  delete_snippet(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
 `

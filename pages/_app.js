@@ -1,10 +1,12 @@
+import {useEffect} from 'react'
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import SearchProvider from '../contexts/SearchContext'
 import { Provider } from 'next-auth/client'
 import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
 import { useRouter } from "next/router"
-
+import { initGA } from '../utils/analytics'
+import Footer from '../components/Footer'
 
 const GlobalStyle = createGlobalStyle`
 	* {
@@ -16,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 	html, body, #__next {
 		min-height: 100vh;
 	}
-	:root { font-size: 14px; }
+	:root { font-size: 16px; }
 
 	body {
 		font-family: ${props => props.theme.fonts.main};
@@ -25,15 +27,22 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	ul { list-style-type: none; }
-	::selection { background-color: rgba(185,235,255,0.20);}
+	::selection { background-color: rgba(113, 198, 238, 0.25);}
 
-	@media ${props => props.theme.breakpoints.tablet} { :root{font-size: 14px;} }
-	@media ${props => props.theme.breakpoints.desktop} { :root{font-size: 16px;} }
+	/* @media ${props => props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
+	@media ${props => props.theme.breakpoints.desktop} { :root{font-size: 16px;} } */
 `
 
 export default function App({ Component, pageProps }) {
 	const router = useRouter()
-	const paths = ["/", "/login", "/signup"]
+	const paths = ["/", "/login", "/signup", "/resetpassword"]
+
+	useEffect(()=>{
+		if (!window.GA_INITIALIZED) {
+			initGA()
+			window.GA_INITIALIZED = true
+		  }
+	},[])
 
   	return (
 		<Provider session={pageProps.session}>
@@ -41,9 +50,15 @@ export default function App({ Component, pageProps }) {
 				<ThemeProvider theme={theme}>
 					<GlobalStyle />
 					{
-						paths.includes(router.pathname) ? <Component {...pageProps} /> : (
+						paths.includes(router.pathname) ? 
+						( 	
+							<>
+								<Component {...pageProps} />
+							</>
+						) :
+						(
 							<Layout>
-							<Component {...pageProps} />
+								<Component {...pageProps} />
 							</Layout>
 						)
 					}

@@ -9,7 +9,7 @@ export default {
         sidebar: "#1A1A1A",
         background: "#1F1F1F",
         elements: "#262626",
-        accent: "#3b3b3b",
+        accent: "#333333",
         details: "#484848",
         secondaryText: "#646464",
         text: "#f6f6f6",
@@ -27,8 +27,8 @@ export default {
         }
     },
     breakpoints: {
-        tablet: "only screen and (min-width: 600px)",
-        desktop: "only screen and (min-width: 900px)",
+        tablet: "only screen and (min-width: 800px)",
+        desktop: "only screen and (min-width: 1000px)",
     },
     borderRadius: "1.25rem",
     sidebarWidth: "270px",

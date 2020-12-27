@@ -9,9 +9,14 @@ export const DropdownMenu = styled.ul`
     border: 1px solid ${props => props.theme.colors.details};
     padding: 0.5em;
     z-index: 3;
-    ${props => props.right && css`
-        right: 0;
-    `}
+    right: 0;
+    @media ${props => props.theme.breakpoints.tablet} {
+        /* left: 0; */
+        right: auto;
+        ${props => props.right && css`
+            right: 0;
+        `}
+    }
 `
 
 export const DropdownItem = styled.li`

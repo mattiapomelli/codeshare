@@ -32,10 +32,10 @@ const providers = [
 
             // check if user exists and is verificated
             if(!user) return Promise.reject(new Error('User not found'))
-            if(!user.verificated) return Promise.reject(new Error('User not verificated'))
+            if(!user.verificated) return Promise.reject(new Error('User not verificated, check your email to verify your account'))
 
             // check if password matches
-            const matched = await bcrypt.compare(credentials.password, result[0].password)
+            const matched = await bcrypt.compare(credentials.password, user.password)
             if(!matched) return Promise.reject(new Error('Wrong password'))
 
             return Promise.resolve(user)    // user object gets passed to signIn callback
@@ -66,6 +66,9 @@ const callbacks = {
         const userData = res[0]
 
         if(userData) {                              // user already exists
+            if(userData.provider !== "github") {
+                return Promise.reject(new Error('Email is already associated to an account'))
+            }
             user.id = userData.id
             user.username = userData.username
             return true

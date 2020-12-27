@@ -5,8 +5,8 @@ export const LoginForm = styled.form`
     flex-direction: column;
     align-items: center;
     width: 90%;
-    max-width: 16.25rem;
-    margin: 4rem auto 0 auto;
+    max-width: 17.25rem;
+    margin: 3.2rem auto 0 auto;
 
     h3 {
         margin-bottom: 2rem;
@@ -24,11 +24,15 @@ export const LoginForm = styled.form`
     hr {
         margin: 1rem 0;
         width: 90%;
+        background-color: ${props => props.theme.colors.text};
+        height: 1px;
+        border: none;
     }
 
     p {
         margin-top: 2rem;
         font-size: 0.8rem;
+        text-align: center;
         a {
             color: #0880B9;
             text-decoration: none;

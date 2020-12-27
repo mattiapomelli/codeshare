@@ -7,7 +7,7 @@ export const Button = styled.button`
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: 500;
-    padding: ${props => props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
+    padding: ${props => props.padding ? props.padding : props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
     border-radius: 10em;
     cursor: pointer;
 
@@ -17,6 +17,8 @@ export const Button = styled.button`
                 return props.theme.colors.primary
             case "inverted":
                 return props.theme.colors.text
+            case "secondary":
+                return props.theme.colors.accent
             default:
                 return props.theme.colors.elements
         }
@@ -40,6 +42,8 @@ export const Button = styled.button`
                     return props.theme.colors.primaryHover
                 case "inverted":
                     return "white"
+                case "secondary":
+                    return props.theme.colors.details
                 default:
                     return props.theme.colors.accent
             }
@@ -56,12 +60,14 @@ const StyledFlexButton = styled(Button)`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    svg { margin-left: 5px; }
+    svg { margin-left: 5px; };
+    min-width: ${props => props.minWidth || 'auto'};
 `
 
-const StyledIconButton = styled(Button)`
+const StyledIconButton = styled(Button).attrs(props => ({
+    padding: props.small ? "0.5em" : "0.9em"
+}))`
     border-radius: 1.2em;
-    padding: ${props => props.small ? "0.5em" : "0.9em"};
     line-height: 1;
 `
 

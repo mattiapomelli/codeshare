@@ -9,15 +9,21 @@ import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
+import processSnippet from '../../utils/processSnippet'
+import PageHead from '../../components/PageHead'
 
 const Description = styled.pre`
+    white-space: pre-wrap;
     font-size: 0.9rem;
     font-family: inherit;
     font-weight: 300;
     margin-left: 5px;
     padding-left: 1.5rem;
     color: #ccc;
-    border-left: 1px solid ${props => props.theme.colors.secondaryText};
+    border-left: 3px solid ${props => props.theme.colors.secondaryText};
+    /* border-right: 3px solid ${props => props.theme.colors.secondaryText}; */
+    /* background-color: ${props => props.theme.colors.sidebar}; */
+    /* border-radius: ${props => props.theme.borderRadius}; */
 `
 
 const Info = styled(Flex)`
@@ -28,6 +34,17 @@ const Info = styled(Flex)`
         color: #ccc;
     }
 `
+
+// const CategoryTag = styled.span`
+//     background: ${props => props.theme.colors.code[props.language]};
+//     border-radius: ${props => props.theme.borderRadius};
+//     font-family: monospace;
+//     text-transform: uppercase;
+//     padding: 0.3rem 0.8rem;
+//     display: inline-block;
+//     font-size: 0.9rem;
+//     color: ${props => props.theme.colors.background} !important;
+// `
 
 const PageSkeleton = () => (
 	<article>	
@@ -42,10 +59,13 @@ const PageSkeleton = () => (
 const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
     
     return (
-        <>
+        <>  
+
             <H2>{title}</H2>
+            {/* <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>s */}
             <Info h="space-between" v="center">
-                <span>{user.username} &middot; {createdAt.slice(0, 10)}</span>
+                <span>{user.username} &middot; {createdAt.slice(0, 10)}
+                </span>
                 <Likes
                     isLiked={liked}
                     count={likesNum}
@@ -68,11 +88,7 @@ const fetcher = (query, snippetId, userId) => request(process.env.NEXT_PUBLIC_HA
 	isAuth: userId ? true : false
 }).then(data => {
 	const { snippet } = data
-    snippet.likesNum = snippet.likes_aggregate.aggregate.count
-    snippet.liked =  snippet.likes ? snippet.likes.length > 0 : false
-    delete snippet.likes_aggregate
-    delete snippet.likes
-    return snippet
+    return processSnippet(snippet)
 })
 
 const SnippetPage = () => {
@@ -86,8 +102,9 @@ const SnippetPage = () => {
     if(!data) return <PageSkeleton/>
 
     return (
-        <>
-        <Snippet {...data}/>
+        <>  
+            <PageHead title={data.title}/>
+            <Snippet {...data}/>
         </>
     )
 }
