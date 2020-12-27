@@ -5,6 +5,7 @@ export const Skeleton = styled.div`
     display: block;
     height: ${props => props.h || "100%"};
     width: ${props => props.w || "100%"};
+    max-width: ${props => props.mw || "100%"};
     background: linear-gradient(-90deg,
         ${props => props.theme.colors.elements} 0%,
         ${props => props.theme.colors.accent} 50%,

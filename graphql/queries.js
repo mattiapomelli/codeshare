@@ -210,6 +210,7 @@ export const GET_USER_INFO_QUERY = `
 			username
 			email
 			createdAt
+			provider
 		}
 	}
 `

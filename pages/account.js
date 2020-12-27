@@ -48,7 +48,7 @@ const SettingCard = ({ children, title }) => {
 const InfoField = ({ children, title}) => (
     <Field>
         <Label>{title} </Label>
-        { children ? <span>{children}</span> : <Skeleton h="1.55rem" w="65%" /> }
+        { children ? <span>{children}</span> : <Skeleton h="1.55rem" w="20rem" mx="65%"/> }
     </Field>
 )
 
@@ -84,9 +84,12 @@ function Account() {
                         { userData ? new Date(userData.createdAt).toDateString().slice(4) : "" }
                     </InfoField>
                 </SettingCard>
-                <SettingCard title="Change password">
-                    <ChangePasswordForm/>
-                </SettingCard>
+                {
+                    userData?.provider === "email" && 
+                    <SettingCard title="Change password">
+                        <ChangePasswordForm/>
+                    </SettingCard>
+                }
             </SettingsGrid>
             
             <Button small onClick={logOut}>Logout</Button>
