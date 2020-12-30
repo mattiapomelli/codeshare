@@ -61,7 +61,7 @@ const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, crea
     return (
         <>  
 
-            <H2>{title}</H2>
+            <H2 wrap>{title}</H2>
             {/* <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>s */}
             <Info h="space-between" v="center">
                 <span>{user.username} &middot; {createdAt.slice(0, 10)}

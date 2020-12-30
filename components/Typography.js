@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const H1 = styled.h1`
     font-size: 3.3rem;
@@ -15,7 +15,10 @@ export const H2 = styled.h2`
     color: white;
     margin-bottom: 0.5rem;
     line-height: 1;
-
+    ${props => props.wrap && css`
+        overflow-wrap: break-word;
+        max-width: 100%;
+    `}
 `
 
 export const Label = styled.label`

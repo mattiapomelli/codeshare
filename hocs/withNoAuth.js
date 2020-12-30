@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 
-const withAuth = (Component) => (props) => {   //pull out component and roles from props and store all the other properties in rest
+const withNoAuth = (Component) => (props) => {   //pull out component and roles from props and store all the other properties in rest
     const [ session, loading ] = useSession()
     const router = useRouter()
 
@@ -11,11 +11,11 @@ const withAuth = (Component) => (props) => {   //pull out component and roles fr
             router.push('/snippets')
     }, [session, loading])
 
-    if(loading) return null
+    // if(loading) return null
 
     return(
         <Component {...props}/>
     )
 }
 
-export default withAuth
+export default withNoAuth

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from './Button'
 import styled , { keyframes }from 'styled-components'
 
@@ -32,16 +32,25 @@ const CookiesContainer = styled.div`
 `
 
 export default function CookiesPopup() {
-    const [acconsented, setAcconsented] = useState(() => {
-        return localStorage.getItem('cookies_consent') === "true"
-    })
+    const [mounted, setMounted] = useState(false)
+    const [showCookies, setShowCookies] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    useEffect(() => {
+        if(mounted && localStorage.getItem('cookies_consent') !== "true") {
+            setShowCookies(true)
+        }
+    }, [mounted])
 
     const consentCookies = () => {
         localStorage.setItem('cookies_consent', 'true')
-        setAcconsented(true)
+        setShowCookies(false)
     } 
 
-    if(acconsented) return null
+    if(!showCookies) return null
 
     return (
         <CookiesContainer dir="column" v="center" flexWrap="wrap" h="center">
