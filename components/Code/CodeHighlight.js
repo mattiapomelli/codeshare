@@ -7,6 +7,7 @@ import java from 'react-syntax-highlighter/dist/cjs/languages/hljs/java';
 import php from 'react-syntax-highlighter/dist/cjs/languages/hljs/php';
 import sql from 'react-syntax-highlighter/dist/cjs/languages/hljs/sql';
 import go from 'react-syntax-highlighter/dist/cjs/languages/hljs/go';
+import cLike from 'react-syntax-highlighter/dist/cjs/languages/hljs/c-like';
 import c from 'react-syntax-highlighter/dist/cjs/languages/hljs/c';
 import cpp from 'react-syntax-highlighter/dist/cjs/languages/hljs/cpp';
 import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
@@ -22,6 +23,7 @@ SyntaxHighlighter.registerLanguage('java', java);
 SyntaxHighlighter.registerLanguage('php', php);
 SyntaxHighlighter.registerLanguage('sql', sql);
 SyntaxHighlighter.registerLanguage('go', go);
+SyntaxHighlighter.registerLanguage('c-like', cLike);
 SyntaxHighlighter.registerLanguage('c', c);
 SyntaxHighlighter.registerLanguage('cpp', cpp);
 
