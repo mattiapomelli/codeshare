@@ -2,7 +2,7 @@ import { GraphQLClient } from "graphql-request"
 
 const graphQLClientAdmin = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL, {
     headers: {
-        "x-hasura-admin-secret": "UNIMI2020"
+        "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET
     }
 })
 
