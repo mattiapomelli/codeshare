@@ -91,7 +91,7 @@ function Profile() {
             <PageHead title="Sign Up – Codeshare"/>
 
             <Flex v="center" h="space-between" flexWrap="wrap">
-                { session && <H2 wrap>{session.user.username}</H2> }
+                { session && <H2 overflowWrap>{session.user.username}</H2> }
                 <Link href="/account">
                     <span>
                         <IconButton icon="settings" iconType="primary"/>

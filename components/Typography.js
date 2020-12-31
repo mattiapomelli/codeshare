@@ -15,7 +15,7 @@ export const H2 = styled.h2`
     color: white;
     margin-bottom: 0.5rem;
     line-height: 1;
-    ${props => props.wrap && css`
+    ${props => props.overflowWrap && css`
         overflow-wrap: break-word;
         max-width: 100%;
     `}

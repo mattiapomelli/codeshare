@@ -6,7 +6,9 @@ import Layout from "../components/Layout/Layout"
 import theme from "../themes/theme"
 import { useRouter } from "next/router"
 import { initGA } from '../utils/analytics'
-import Footer from '../components/Footer'
+// import dynamic from 'next/dynamic'
+
+// const Layout = dynamic(() => import('../components/Layout/Layout'))
 
 const GlobalStyle = createGlobalStyle`
 	* {
