@@ -24,6 +24,7 @@ export default function NewSnippetForm({ langs }) {
     const [session] = useSession()
     const [showModal, setShowModal] = useState(false)
     const [messages, setMessages] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -39,12 +40,15 @@ export default function NewSnippetForm({ langs }) {
 
     const publishSnippet = (e) => {
         e.preventDefault();
+        setLoading(true)
         executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
         .then(res => {
             setMessages(messages => [...messages, { type: 'success', text: "Snippet published!"}])
             setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
+            setLoading(false)
         }).catch(err => {
             setMessages(messages => [...messages, { type: 'error', text: "Something went wrong"}])
+            setLoading(false)
         })
     }
 
@@ -94,7 +98,8 @@ export default function NewSnippetForm({ langs }) {
                         !snippet.description ||
                         snippet.title.length > limits.title ||
                         snippet.code.length > limits.code ||
-                        snippet.description.length > limits.description
+                        snippet.description.length > limits.description ||
+                        loading
                     }
                 >Publish
                 </Button>

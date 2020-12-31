@@ -21,6 +21,7 @@ export default function ChangePasswordForm() {
     const [session] = useSession()
     const [passwords, setPasswords] = useState({ current: '', newPassword: '', newPassword2: ''})
     const [messages, setMessages] = useState([])
+    const [loading, setLoading] = useState(false)
     
     const onChange = (e) => {
 		setPasswords({...passwords, [e.target.name]: e.target.value})
@@ -34,6 +35,7 @@ export default function ChangePasswordForm() {
             return 
         }
 
+        setLoading(true)
         fetch('/api/changepassword', {
             method: 'POST',
             headers: {
@@ -52,8 +54,9 @@ export default function ChangePasswordForm() {
             if(data.type == 'success') {
                 setPasswords({ current: '', newPassword: '', newPassword2: ''})
             }
+            setLoading(false)
         }).catch(err => {
-            console.log(err)
+            setLoading(false)
         })
     }
 
@@ -83,7 +86,7 @@ export default function ChangePasswordForm() {
                 value={passwords.newPassword2}
                 onChange={onChange}
             />
-            <Button small onClick={changePassword} type="primary">Change</Button>
+            <Button small onClick={changePassword} type="primary" disabled={loading}>Change</Button>
             <Popups popups={messages} setPopups={setMessages}/>
         </PasswordForm>
     )

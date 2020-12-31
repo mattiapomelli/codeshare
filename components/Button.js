@@ -8,7 +8,7 @@ export const Button = styled.button`
     font-size: 0.8rem;
     font-weight: 500;
     padding: ${props => props.padding ? props.padding : props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
-    border-radius: 10em;
+    border-radius: ${props => props.borderRadius || "10em"};
     cursor: pointer;
 
     background: ${props => {
@@ -65,9 +65,9 @@ const StyledFlexButton = styled(Button)`
 `
 
 const StyledIconButton = styled(Button).attrs(props => ({
-    padding: props.small ? "0.5em" : "0.9em"
+    padding: props.small ? "0.5em" : "0.9em",
+    borderRadius: "1.2em",
 }))`
-    border-radius: 1.2em;
     line-height: 1;
 `
 

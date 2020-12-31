@@ -10,9 +10,11 @@ import { logPageView } from '../utils/analytics'
 const ForgotPassword = () => {
     const [email, setEmail] = useState("")
     const [messages, setMessages] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const sendResetPassword = (e) => {
         e.preventDefault()
+        setLoading(true)
         fetch('/api/retrievepassword', {
             method: 'POST',
             headers: {
@@ -29,8 +31,9 @@ const ForgotPassword = () => {
             if(data.type == 'success') {
                 setEmail('')
             }
+            setLoading(false)
         }).catch(err => {
-            console.log(err)
+            setLoading(false)
         })
     }
 
@@ -55,7 +58,7 @@ const ForgotPassword = () => {
                 iconSize={20}
                 big
             />
-            <Button onClick={sendResetPassword} type="primary">
+            <Button onClick={sendResetPassword} type="primary" disabled={loading}>
                 Reset Password
             </Button>      
             <p>Well'send password reset instructions to the email address associated with your account</p>   

@@ -13,6 +13,7 @@ import { logPageView } from '../utils/analytics'
 const Signup = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '', username: '', password2: ''})
     const [messages, setMessages] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const onChange = (e) => {
 		setCredentials({...credentials, [e.target.name]: e.target.value})
@@ -20,6 +21,7 @@ const Signup = () => {
     
     const signInWithGitHub = (e) => {
         e.preventDefault()
+        setLoading(true)
 		signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets` })
     }
     
@@ -31,6 +33,7 @@ const Signup = () => {
             return 
         }
 
+        setLoading(true)
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -49,8 +52,9 @@ const Signup = () => {
             if(data.type == 'success') {
                 setCredentials({ email: '', password: '', username: '', password2: ''})
             }
+            setLoading(false)
         }).catch(err => {
-            console.log(err)
+            setLoading(false)
         })
     }
 
@@ -109,11 +113,11 @@ const Signup = () => {
                 iconSize={20}
                 big
             />
-            <Button onClick={signUp} type="primary">
+            <Button onClick={signUp} type="primary" disabled={loading}>
                 SIGN UP
             </Button>
             <hr/>
-            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github">
+            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github" disabled={loading}>
                 Sign in with GitHub
             </FlexButton>
             <p>

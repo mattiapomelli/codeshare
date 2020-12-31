@@ -15,6 +15,7 @@ const Login = () => {
     const router = useRouter()
     const [credentials, setCredentials] = useState({ email: '', password: ''})
     const [messages, setMessages] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if(router.query.error) {
@@ -34,6 +35,7 @@ const Login = () => {
 
 	const signInWithCredentials = (e) => {
         e.preventDefault()
+        setLoading(true)
 		signIn('credentials', {
 			email: credentials.email.toLowerCase(),
             password: credentials.password,
@@ -43,6 +45,7 @@ const Login = () => {
     
     const signInWithGitHub = (e) => {
         e.preventDefault()
+        setLoading(true)
 		signIn('github', { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets` })
     }
 
@@ -74,11 +77,11 @@ const Login = () => {
                 iconSize={20}
                 big
             />
-            <Button onClick={signInWithCredentials} type="primary">
+            <Button onClick={signInWithCredentials} type="primary" disabled={loading}>
                 LOGIN
             </Button>
             <hr/>
-            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github">
+            <FlexButton onClick={signInWithGitHub} type="inverted" icon="github" disabled={loading}>
                 Sign in with GitHub
             </FlexButton>
             <p>
