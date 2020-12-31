@@ -17,7 +17,7 @@ const defaultCode = `function yourAwesomeFunction() {
     // copy or write your code!
 }`;
 
-const limits = { title: 10, code: 2000, description: 1000 }
+const limits = { title: 80, code: 2000, description: 1000 }
 
 export default function NewSnippetForm({ langs }) {
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
