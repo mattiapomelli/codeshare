@@ -10,6 +10,8 @@ export const Button = styled.button`
     padding: ${props => props.padding ? props.padding : props.small ? "1.1em 2.6em" : "1.4em 2.6em"};
     border-radius: ${props => props.borderRadius || "10em"};
     cursor: pointer;
+    min-width: ${props => props.minWidth || 'auto'};
+    text-align: center;
 
     background: ${props => {
         switch(props.type) {
@@ -61,7 +63,6 @@ const StyledFlexButton = styled(Button)`
     align-items: center;
     justify-content: center;
     svg { margin-left: 5px; };
-    min-width: ${props => props.minWidth || 'auto'};
 `
 
 const StyledIconButton = styled(Button).attrs(props => ({
@@ -85,3 +86,14 @@ export const FlexButton= ({ children, icon, iconType, small, ...rest }) => {
         </StyledFlexButton>
     )
 }
+
+export const Tab = styled.div`
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 1.1em 2.6em;
+    border-radius: 10em;
+    min-width: ${props => props.minWidth || 'auto'};
+    text-align: center;
+    background-color: ${props => props.theme.colors.elements};
+    color: ${props => props.theme.colors.text};
+`

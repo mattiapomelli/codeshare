@@ -214,3 +214,14 @@ export const GET_USER_INFO_QUERY = `
 		}
 	}
 `
+
+export const GET_SNIPPET_INFO = `
+	query SingleSnippetQuery($id: uuid!) {
+	  	snippet: snippet_by_pk(id: $id) {
+			code
+			description
+			programmingLang
+			title
+		}
+	}
+`

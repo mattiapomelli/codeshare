@@ -5,9 +5,11 @@ import withAuth from '../hocs/withAuth'
 import graphQLClientAdmin from '../graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
 import PageHead from '../components/PageHead'
+import { useRouter } from 'next/router'
 import { logPageView } from '../utils/analytics'
 
 function EditorPage({ langs }) {
+    const router = useRouter()
 
     useEffect(()=>{
         logPageView()
@@ -17,7 +19,7 @@ function EditorPage({ langs }) {
         <>
 			<PageHead title="Editor – Codeshare"/>
             <H1>Editor</H1>
-            <NewSnippetForm langs={langs}/>
+            <NewSnippetForm langs={langs} id={router.query.edit}/>
         </> 
     );
 }

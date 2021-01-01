@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 export const CREATE_SNIPPET_MUTATION = gql`
-    mutation MyMutation ($code: String!, $description: String, $programmingLang: String!, $title: String!){
+    mutation MyMutation ($code: String!, $description: String!, $programmingLang: String!, $title: String!){
         insert_snippet(objects: {code: $code, description: $description, programmingLang: $programmingLang, title: $title}) {
             returning {
                 title
@@ -76,6 +76,14 @@ export const DELETE_SNIPPET = `
 mutation DeleteSnippet($id: uuid!) {
   delete_snippet(where: {id: {_eq: $id}}) {
     affected_rows
+  }
+}
+`
+
+export const UPDATE_SNIPPET_MUTATION = `
+mutation UpdateSnippetMutation($id: uuid!, $code: String!, $description: String, $title: String!) {
+  update_snippet_by_pk(pk_columns: {id: $id}, _set: {code: $code, description: $description, title: $title}) {
+    id
   }
 }
 `

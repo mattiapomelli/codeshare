@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { Icon } from "./Icon/Icon"
 import DeleteSnippetModal from "./DeleteSnippetModal"
 import styled from 'styled-components'
+import Link from 'next/link'
 
 const ActionsMenu = styled.ul`
     list-style-type: none;
@@ -65,6 +66,9 @@ export default function SnippetActions({ id }) {
                 open &&
                 <ActionsMenu>
                     <ActionItem onClick={() => setShowModal(true)}>Delete</ActionItem>
+                    <Link href={`/editor?edit=${id}`}>
+                        <ActionItem>Edit</ActionItem>
+                    </Link>
                 </ActionsMenu>
             }
             { showModal && <DeleteSnippetModal close={() => setShowModal(false)} id={id}/> }
