@@ -85,6 +85,12 @@ export default function NewSnippetForm({ langs }) {
         })
     }
 
+    const cancelEdit = (e) => {
+        e.preventDefault();
+        router.push('/editor')
+        setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
+    }
+
     return (
         <>
         <EditorForm dir="column" h="center" v="stretch">        
@@ -125,6 +131,13 @@ export default function NewSnippetForm({ langs }) {
             </DescriptionArea>
             
             <SubmitArea>
+                { isEdit && 
+                <Button
+                    type="secondary"
+                    onClick={cancelEdit}
+                    style={{marginRight: '0.5rem'}}
+                >Cancel
+                </Button>}
                 <Button
                     type="primary"
                     onClick={isEdit ? updateSnippet : publishSnippet}
