@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { logPageView } from '../utils/analytics'
 
 function EditorPage({ langs }) {
-    const router = useRouter()
 
     useEffect(()=>{
         logPageView()
@@ -19,7 +18,7 @@ function EditorPage({ langs }) {
         <>
 			<PageHead title="Editor – Codeshare"/>
             <H1>Editor</H1>
-            <NewSnippetForm langs={langs} id={router.query.edit}/>
+            <NewSnippetForm langs={langs}/>
         </> 
     );
 }

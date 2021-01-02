@@ -81,7 +81,7 @@ mutation DeleteSnippet($id: uuid!) {
 `
 
 export const UPDATE_SNIPPET_MUTATION = `
-mutation UpdateSnippetMutation($id: uuid!, $code: String!, $description: String, $title: String!) {
+mutation UpdateSnippetMutation($id: uuid!, $code: String!, $description: String!, $title: String!) {
   update_snippet_by_pk(pk_columns: {id: $id}, _set: {code: $code, description: $description, title: $title}) {
     id
   }

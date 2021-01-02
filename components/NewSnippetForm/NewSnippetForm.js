@@ -28,8 +28,10 @@ const fetcher = (query, id) => request(process.env.NEXT_PUBLIC_HASURA_URL, query
 export default function NewSnippetForm({ langs }) {
     const router = useRouter()
     const id = router.query.edit
-    const isEdit = id != undefined
-    const { data } = useSWR([GET_SNIPPET_INFO, id], fetcher)
+    const isEdit = id !== undefined
+    const { data, error } = useSWR(isEdit ? [GET_SNIPPET_INFO, id] : null, fetcher, {
+        revalidateOnFocus: false,
+    })
     const [snippet, setSnippet] = useState({title: "", code: defaultCode, description: "", programmingLang: "JavaScript"})
     const [session] = useSession()
     const [showModal, setShowModal] = useState(false)
@@ -37,11 +39,18 @@ export default function NewSnippetForm({ langs }) {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if(data) {
-            console.log(data)
-            setSnippet(data)
+        if(error) {
+            cancelEdit()
         }
-    }, [data])
+        if(data) {
+            const {title, description, programmingLang, code, user} = data
+            if(user.username != session.user.username) {
+                cancelEdit()
+            } else {
+                setSnippet({title, description, programmingLang, code})
+            } 
+        }
+    }, [data, error])
 
     const onCodeChange = (codeString) => {
         setSnippet({...snippet, code: codeString});
@@ -55,45 +64,43 @@ export default function NewSnippetForm({ langs }) {
         setSnippet({...snippet, [e.target.name]: e.target.value})
     }
 
-    const publishSnippet = (e) => {
+    const publishSnippet = async (e) => {
         e.preventDefault();
         setLoading(true)
-        executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
-        .then(res => {
+        try {
+            await executeQuery(CREATE_SNIPPET_MUTATION, {...snippet }, session.user.jwt)
             setMessages(messages => [...messages, { type: 'success', text: "Snippet published!"}])
             setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
             setLoading(false)
-        }).catch(err => {
-            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong"}])
+        } catch(err) {
+            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong, please try again"}])
             setLoading(false)
-        })
+        }
     }
 
-    const updateSnippet = (e) => {
+    const updateSnippet = async (e) => {
         e.preventDefault();
         setLoading(true)
-        const { title, description, code } = snippet
-        executeQuery(UPDATE_SNIPPET_MUTATION, {id, title, description, code}, session.user.jwt)
-        .then(res => {
+        try {
+            const { title, description, code } = snippet
+            await executeQuery(UPDATE_SNIPPET_MUTATION, {id, title, description, code}, session.user.jwt)
             setMessages(messages => [...messages, { type: 'success', text: "Snippet updated!"}])
-            router.push('/editor')
-            setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
             setLoading(false)
-        }).catch(err => {
-            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong"}])
+            cancelEdit()
+        } catch(err) {
+            setMessages(messages => [...messages, { type: 'error', text: "Something went wrong, please try again"}])
             setLoading(false)
-        })
+        }
     }
 
-    const cancelEdit = (e) => {
-        e.preventDefault();
-        router.push('/editor')
+    const cancelEdit = () => {
         setSnippet(prevSnippet => ({...prevSnippet, title: '', description: '', code: defaultCode}))
+        router.push('/editor')
     }
 
     return (
         <>
-        <EditorForm dir="column" h="center" v="stretch">        
+        <EditorForm>        
             <EditorArea>
                 <Label>Code</Label>
                 <CodeEditor onChangeHandler={onCodeChange} valueHandler={snippet.code} language={snippet.programmingLang}/>
@@ -134,7 +141,7 @@ export default function NewSnippetForm({ langs }) {
                 { isEdit && 
                 <Button
                     type="secondary"
-                    onClick={cancelEdit}
+                    onClick={(e) => {e.preventDefault(); cancelEdit()}}
                     style={{marginRight: '0.5rem'}}
                 >Cancel
                 </Button>}

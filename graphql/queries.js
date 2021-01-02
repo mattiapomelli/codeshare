@@ -22,7 +22,7 @@ export const GET_FILTERED_SNIPPETS_QUERY = `
 `
 
 export const GET_LATEST_SNIPPETS_QUERY = `
-	query SearchSnippetsQuery( $programmingLang: String, $limit: Int!, $offset: Int!, $userId: uuid, $isAuth: Boolean!) {
+	query GetLatestSnippetsQuery( $programmingLang: String, $limit: Int!, $offset: Int!, $userId: uuid, $isAuth: Boolean!) {
 	snippets: snippet( where: {programmingLang: {_eq: $programmingLang}}, order_by: {createdAt: desc}, limit: $limit, offset: $offset) {
 		title
 		code
@@ -222,6 +222,9 @@ export const GET_SNIPPET_INFO = `
 			description
 			programmingLang
 			title
+			user {
+				username
+			}
 		}
 	}
 `
