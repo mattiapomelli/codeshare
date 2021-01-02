@@ -22,7 +22,11 @@ export default function DeleteSnippetModal({ close, id }) {
         try {
             setLoading(true)
             await executeQuery(DELETE_SNIPPET, { id }, session.user.jwt)
-            window.location.reload();
+            if(window.location.pathname.startsWith("/snippet/")) {
+                window.location.href = "/profile"
+            } else {
+                window.location.reload();
+            }
         } catch(err) {
             setLoading(false)
         }

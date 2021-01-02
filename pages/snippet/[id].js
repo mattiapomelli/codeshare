@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from "graphql-request"
 import processSnippet from '../../utils/processSnippet'
+import SnippetActions from '../../components/SnippetActions'
 import PageHead from '../../components/PageHead'
 
 const Description = styled.pre`
@@ -32,6 +33,7 @@ const Info = styled(Flex)`
     span {
         font-weight: 300;
         color: #ccc;
+        flex: 1;
     }
 `
 
@@ -57,21 +59,28 @@ const PageSkeleton = () => (
 )
 
 const Snippet = ({ code, programmingLang, title, id, likesNum, liked, user, createdAt, description, mutate }) => {
+    const [session] = useSession()
     
     return (
         <>  
 
             <H2 overflowWrap>{title}</H2>
             {/* <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>s */}
-            <Info h="space-between" v="center">
-                <span>{user.username} &middot; {createdAt.slice(0, 10)}
+            <Info h="space-between" v="center" flexWrap="wrap">
+                <span>
+                    {user.username} &middot; {createdAt.slice(0, 10)}
                 </span>
-                <Likes
-                    isLiked={liked}
-                    count={likesNum}
-                    snippetId={id}
-                    secondMutate={mutate}
-                />
+                <Flex v="center">
+                    { session?.user.username === user.username &&
+                        <SnippetActions id={id}/>
+                    }
+                    <Likes
+                        isLiked={liked}
+                        count={likesNum}
+                        snippetId={id}
+                        secondMutate={mutate}
+                    />
+                </Flex>
             </Info>
             <CodeBlock codeString={code + "\n"} language={programmingLang}/>    
             <Label style={{marginTop: "1rem"}}>Description</Label>
