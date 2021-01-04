@@ -10,7 +10,10 @@ const useInfiniteScrolling = (query, variables, fetcher) => {
 	const reachedEnd = useRef(false)
 
 	const { data, error, size, setSize } = useSWRInfinite(
-		index => !loading ? [query, index*6, userId, ...Object.values(variables)] : null,
+		(index) => {
+			if(loading) return null;
+			return [query, index*6, userId, ...Object.values(variables)]
+		},
 		fetcher,
 		{ 
 			revalidateAll: false,
