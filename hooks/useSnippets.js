@@ -4,13 +4,13 @@ import scrolledToBottom from "../utils/scrolled-to-bottom"
 import { useSession } from "next-auth/client"
 
 const useInfiniteScrolling = (query, variables, fetcher) => {
-	const [session] = useSession()
+	const [session, loading] = useSession()
 	const userId = session ? session.user.id : null
 	const loadingMore = useRef(false)
 	const reachedEnd = useRef(false)
 
 	const { data, error, size, setSize } = useSWRInfinite(
-		index => [query, index*6, userId, ...Object.values(variables)],
+		index => !loading ? [query, index*6, userId, ...Object.values(variables)] : null,
 		fetcher,
 		{ 
 			revalidateAll: false,
