@@ -1,6 +1,7 @@
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import js from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript';
-import html from 'react-syntax-highlighter/dist/cjs/languages/hljs/htmlbars';
+import xml from 'react-syntax-highlighter/dist/cjs/languages/hljs/xml';
+import htmlbars from 'react-syntax-highlighter/dist/cjs/languages/hljs/htmlbars';
 import css from 'react-syntax-highlighter/dist/cjs/languages/hljs/css';
 import python from 'react-syntax-highlighter/dist/cjs/languages/hljs/python';
 import java from 'react-syntax-highlighter/dist/cjs/languages/hljs/java';
@@ -16,7 +17,8 @@ import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 // theme["hljs-title"].fontStyle = "normal";
  
 SyntaxHighlighter.registerLanguage('javascript', js);
-SyntaxHighlighter.registerLanguage('html', html);
+SyntaxHighlighter.registerLanguage('xml', xml);
+SyntaxHighlighter.registerLanguage('html', htmlbars);
 SyntaxHighlighter.registerLanguage('css', css);
 SyntaxHighlighter.registerLanguage('python', python);
 SyntaxHighlighter.registerLanguage('java', java);
