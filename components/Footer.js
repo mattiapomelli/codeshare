@@ -40,10 +40,10 @@ export default function Footer({ expanded }) {
                     </Link>
                     <li><a href="mailto:hello@codeshare.tech">Contact</a></li>
                 </LinksList>
-                <LinksList as="ul" flexWrap="wrap" h="flex-end">
+                {/* <LinksList as="ul" flexWrap="wrap" h="flex-end">
                     <li><Icon name="instagram" type="primary" size={18}/></li>
                     <li><Icon name="twitch" type="primary" size={18}/></li>
-                </LinksList>
+                </LinksList> */}
             </Flex>
         </FooterContainer>
     )
