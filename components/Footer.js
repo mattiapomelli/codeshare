@@ -31,7 +31,7 @@ export default function Footer({ expanded }) {
         <FooterContainer expanded={expanded}>       
             <Flex h="space-between" v="center" flexWrap="wrap">
                 <LinksList as="ul" flexWrap="wrap">
-                    <li>&copy; 2020, Codeshare</li>
+                    <li>&copy; 2021, Codeshare</li>
                     <Link href="/privacy-policy">
                         <li><a>Privacy</a></li>
                     </Link>

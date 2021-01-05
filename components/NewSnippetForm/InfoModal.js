@@ -14,7 +14,7 @@ export default function InfoModal({ close }) {
             <h4>Wondering what you should write in your snippet's description?</h4>
 
             <P>
-                Here are some advices about what should be mentioned:
+                Here are some advices about what could be worth mentioning:
                 <BulletList>
                     <li>explain what your code does</li>
                     <li>explain a little bit about how it works</li>

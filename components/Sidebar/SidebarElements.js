@@ -6,6 +6,15 @@ export const SideNavItem = styled.li`
     width: 100%;
     border-radius: 10em;
     margin-bottom: 0.6rem;
+    animation: fadeIn 1s;
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
 
     a {
         display: flex;
@@ -79,16 +88,7 @@ export const SidebarLayout = styled.aside`
     header{ margin-top: 35px; }
     nav {
         margin-top: 2rem;
-        width: 80%;
-        animation: fadeIn 1s;
-        @keyframes fadeIn {
-            0% {
-                opacity:0;
-            }
-            100% {
-                opacity:1;
-            }
-        }
+        width: 80%; 
     }
 
     ${props => props.collapsed && css`

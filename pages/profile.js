@@ -88,7 +88,7 @@ function Profile() {
 
     return (
         <> 
-            <PageHead title="Sign Up – Codeshare"/>
+            <PageHead title={`${session.user.username} – Codeshare`}/>
 
             <Flex v="center" h="space-between" flexWrap="wrap">
                 { session && <H2 overflowWrap>{session.user.username}</H2> }
