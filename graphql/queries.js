@@ -136,7 +136,7 @@ export const GET_USER_SNIPPETS_QUERY = `
 			id
 			title
 			programmingLang
-			likes {
+			likes(where: {userId: {_eq: $userId}}) {
 				createdAt
 			}
 			likes_aggregate {
