@@ -13,6 +13,7 @@ import Flex from '../components/Flex'
 import { Button, IconButton } from '../components/Button'
 import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
+import { executeQuery } from '../graphql/client'
 
 const Tab = styled.li`
     display: inline-block;
@@ -63,26 +64,26 @@ const TabItem = ({ children, count, active, onClick }) => {
     )
 }
 
-const fetcher = (query, offset, userId) => request( process.env.NEXT_PUBLIC_HASURA_URL, query, {
+const fetcher = (query, offset, userId, token) => executeQuery(query, {
 	limit: 6,
 	offset,
 	userId: userId,
-}).then(data => {
+}, token).then(data => {
     data.snippets.forEach(snippet => processSnippet(snippet))
 	return data.snippets
 })
 
-const countFetcher = (query, userId) => request(process.env.NEXT_PUBLIC_HASURA_URL, query, {userId}).then(res => {
+const countFetcher = (query, userId, token) => executeQuery(query, {userId}, token).then(res => {
     return res.result.aggregate.count
 })
 
 function Profile() {
     const [option, setOption] = useState("snippets")
     const [session] = useSession()
-    const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id], countFetcher, {
+    const { data: snippetsCount } = useSWR([GET_USER_SNIPPET_COUNT, session.user.id, session.user.jwt], countFetcher, {
         revalidateOnFocus: false,
     })
-    const { data: likedCount } = useSWR([GET_LIKED_SNIPPETS_COUNT, session.user.id], countFetcher, {
+    const { data: likedCount } = useSWR([GET_LIKED_SNIPPETS_COUNT, session.user.id, session.user.jwt], countFetcher, {
         revalidateOnFocus: false,
     })
 
@@ -114,7 +115,7 @@ function Profile() {
 
             <Snippets
                 query={option === "snippets" ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY }
-                variables={{}}
+                variables={{token: session.user.jwt}}
                 fetcher={fetcher}
             >
                 {
