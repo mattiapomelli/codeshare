@@ -8,5 +8,6 @@ export default {
     "python": "py",
     "sql": "sql",
     "c++": "cpp",
-    "php": "php"
+    "php": "php",
+    "rust": "rs",
 }

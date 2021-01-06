@@ -23,7 +23,8 @@ export default {
             python: "#336E9C",
             "c++": "#eb7195",
             go: "#00ADD8",
-            php: "#4F5D95"
+            php: "#4F5D95",
+            rust: "#d99c79"
         }
     },
     breakpoints: {

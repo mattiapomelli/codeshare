@@ -11,6 +11,8 @@ import go from 'react-syntax-highlighter/dist/cjs/languages/hljs/go';
 import cLike from 'react-syntax-highlighter/dist/cjs/languages/hljs/c-like';
 import c from 'react-syntax-highlighter/dist/cjs/languages/hljs/c';
 import cpp from 'react-syntax-highlighter/dist/cjs/languages/hljs/cpp';
+import rust from 'react-syntax-highlighter/dist/cjs/languages/hljs/rust';
+// import bash from 'react-syntax-highlighter/dist/cjs/languages/hljs/bash';
 import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark';
 // theme["hljs-keyword"].fontStyle = "normal";
 // theme["hljs-built_in"].fontStyle = "normal";
@@ -28,6 +30,8 @@ SyntaxHighlighter.registerLanguage('go', go);
 SyntaxHighlighter.registerLanguage('c-like', cLike);
 SyntaxHighlighter.registerLanguage('c', c);
 SyntaxHighlighter.registerLanguage('cpp', cpp);
+SyntaxHighlighter.registerLanguage('rust', rust);
+// SyntaxHighlighter.registerLanguage('bash', bash);
 
 const CodeHighlight = ({ codeString, language, wrapLongLines, pre }) => {
 
