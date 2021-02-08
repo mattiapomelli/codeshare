@@ -3,7 +3,11 @@ import Icon from './Icon'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-const FooterContainer = styled.footer`
+interface FooterProps {
+	expanded?: boolean
+}
+
+const FooterContainer = styled.footer<FooterProps>`
 	font-size: 0.8rem;
 	padding: 2rem 0;
 	width: ${props => (props.expanded ? '100%' : '90%')};
@@ -28,7 +32,7 @@ const LinksList = styled(Flex)`
 	}
 `
 
-export default function Footer({ expanded }) {
+export default function Footer({ expanded = false }: FooterProps) {
 	return (
 		<FooterContainer expanded={expanded}>
 			<Flex h="space-between" v="center" flexWrap="wrap">

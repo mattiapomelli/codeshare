@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { DELETE_SNIPPET } from '../graphql/mutations'
-import { executeQuery } from '../graphql/client'
+import { DELETE_SNIPPET } from '../../graphql/mutations'
+import { executeQuery } from '../../graphql/client'
 import { useSession } from 'next-auth/client'
-import Modal from './Modal'
-import Button from './Button'
-import Flex from './Flex'
+import Modal from '../Modal'
+import Button from '../Button'
+import Flex from '../Flex'
 import styled from 'styled-components'
 
 const Buttons = styled(Flex)`
@@ -14,7 +14,12 @@ const Buttons = styled(Flex)`
 	}
 `
 
-export default function DeleteSnippetModal({ close, id }) {
+interface Props {
+	close: () => void
+	id: string
+}
+
+export default function DeleteSnippetModal({ close, id }: Props) {
 	const [session] = useSession()
 	const [loading, setLoading] = useState(false)
 

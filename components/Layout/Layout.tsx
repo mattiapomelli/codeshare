@@ -1,13 +1,13 @@
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
 import { Header, Page, Main } from './LayoutElements'
-import Sidebar from '../Sidebar/Sidebar'
+import Sidebar from '../Sidebar'
 import Button from '../Button'
 import { IconButton } from '../Icon'
 import Footer from '../Footer'
 import { useSession } from 'next-auth/client'
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
 	const [collapsed, setCollapsed] = useState(false)
 	const [session] = useSession()
 

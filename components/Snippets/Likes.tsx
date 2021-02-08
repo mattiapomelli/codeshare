@@ -8,7 +8,7 @@ import { GET_LIKED_SNIPPETS_COUNT } from '../../graphql/queries'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 import Icon from '../Icon'
-import useCache from '../../hooks/useCache'
+import useCache from '../../hooks/use-cache'
 import { useRouter } from 'next/router'
 import { mutate, cache } from 'swr'
 

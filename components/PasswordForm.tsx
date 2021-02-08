@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import Popups from '../components/Popup/Popup'
-import Input from '../components/Input'
-import { Label } from '../components/Typography'
-import Button from '../components/Button'
+import Popups from './Popup/Popup'
+import Input from './Input'
+import { Label } from './Typography'
+import Button from './Button'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 
@@ -66,7 +66,7 @@ export default function ChangePasswordForm() {
 				}
 				setLoading(false)
 			})
-			.catch(err => {
+			.catch(() => {
 				setLoading(false)
 			})
 	}

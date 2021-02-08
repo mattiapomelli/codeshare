@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { executeQuery } from '../../graphql/client'
 import {
 	CREATE_SNIPPET_MUTATION,
@@ -17,7 +17,7 @@ import {
 	InfoArea,
 	SubmitArea,
 	InfoIcon,
-} from './FormElements'
+} from './styles'
 import TextLimiter from './TextLimiter'
 import Button from '../Button'
 import Dropdown from '../Dropdown'
@@ -38,7 +38,7 @@ const fetcher = (query, id) =>
 		data => data.snippet
 	)
 
-export default function NewSnippetForm({ langs }) {
+export default function SnippetEditor({ langs }: { langs: string[] }) {
 	const router = useRouter()
 	const id = router.query.edit
 	const isEdit = id !== undefined
@@ -60,6 +60,16 @@ export default function NewSnippetForm({ langs }) {
 	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
 
+	const cancelEdit = useCallback(() => {
+		setSnippet(prevSnippet => ({
+			...prevSnippet,
+			title: '',
+			description: '',
+			code: defaultCode,
+		}))
+		router.push('/editor')
+	}, [router])
+
 	useEffect(() => {
 		if (error) {
 			cancelEdit()
@@ -72,7 +82,7 @@ export default function NewSnippetForm({ langs }) {
 				setSnippet({ title, description, programmingLang, code })
 			}
 		}
-	}, [data, error])
+	}, [data, error, cancelEdit, session.user.username])
 
 	const onCodeChange = codeString => {
 		setSnippet({ ...snippet, code: codeString })
@@ -140,16 +150,6 @@ export default function NewSnippetForm({ langs }) {
 		}
 	}
 
-	const cancelEdit = () => {
-		setSnippet(prevSnippet => ({
-			...prevSnippet,
-			title: '',
-			description: '',
-			code: defaultCode,
-		}))
-		router.push('/editor')
-	}
-
 	return (
 		<>
 			<EditorForm>
@@ -186,7 +186,6 @@ export default function NewSnippetForm({ langs }) {
 								value={snippet.programmingLang}
 								onSelect={onLanguageChange}
 								right
-								minWidth="7rem"
 							/>
 						)}
 					</div>

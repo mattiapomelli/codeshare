@@ -1,9 +1,9 @@
-import { SidebarLayout, SideNavItem } from './SidebarElements'
+import { SidebarLayout, SideNavItem } from './styles'
 import Flex from '../Flex'
 import Logo from '../Logo'
-import Icon from '../Icon'
-import { useRouter } from 'next/router'
+import Icon, { IconName } from '../Icon'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 
@@ -17,7 +17,14 @@ const CloseIcon = styled(Icon)`
 	}
 `
 
-const NavLink = ({ children, href, icon, onClick }) => {
+interface NavLinkProps {
+	children: string
+	href: string
+	icon: IconName
+	onClick: () => void
+}
+
+const NavLink = ({ children, href, icon, onClick }: NavLinkProps) => {
 	const router = useRouter()
 	const active = router.pathname === href
 
@@ -25,11 +32,7 @@ const NavLink = ({ children, href, icon, onClick }) => {
 		<SideNavItem active={active} onClick={onClick}>
 			<Link href={href}>
 				<a>
-					<Icon
-						icon={icon}
-						size={18}
-						variant={active ? 'primary' : 'secondary'}
-					/>
+					<Icon icon={icon} size={18} variant={active ? 'primary' : null} />
 					<span className="menu-text">{children}</span>
 				</a>
 			</Link>
@@ -37,7 +40,12 @@ const NavLink = ({ children, href, icon, onClick }) => {
 	)
 }
 
-export default function Sidebar({ collapsed, setCollapsed }) {
+interface SidebarProps {
+	collapsed?: boolean
+	setCollapsed: (collapsed: boolean) => void
+}
+
+export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
 	const [session] = useSession()
 
 	const closeSidebar = () => {
@@ -48,7 +56,9 @@ export default function Sidebar({ collapsed, setCollapsed }) {
 
 	return (
 		<SidebarLayout collapsed={collapsed}>
-			<CloseIcon icon="cross" variant="primary" onClick={closeSidebar} />
+			<span onClick={closeSidebar}>
+				<CloseIcon icon="cross" variant="primary" />
+			</span>
 			<header>
 				<Logo size={32} href={session ? '/snippets' : '/'} />
 				<Flex dir="column" v="center" h="center" as="nav" auto>

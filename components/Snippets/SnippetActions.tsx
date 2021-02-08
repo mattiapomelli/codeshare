@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Icon from '../Icon'
-import DeleteSnippetModal from '../DeleteSnippetModal'
+import DeleteSnippetModal from './DeleteSnippetModal'
 import styled from 'styled-components'
 import Link from 'next/link'
 

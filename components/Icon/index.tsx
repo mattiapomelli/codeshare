@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react'
 import * as icons from './icons'
 import type { IconNames } from './icons'
 import styled from 'styled-components'
@@ -13,6 +14,7 @@ interface SVGProps {
 
 interface IconProps extends SVGProps {
 	icon: IconName
+	onClick?: (event: MouseEvent<SVGElement>) => void
 }
 
 const SVG = styled.svg<SVGProps>`
@@ -42,7 +44,12 @@ const Icon = ({ icon, ...rest }: IconProps) => {
 
 export default Icon
 
-export const IconButton = ({ icon, ...rest }: { icon: IconName }) => {
+interface IconButtonProps {
+	icon: IconName
+	onClick: (event: MouseEvent<HTMLButtonElement>) => void
+}
+
+export const IconButton = ({ icon, ...rest }: IconButtonProps) => {
 	return (
 		<StyledIconButton {...rest}>
 			<Icon icon={icon} variant="primary" />

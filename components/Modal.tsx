@@ -33,8 +33,13 @@ const CloseIcon = styled(Icon)`
 	cursor: pointer;
 `
 
-export default function Modal({ children, close }) {
-	const modalRef = useRef()
+interface Props {
+	children: React.ReactNode
+	close: () => void
+}
+
+export default function Modal({ children, close }: Props) {
+	const modalRef = useRef<HTMLDivElement>()
 
 	useEffect(() => {
 		function handleClick(event) {
@@ -46,12 +51,12 @@ export default function Modal({ children, close }) {
 		window.addEventListener('click', handleClick)
 
 		return () => window.removeEventListener('click', handleClick)
-	}, [])
+	}, [close])
 
 	return (
 		<ModalWrapper v="center" h="center">
 			<ModalContent ref={modalRef}>
-				<CloseIcon name="cross" type="primary" size={18} onClick={close} />
+				<CloseIcon icon="cross" variant="primary" size={18} onClick={close} />
 				{children}
 			</ModalContent>
 		</ModalWrapper>

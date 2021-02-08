@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Button from './Button'
-import Icon from '../components/Icon'
+import Icon from './Icon'
 import Flex from './Flex'
 import Link from 'next/link'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 
-const List = styled.ul`
+const List = styled.ul<{ show: boolean }>`
 	list-style-type: none;
 	position: absolute;
 	top: 0.8rem;
@@ -41,7 +41,7 @@ const List = styled.ul`
 		border: none;
 		padding: 0;
 		& > *:not(:last-child) {
-			margin-right: ${props => (props.horizontal ? props.margin : '0')};
+			margin-right: 2rem;
 		}
 		animation: fadeIn 1s;
 		@keyframes fadeIn {
@@ -67,6 +67,7 @@ const NavMenu = styled(Flex)`
 const HamIcon = styled(Icon)`
 	z-index: 30;
 	position: relative;
+	cursor: pointer;
 	@media ${props => props.theme.breakpoints.tablet} {
 		display: none;
 	}
@@ -80,7 +81,7 @@ export default function Navbar() {
 		<NavMenu h="space-between" v="center" as="header" auto>
 			<Logo size={36} />
 			<nav>
-				<List horizontal margin="2rem" v="center" as="ul" show={showNavbar}>
+				<List show={showNavbar}>
 					<Link href="/snippets">
 						<li>
 							<a>Snippets</a>
@@ -88,11 +89,11 @@ export default function Navbar() {
 					</Link>
 					{session ? (
 						<Link href="/editor">
-							<Button type="primary">Share code</Button>
+							<Button variant="primary">Share code</Button>
 						</Link>
 					) : (
 						<Link href="/signup">
-							<Button type="primary">Sign up</Button>
+							<Button variant="primary">Sign up</Button>
 						</Link>
 					)}
 				</List>

@@ -3,11 +3,11 @@ import Button from './Button'
 import styled, { keyframes } from 'styled-components'
 
 const slideInBottom = keyframes`
-    from {
-	    transform: translateY(100%); 
+  from {
+    transform: translateY(100%); 
 	}
 	to {
-	    transform: translatey(0);
+    transform: translatey(0);
 	}
 `
 
@@ -52,7 +52,7 @@ export default function CookiesPopup() {
 	if (!showCookies) return null
 
 	return (
-		<CookiesContainer dir="column" v="center" flexWrap="wrap" h="center">
+		<CookiesContainer>
 			<h3>This website uses cookies</h3>
 			<div>
 				We use cookies to provide you with a great user experience. By using
