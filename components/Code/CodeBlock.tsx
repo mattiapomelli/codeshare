@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import CodeHighlight from './Code/CodeHighlight'
-import { CodeLayout } from './Code/CodeLayout'
-import { ScrollWrapper } from './Code/ScrollWrapper'
-import Icon from './Icon'
-import copyToClipboard from '../utils/copy-to-clipboard'
+import CodeHighlight from './CodeHighlight'
+import CodeLayout from './CodeLayout'
+import ScrollWrapper from './ScrollWrapper'
+import Icon from '../Icon'
+import copyToClipboard from '../../utils/copy-to-clipboard'
 import styled from 'styled-components'
 
 const CopyButton = styled.div`
@@ -32,7 +32,13 @@ const CopiedText = styled.span`
 	padding: 0.3rem;
 `
 
-const CodeBlock = ({ codeString, language, preview }) => {
+interface Props {
+	codeString: string
+	language: string
+	preview?: boolean
+}
+
+const CodeBlock = ({ codeString, language, preview }: Props) => {
 	const [copied, setCopied] = useState(false)
 
 	const clickHandler = e => {
@@ -50,7 +56,6 @@ const CodeBlock = ({ codeString, language, preview }) => {
 				<CodeHighlight
 					codeString={codeString}
 					language={language.toLowerCase()}
-					wrapLines={true}
 					wrapLongLines={false}
 				/>
 			</ScrollWrapper>

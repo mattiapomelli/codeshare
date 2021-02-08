@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import Icon from './Icon'
-import DeleteSnippetModal from './DeleteSnippetModal'
+import Icon from '../Icon'
+import DeleteSnippetModal from '../DeleteSnippetModal'
 import styled from 'styled-components'
 import Link from 'next/link'
 
@@ -42,10 +42,14 @@ const ActionsIcon = styled.div`
 	}
 `
 
-export default function SnippetActions({ id }) {
+interface Props {
+	id: string
+}
+
+export default function SnippetActions({ id }: Props) {
 	const [open, setOpen] = useState(false)
 	const [showModal, setShowModal] = useState(false)
-	const dropdownRef = useRef()
+	const dropdownRef = useRef<HTMLDivElement>()
 
 	useEffect(() => {
 		function handleClick(event) {
@@ -60,15 +64,12 @@ export default function SnippetActions({ id }) {
 
 	return (
 		<ActionsWrapper ref={dropdownRef}>
-			<ActionsIcon>
-				<Icon
-					icon="arrowdown"
-					variant="primary"
-					size={20}
-					onClick={() => {
-						setOpen(open => !open)
-					}}
-				/>
+			<ActionsIcon
+				onClick={() => {
+					setOpen(open => !open)
+				}}
+			>
+				<Icon icon="arrowdown" variant="primary" size={20} />
 			</ActionsIcon>
 			{open && (
 				<ActionsMenu>

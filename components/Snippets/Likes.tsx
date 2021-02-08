@@ -1,11 +1,14 @@
 import { useRef } from 'react'
-import { executeQuery } from '../graphql/client'
-import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from '../graphql/mutations'
-import { GET_LIKED_SNIPPETS_COUNT } from '../graphql/queries'
+import { executeQuery } from '../../graphql/client'
+import {
+	ADD_LIKE_MUTATION,
+	REMOVE_LIKE_MUTATION,
+} from '../../graphql/mutations'
+import { GET_LIKED_SNIPPETS_COUNT } from '../../graphql/queries'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
-import Icon from './Icon'
-import useCache from '../hooks/useCache'
+import Icon from '../Icon'
+import useCache from '../../hooks/useCache'
 import { useRouter } from 'next/router'
 import { mutate, cache } from 'swr'
 
@@ -19,7 +22,13 @@ const LikesWrapper = styled.div`
 	}
 `
 
-export default function Likes({ isLiked, count, snippetId }) {
+interface Props {
+	isLiked: boolean
+	count: number
+	snippetId: string
+}
+
+export default function Likes({ isLiked, count, snippetId }: Props) {
 	const [session] = useSession()
 	const router = useRouter()
 	const fetching = useRef(false)

@@ -1,16 +1,25 @@
 import { useEffect, useState } from 'react'
-import useSnippets from '../hooks/useSnippets'
+import useSnippets from '../../hooks/useSnippets'
 import SnippetCard from './SnippetCard'
-import { Skeleton } from './Skeleton'
-import { IconButton } from '../components/Icon'
-import Flex from '../components/Flex'
+import { Skeleton } from '../Skeleton'
+import Icon from '../Icon'
+import Flex from '../Flex'
 import styled from 'styled-components'
 
-const ScrollButton = styled(IconButton)`
+const ScrollButton = styled.button`
+	border: none;
+	outline: none;
+	font-size: 0.8rem;
+	cursor: pointer;
+	text-align: center;
+	padding: 0.5em;
+	border-radius: 1.2em;
+	line-height: 1;
 	position: fixed;
 	bottom: 0.6rem;
 	right: 0.6rem;
 	animation: opacity 200ms;
+	background: ${props => props.theme.colors.primary};
 `
 
 const ScrollToTopButton = () => {
@@ -34,13 +43,9 @@ const ScrollToTopButton = () => {
 	return (
 		<>
 			{scrolled && (
-				<ScrollButton
-					icon="arrowUp"
-					type="primary"
-					iconType="primary"
-					small
-					onClick={scrollToTop}
-				/>
+				<ScrollButton onClick={scrollToTop}>
+					<Icon icon="arrowUp" variant="primary" />
+				</ScrollButton>
 			)}
 		</>
 	)
@@ -82,7 +87,22 @@ const NoResultsContainer = styled(Flex)`
 	}
 `
 
-export default function Snippets({ children, query, variables, fetcher }) {
+interface Props {
+	children: React.ReactNode
+	query: string
+	variables: {
+		[key: string]: string
+	}
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+	fetcher: (...args: any) => any
+}
+
+export default function Snippets({
+	children,
+	query,
+	variables,
+	fetcher,
+}: Props) {
 	const { data, loading, setSize, noResults } = useSnippets(
 		query,
 		variables,

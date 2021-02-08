@@ -6,7 +6,7 @@ import {
 } from '../../graphql/mutations'
 import { GET_SNIPPET_INFO } from '../../graphql/queries'
 import { useSession } from 'next-auth/client'
-import CodeEditor from '../CodeEditor'
+import { CodeEditor } from '../Code'
 import { TextArea } from '../TextArea'
 import Input from '../Input'
 import { Label } from '../Typography'
