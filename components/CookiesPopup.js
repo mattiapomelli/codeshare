@@ -12,11 +12,11 @@ const slideInBottom = keyframes`
 `
 
 const CookiesContainer = styled.div`
-	background-color: ${(props) => props.theme.colors.text};
-	color: ${(props) => props.theme.colors.background};
+	background-color: ${props => props.theme.colors.text};
+	color: ${props => props.theme.colors.background};
 	font-size: 0.8rem;
 	border: 1px solid #333;
-	border-radius: ${(props) => props.theme.borderRadius};
+	border-radius: ${props => props.theme.borderRadius};
 	position: fixed;
 	bottom: 1rem;
 	right: 1rem;
@@ -58,7 +58,7 @@ export default function CookiesPopup() {
 				We use cookies to provide you with a great user experience. By using
 				CodeShare, you accept our use of cookies
 			</div>
-			<Button small onClick={consentCookies} type="primary">
+			<Button small onClick={consentCookies} variant="primary">
 				Accept
 			</Button>
 		</CookiesContainer>

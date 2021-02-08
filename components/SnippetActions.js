@@ -62,8 +62,8 @@ export default function SnippetActions({ id }) {
 		<ActionsWrapper ref={dropdownRef}>
 			<ActionsIcon>
 				<Icon
-					name="arrowdown"
-					type="primary"
+					icon="arrowdown"
+					variant="primary"
 					size={20}
 					onClick={() => {
 						setOpen(open => !open)

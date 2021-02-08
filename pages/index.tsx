@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from '../components/Navbar'
-import Button from '../components/Button'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Flex from '../components/Flex'
@@ -10,6 +9,7 @@ import PageHead from '../components/PageHead'
 import CookiesPopup from '../components/CookiesPopup'
 import Footer from '../components/Footer'
 import { logPageView } from '../utils/analytics'
+import Button from '../components/Button'
 
 const Hero = styled.section`
 	display: flex;
@@ -38,7 +38,7 @@ const Hero = styled.section`
 	p {
 		font-size: 1rem;
 		font-weight: 300;
-		color: ${(props) => props.theme.colors.text};
+		color: ${props => props.theme.colors.text};
 		width: 90%;
 		max-width: 500px;
 		text-align: center;
@@ -100,10 +100,10 @@ const Home = () => {
 				</p>
 				<Flex h="center" flexWrap="wrap">
 					<Link href="/snippets">
-						<Button type="secondary">LEARN MORE</Button>
+						<Button variant="secondary">LEARN MORE</Button>
 					</Link>
 					<Link href="/signup">
-						<Button type="primary">GET STARTED</Button>
+						<Button variant="primary">GET STARTED</Button>
 					</Link>
 				</Flex>
 				<Image

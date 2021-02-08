@@ -50,10 +50,10 @@ export default function Footer({ expanded }) {
 				</LinksList>
 				<LinksList as="ul" flexWrap="wrap" h="flex-end">
 					<li>
-						<Icon name="instagram" type="primary" size={18} />
+						<Icon icon="instagram" variant="primary" size={18} />
 					</li>
 					<li>
-						<Icon name="twitch" type="primary" size={18} />
+						<Icon icon="twitch" variant="primary" size={18} />
 					</li>
 				</LinksList>
 			</Flex>

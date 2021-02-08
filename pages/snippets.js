@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSearch } from '../contexts/SearchContext'
-import Dropdown from '../components/Dropdown/Dropdown'
+import Dropdown from '../components/Dropdown'
 import { IconInput } from '../components/Input'
 import Flex from '../components/Flex'
 import { H1 } from '../components/Typography'

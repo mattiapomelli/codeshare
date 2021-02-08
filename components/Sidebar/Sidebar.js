@@ -25,7 +25,11 @@ const NavLink = ({ children, href, icon, onClick }) => {
 		<SideNavItem active={active} onClick={onClick}>
 			<Link href={href}>
 				<a>
-					<Icon name={icon} size={18} type={active ? 'primary' : 'secondary'} />
+					<Icon
+						icon={icon}
+						size={18}
+						variant={active ? 'primary' : 'secondary'}
+					/>
 					<span className="menu-text">{children}</span>
 				</a>
 			</Link>
@@ -44,7 +48,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
 
 	return (
 		<SidebarLayout collapsed={collapsed}>
-			<CloseIcon name="cross" type="primary" onClick={closeSidebar} />
+			<CloseIcon icon="cross" variant="primary" onClick={closeSidebar} />
 			<header>
 				<Logo size={32} href={session ? '/snippets' : '/'} />
 				<Flex dir="column" v="center" h="center" as="nav" auto>

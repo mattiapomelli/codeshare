@@ -42,7 +42,7 @@ const InputWrapper = styled.div`
 export const IconInput = ({ icon, className, iconSize, ...rest }) => {
 	return (
 		<InputWrapper {...rest} className={className}>
-			<Icon name={icon} size={iconSize} />
+			<Icon icon={icon} size={iconSize} />
 			<Input {...rest} />
 		</InputWrapper>
 	)

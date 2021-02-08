@@ -10,7 +10,7 @@ const PasswordForm = styled.form`
 	${Input} {
 		margin-bottom: 0.6rem;
 		width: 100%;
-		background-color: ${(props) => props.theme.colors.accent};
+		background-color: ${props => props.theme.colors.accent};
 	}
 	${Button} {
 		margin-top: 0.6rem;
@@ -27,15 +27,15 @@ export default function ChangePasswordForm() {
 	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
 
-	const onChange = (e) => {
+	const onChange = e => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value })
 	}
 
-	const changePassword = (e) => {
+	const changePassword = e => {
 		e.preventDefault()
 
 		if (passwords.newPassword !== passwords.newPassword2) {
-			setMessages((messages) => [
+			setMessages(messages => [
 				...messages,
 				{ type: 'error', text: 'Passwords must match' },
 			])
@@ -55,9 +55,9 @@ export default function ChangePasswordForm() {
 				newPassword: passwords.newPassword,
 			}),
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				setMessages((messages) => [
+			.then(res => res.json())
+			.then(data => {
+				setMessages(messages => [
 					...messages,
 					{ type: data.type || 'error', text: data.message },
 				])
@@ -66,7 +66,7 @@ export default function ChangePasswordForm() {
 				}
 				setLoading(false)
 			})
-			.catch((err) => {
+			.catch(err => {
 				setLoading(false)
 			})
 	}
@@ -97,7 +97,12 @@ export default function ChangePasswordForm() {
 				value={passwords.newPassword2}
 				onChange={onChange}
 			/>
-			<Button small onClick={changePassword} type="primary" disabled={loading}>
+			<Button
+				small
+				onClick={changePassword}
+				variant="primary"
+				disabled={loading}
+			>
 				Change
 			</Button>
 			<Popups popups={messages} setPopups={setMessages} />

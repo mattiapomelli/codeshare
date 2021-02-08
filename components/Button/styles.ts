@@ -1,32 +1,23 @@
 import styled from 'styled-components'
 
 interface ButtonProps {
-	padding?: string
+	variant?: 'primary' | 'secondary' | 'inverted'
 	small?: boolean
-	borderRadius?: string
-	type?: 'primary' | 'secomdary' | 'inverted'
-	minWidth?: string
 }
 
-export const Button = styled.button<ButtonProps>`
+const Button = styled.button<ButtonProps>`
 	border: none;
 	outline: none;
 	font-family: inherit;
 	font-size: 0.8rem;
 	font-weight: 500;
-	padding: ${props =>
-		props.padding
-			? props.padding
-			: props.small
-			? '1.1em 2.6em'
-			: '1.4em 2.6em'};
-	border-radius: ${props => props.borderRadius || '10em'};
+	padding: ${props => (props.small ? '1.1em 2.6em' : '1.4em 2.6em')};
+	border-radius: 10em;
 	cursor: pointer;
-	min-width: ${props => props.minWidth || 'auto'};
 	text-align: center;
 
 	background: ${props => {
-		switch (props.type) {
+		switch (props.variant) {
 			case 'primary':
 				return props.theme.colors.primary
 			case 'inverted':
@@ -39,7 +30,7 @@ export const Button = styled.button<ButtonProps>`
 	}};
 
 	color: ${props => {
-		switch (props.type) {
+		switch (props.variant) {
 			case 'primary':
 				return 'white'
 			case 'inverted':
@@ -51,7 +42,7 @@ export const Button = styled.button<ButtonProps>`
 
 	&:hover:not(:disabled) {
 		background: ${props => {
-			switch (props.type) {
+			switch (props.variant) {
 				case 'primary':
 					return props.theme.colors.primaryHover
 				case 'inverted':
@@ -68,31 +59,14 @@ export const Button = styled.button<ButtonProps>`
 		cursor: not-allowed;
 		opacity: 60%;
 	}
-`
 
-export const StyledFlexButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+
 	svg {
 		margin-left: 5px;
 	}
 `
 
-export const StyledIconButton = styled(Button).attrs<ButtonProps>(props => ({
-	padding: props.small ? '0.5em' : '0.9em',
-	borderRadius: '1.2em',
-}))`
-	line-height: 1;
-`
-
-export const Tab = styled.div<{ minWidth: string }>`
-	font-size: 0.8rem;
-	font-weight: 500;
-	padding: 1.1em 2.6em;
-	border-radius: 10em;
-	min-width: ${props => props.minWidth || 'auto'};
-	text-align: center;
-	background-color: ${props => props.theme.colors.elements};
-	color: ${props => props.theme.colors.text};
-`
+export default Button

@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Header, Page, Main } from './LayoutElements'
 import Sidebar from '../Sidebar/Sidebar'
-import Button, { IconButton } from '../Button'
+import Button from '../Button'
+import { IconButton } from '../Icon'
 import Footer from '../Footer'
 import { useSession } from 'next-auth/client'
 
@@ -11,7 +12,7 @@ const Layout = ({ children }) => {
 	const [session] = useSession()
 
 	const clickHandler = () => {
-		setCollapsed((collapsed) => !collapsed)
+		setCollapsed(collapsed => !collapsed)
 	}
 
 	return (
@@ -19,9 +20,9 @@ const Layout = ({ children }) => {
 			<Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 			<Page collapsed={collapsed}>
 				<Header>
-					<IconButton onClick={clickHandler} icon="menu" iconType="primary" />
+					<IconButton onClick={clickHandler} icon="menu" />
 					<Link href={session ? '/editor' : '/signup'}>
-						<Button type="primary">Share code</Button>
+						<Button variant="primary">Share code</Button>
 					</Link>
 				</Header>
 				<Main>{children}</Main>

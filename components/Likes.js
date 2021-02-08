@@ -77,7 +77,7 @@ export default function Likes({ isLiked, count, snippetId }) {
 					changeLikeWithCache()
 				}}
 			>
-				<Icon name={value.liked ? 'star' : 'starEmpty'} type="primary" />
+				<Icon icon={value.liked ? 'star' : 'starEmpty'} variant="primary" />
 			</span>
 		</LikesWrapper>
 	)

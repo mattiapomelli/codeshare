@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Logo from './Logo'
-import Button from '../components/Button'
+import Button from './Button'
 import Icon from '../components/Icon'
 import Flex from './Flex'
 import Link from 'next/link'
-import { useSession, signOut } from 'next-auth/client'
+import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 
 const List = styled.ul`
@@ -97,8 +97,8 @@ export default function Navbar() {
 					)}
 				</List>
 				<HamIcon
-					name={showNavbar ? 'cross' : 'menu'}
-					type="primary"
+					icon={showNavbar ? 'cross' : 'menu'}
+					variant="primary"
 					onClick={() => setShowNavbar(prev => !prev)}
 				/>
 			</nav>
