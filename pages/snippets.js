@@ -67,14 +67,11 @@ export default function Home({ langs }) {
 					}}
 					icon="search"
 					style={{ marginRight: '0.9rem' }}
-					minWidth="16rem"
-					double={search.length > 0}
-					secondIcon="cross"
 				/>
 				<Dropdown
 					options={['All'].concat(langs)}
 					onSelect={handleLanguageChange}
-					value={activeLanguage}
+					value={activeLanguage || 'All'}
 				/>
 			</Flex>
 

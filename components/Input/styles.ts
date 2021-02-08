@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import Icon from './Icon'
 
-export const Input = styled.input`
+export const Input = styled.input<{ big?: boolean; small?: boolean }>`
 	border: none;
 	outline: none;
 	font-family: inherit;
@@ -14,7 +13,7 @@ export const Input = styled.input`
 	color: ${props => props.theme.colors.text};
 
 	@media ${props => props.theme.breakpoints.tablet} {
-		min-width: ${props => props.minWidth || 'auto'};
+		min-width: 16rem;
 	}
 
 	::placeholder {
@@ -22,7 +21,7 @@ export const Input = styled.input`
 	}
 `
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
 	display: inline-block;
 	position: relative;
 
@@ -38,12 +37,3 @@ const InputWrapper = styled.div`
 		width: 100%;
 	}
 `
-
-export const IconInput = ({ icon, className, iconSize, ...rest }) => {
-	return (
-		<InputWrapper {...rest} className={className}>
-			<Icon icon={icon} size={iconSize} />
-			<Input {...rest} />
-		</InputWrapper>
-	)
-}

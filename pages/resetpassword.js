@@ -12,7 +12,7 @@ const ForgotPassword = () => {
 	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
 
-	const sendResetPassword = (e) => {
+	const sendResetPassword = e => {
 		e.preventDefault()
 		setLoading(true)
 		fetch('/api/retrievepassword', {
@@ -25,9 +25,9 @@ const ForgotPassword = () => {
 				email,
 			}),
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				setMessages((messages) => [
+			.then(res => res.json())
+			.then(data => {
+				setMessages(messages => [
 					...messages,
 					{ type: data.type || 'error', text: data.message },
 				])
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
 				}
 				setLoading(false)
 			})
-			.catch((err) => {
+			.catch(err => {
 				setLoading(false)
 			})
 	}
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
 					className="input-field"
 					icon="email"
 					value={email}
-					onChange={(e) => {
+					onChange={e => {
 						setEmail(e.target.value)
 					}}
 					name="email"

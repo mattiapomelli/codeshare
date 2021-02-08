@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Popups from '../components/Popup/Popup'
-import { Input } from '../components/Input'
+import Input from '../components/Input'
 import { Label } from '../components/Typography'
 import Button from '../components/Button'
 import { useSession } from 'next-auth/client'
