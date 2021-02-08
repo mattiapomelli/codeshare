@@ -1,27 +1,24 @@
 import { useState, useEffect, useRef } from 'react'
 import Button from '../Button'
 import Icon from '../Icon'
-import { DropdownWrapper, DropdownMenu, DropdownItem } from './style'
+import { DropdownWrapper, DropdownMenu, DropdownItem } from './styles'
 
 interface DropdownProps {
 	options: string[]
 	value: string
-	nullValue?: string
 	as?: string
 	onSelect: (string) => void
 	right?: boolean
-	minWidth?: string
 }
 
 export default function Dropdown({
 	options,
 	onSelect,
 	value,
-	nullValue,
 	right,
 }: DropdownProps) {
 	const [open, setOpen] = useState(false)
-	const dropdownRef = useRef()
+	const dropdownRef = useRef<HTMLDivElement>()
 
 	useEffect(() => {
 		function handleClick(event) {
@@ -29,17 +26,14 @@ export default function Dropdown({
 				setOpen(false)
 			}
 		}
+
 		window.addEventListener('click', handleClick)
 
 		return () => window.removeEventListener('click', handleClick)
 	}, [])
 
 	const clickHandler = option => {
-		if (option == nullValue) {
-			onSelect(null)
-		} else {
-			onSelect(option)
-		}
+		onSelect(option)
 		setOpen(false)
 	}
 
@@ -52,7 +46,7 @@ export default function Dropdown({
 				small
 				as="span"
 			>
-				{value || nullValue}
+				{value}
 				<Icon icon="arrowdown" variant="primary" size={12} />
 			</Button>
 			{open && (

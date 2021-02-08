@@ -195,9 +195,9 @@ export default function NewSnippetForm({ langs }) {
 					<Label>
 						Description
 						<InfoIcon
-							name="info"
+							icon="info"
 							size={16}
-							type="primary"
+							variant="primary"
 							onClick={() => setShowModal(true)}
 						/>
 					</Label>
@@ -217,7 +217,7 @@ export default function NewSnippetForm({ langs }) {
 				<SubmitArea>
 					{isEdit && (
 						<Button
-							type="secondary"
+							variant="secondary"
 							onClick={e => {
 								e.preventDefault()
 								cancelEdit()
@@ -228,7 +228,7 @@ export default function NewSnippetForm({ langs }) {
 						</Button>
 					)}
 					<Button
-						type="primary"
+						variant="primary"
 						onClick={isEdit ? updateSnippet : publishSnippet}
 						disabled={
 							!snippet.title ||

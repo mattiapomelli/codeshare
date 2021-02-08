@@ -48,6 +48,10 @@ export default function Home({ langs }) {
 		logPageView()
 	}, [])
 
+	const handleLanguageChange = value => {
+		setActiveLanguage(value === 'All' ? null : value)
+	}
+
 	return (
 		<>
 			<PageHead title="Code Snippets – Codeshare" />
@@ -69,10 +73,8 @@ export default function Home({ langs }) {
 				/>
 				<Dropdown
 					options={['All'].concat(langs)}
-					onSelect={setActiveLanguage}
+					onSelect={handleLanguageChange}
 					value={activeLanguage}
-					nullValue="All"
-					minWidth="7rem"
 				/>
 			</Flex>
 
