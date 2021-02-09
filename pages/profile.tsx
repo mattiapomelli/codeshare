@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, LiHTMLAttributes } from 'react'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 import { H2, Label } from '../components/Typography'
@@ -20,35 +20,32 @@ import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
 import { IconButton } from '../components/Icon'
 
-const Tab = styled.li`
+const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
 	padding: 0.6rem 1rem 0.6rem 0;
 	margin-right: 1rem;
 	cursor: pointer;
 	${props =>
-		props.active &&
-		css`
-			border-bottom: 3px solid;
-			border-image-slice: 1;
-			border-image-source: ${props => props.theme.colors.primary};
-			// needed for safari bug that keeps all borders
-			border-left: 0px;
-			border-right: 0px;
-			border-top: 0px;
-		`}
-
-	${props =>
-		props.secondary &&
-		css`
-			${Label} {
-				color: ${props => props.theme.colors.secondaryText};
-			}
-			&:hover {
-				${Label} {
-					color: ${props => props.theme.colors.text};
-				}
-			}
-		`};
+		props.active
+			? css`
+					border-bottom: 3px solid;
+					border-image-slice: 1;
+					border-image-source: ${props => props.theme.colors.primary};
+					// needed for safari bug that keeps all borders
+					border-left: 0px;
+					border-right: 0px;
+					border-top: 0px;
+			  `
+			: css`
+					${Label} {
+						color: ${props => props.theme.colors.secondaryText};
+					}
+					&:hover {
+						${Label} {
+							color: ${props => props.theme.colors.text};
+						}
+					}
+			  `}
 `
 
 const Tag = styled.span`
@@ -59,13 +56,14 @@ const Tag = styled.span`
 	font-size: 0.9rem;
 `
 
-const TabItem = ({ children, count, active, onClick }) => {
-	useEffect(() => {
-		logPageView()
-	}, [])
+interface TabProps extends LiHTMLAttributes<HTMLLIElement> {
+	count: number
+	active: boolean
+}
 
+const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 	return (
-		<Tab active={active} onClick={onClick} secondary={!active}>
+		<Tab active={active} {...rest}>
 			<Label as="span" inline>
 				{children}
 			</Label>
@@ -107,6 +105,10 @@ function Profile() {
 		}
 	)
 
+	useEffect(() => {
+		logPageView()
+	}, [])
+
 	return (
 		<>
 			<PageHead title="Sign Up – Codeshare" />
@@ -115,7 +117,7 @@ function Profile() {
 				{session && <H2 overflowWrap>{session.user.username}</H2>}
 				<Link href="/account">
 					<span>
-						<IconButton icon="settings" iconType="primary" />
+						<IconButton icon="settings" />
 					</span>
 				</Link>
 			</Flex>
@@ -148,7 +150,7 @@ function Profile() {
 					<>
 						<div>You haven't created any snippets yet</div>
 						<Link href="/editor">
-							<Button type="primary">Create your first snippet</Button>
+							<Button variant="primary">Create your first snippet</Button>
 						</Link>
 					</>
 				) : (

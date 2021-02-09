@@ -1,3 +1,4 @@
+import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import SearchProvider from '../contexts/SearchContext'
@@ -36,7 +37,13 @@ const GlobalStyle = createGlobalStyle`
 		props.theme.breakpoints.desktop} { :root{font-size: 16px;} } */
 `
 
-export default function App({ Component, pageProps }) {
+declare global {
+	interface Window {
+		GA_INITIALIZED: boolean
+	}
+}
+
+export default function App({ Component, pageProps }: AppProps) {
 	const router = useRouter()
 	const paths = ['/', '/login', '/signup', '/resetpassword']
 

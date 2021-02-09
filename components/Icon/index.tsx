@@ -46,7 +46,7 @@ export default Icon
 
 interface IconButtonProps {
 	icon: IconName
-	onClick: (event: MouseEvent<HTMLButtonElement>) => void
+	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
 export const IconButton = ({ icon, ...rest }: IconButtonProps) => {

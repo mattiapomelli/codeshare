@@ -36,7 +36,7 @@ const ForgotPassword = () => {
 				}
 				setLoading(false)
 			})
-			.catch(err => {
+			.catch(() => {
 				setLoading(false)
 			})
 	}
@@ -63,7 +63,11 @@ const ForgotPassword = () => {
 					iconSize={20}
 					big
 				/>
-				<Button onClick={sendResetPassword} type="primary" disabled={loading}>
+				<Button
+					onClick={sendResetPassword}
+					variant="primary"
+					disabled={loading}
+				>
 					Reset Password
 				</Button>
 				<p>

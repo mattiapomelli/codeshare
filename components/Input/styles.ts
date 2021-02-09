@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
-export const Input = styled.input<{ big?: boolean; small?: boolean }>`
+export interface InputProps {
+	big?: boolean
+	small?: boolean
+}
+
+export const Input = styled.input<InputProps>`
 	border: none;
 	outline: none;
 	font-family: inherit;

@@ -41,7 +41,11 @@ const searchFetcher = (query, offset, userId, search, lang) =>
 		return data.snippets
 	})
 
-export default function Home({ langs }) {
+interface Props {
+	langs: string[]
+}
+
+export default function Home({ langs }: Props) {
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch()
 
 	useEffect(() => {

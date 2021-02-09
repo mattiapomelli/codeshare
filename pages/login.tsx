@@ -20,10 +20,13 @@ const Login = () => {
 
 	useEffect(() => {
 		if (router.query.error) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'error', text: router.query.error.replace('Error: ', '') },
-			])
+			const errors = router.query.error
+			const errorMsg =
+				typeof errors === 'string'
+					? errors.replace('Error: ', '')
+					: errors[0].replace('Error: ', '')
+
+			setMessages(messages => [...messages, { type: 'error', text: errorMsg }])
 		} else if (router.query.message) {
 			setMessages(messages => [
 				...messages,

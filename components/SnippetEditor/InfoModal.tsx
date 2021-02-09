@@ -15,9 +15,7 @@ interface Props {
 export default function InfoModal({ close }: Props) {
 	return (
 		<Modal close={close}>
-			<h4>
-				Wondering what you should write in your snippet&apos;s description?
-			</h4>
+			<h4>Wondering what you should write in your snippet's description?</h4>
 
 			<P>
 				Here are some advices about what should be mentioned:

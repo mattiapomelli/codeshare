@@ -7,7 +7,11 @@ import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
 import PageHead from '../components/PageHead'
 import { logPageView } from '../utils/analytics'
 
-function EditorPage({ langs }) {
+interface Props {
+	langs: string[]
+}
+
+function EditorPage({ langs }: Props) {
 	useEffect(() => {
 		logPageView()
 	}, [])

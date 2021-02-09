@@ -36,6 +36,7 @@ interface Props {
 	noText?: boolean
 	href?: string
 	vertical?: boolean
+	style?: React.CSSProperties
 }
 
 export default function Logo({

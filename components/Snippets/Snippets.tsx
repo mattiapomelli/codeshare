@@ -88,7 +88,7 @@ const NoResultsContainer = styled(Flex)`
 `
 
 interface Props {
-	children: React.ReactNode
+	children?: React.ReactNode
 	query: string
 	variables: {
 		[key: string]: string

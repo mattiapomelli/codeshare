@@ -22,7 +22,7 @@ const SettingsGrid = styled.div`
 `
 
 const Card = styled.div`
-	background-color: ${(props) => props.theme.colors.elements};
+	background-color: ${props => props.theme.colors.elements};
 	padding: 1rem;
 	border-radius: 0.8rem;
 	width: 100%;
@@ -37,7 +37,12 @@ const Field = styled.div`
 	}
 `
 
-const SettingCard = ({ children, title }) => {
+interface Props {
+	children: React.ReactNode
+	title: string
+}
+
+const SettingCard = ({ children, title }: Props) => {
 	return (
 		<Flex dir="column">
 			<Label>{title}</Label>
@@ -46,13 +51,13 @@ const SettingCard = ({ children, title }) => {
 	)
 }
 
-const InfoField = ({ children, title }) => (
+const InfoField = ({ children, title }: Props) => (
 	<Field>
 		<Label>{title} </Label>
 		{children ? (
 			<span>{children}</span>
 		) : (
-			<Skeleton h="1.55rem" w="20rem" mx="65%" />
+			<Skeleton h="1.55rem" w="20rem" mw="65%" />
 		)}
 	</Field>
 )
@@ -62,9 +67,7 @@ function Account() {
 	const { data: userData } = useSWR(
 		session ? [GET_USER_INFO_QUERY, session.user.id] : null,
 		(query, id) => {
-			return executeQuery(query, { id }, session.user.jwt).then(
-				(res) => res.user
-			)
+			return executeQuery(query, { id }, session.user.jwt).then(res => res.user)
 		}
 	)
 

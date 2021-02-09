@@ -82,7 +82,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 				setSnippet({ title, description, programmingLang, code })
 			}
 		}
-	}, [data, error, cancelEdit, session.user.username])
+	}, [data, error, cancelEdit])
 
 	const onCodeChange = codeString => {
 		setSnippet({ ...snippet, code: codeString })

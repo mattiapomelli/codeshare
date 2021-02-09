@@ -73,7 +73,7 @@ const Signup = () => {
 				}
 				setLoading(false)
 			})
-			.catch(err => {
+			.catch(() => {
 				setLoading(false)
 			})
 	}

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 interface Props {
 	h?: string
 	w?: string
+	mw?: string
 }
 
 export const Skeleton = styled.div<Props>`

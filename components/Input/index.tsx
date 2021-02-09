@@ -1,12 +1,15 @@
+import { InputHTMLAttributes } from 'react'
 import Icon, { IconName } from '../Icon'
-import { Input, InputWrapper } from './styles'
+import { Input, InputWrapper, InputProps } from './styles'
 export default Input
 
-interface InputProps {
+interface IconInputProps
+	extends InputHTMLAttributes<HTMLInputElement>,
+		InputProps {
 	icon: IconName
-	iconSize: number
+	iconSize?: number
 	className?: string
-	style: React.CSSProperties
+	style?: React.CSSProperties
 }
 
 export const IconInput = ({
@@ -15,7 +18,7 @@ export const IconInput = ({
 	style,
 	iconSize,
 	...rest
-}: InputProps) => {
+}: IconInputProps) => {
 	return (
 		<InputWrapper className={className} style={style}>
 			<Icon icon={icon} size={iconSize} />
