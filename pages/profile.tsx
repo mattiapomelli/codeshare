@@ -19,6 +19,7 @@ import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
 import { executeQuery } from '../graphql/client'
 import { IconButton } from '../components/Icon'
+import useSnippets from '../hooks/useSnippets'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
@@ -72,13 +73,11 @@ const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 	)
 }
 
-const fetcher = (query, offset, userId, token) =>
+const fetcher = (query, params, token) =>
 	executeQuery(
 		query,
 		{
-			limit: 6,
-			offset,
-			userId: userId,
+			...params,
 		},
 		token
 	).then(data => {
@@ -107,6 +106,11 @@ function Profile() {
 		{
 			revalidateOnFocus: false,
 		}
+	)
+	const { data, loading, noResults } = useSnippets(
+		option === 'snippets' ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY,
+		{ userId: session.user.id },
+		(query, params) => fetcher(query, params, session.user.jwt)
 	)
 
 	useEffect(() => {
@@ -141,15 +145,7 @@ function Profile() {
 				Liked
 			</TabItem>
 
-			<Snippets
-				query={
-					option === 'snippets'
-						? GET_USER_SNIPPETS_QUERY
-						: GET_LIKED_SNIPPETS_QUERY
-				}
-				variables={{ token: session.user.jwt }}
-				fetcher={fetcher}
-			>
+			<Snippets data={data} loading={loading} noResults={noResults}>
 				{option === 'snippets' ? (
 					<>
 						<div>You haven't created any snippets yet</div>

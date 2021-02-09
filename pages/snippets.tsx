@@ -15,27 +15,12 @@ import Snippets from '../components/Snippets'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
 import { logPageView } from '../utils/analytics'
+import useSnippets from '../hooks/useSnippets'
+import { useSession } from 'next-auth/client'
 
-const fetcher = (query, offset, userId, lang) =>
+const fetcher = (query, params) =>
 	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
-		limit: 6,
-		offset,
-		userId: userId,
-		programmingLang: lang,
-		isAuth: userId ? true : false,
-	}).then(data => {
-		data.snippets.forEach(snippet => processSnippet(snippet))
-		return data.snippets
-	})
-
-const searchFetcher = (query, offset, userId, search, lang) =>
-	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
-		limit: 6,
-		offset,
-		userId: userId,
-		search,
-		programmingLang: lang,
-		isAuth: userId ? true : false,
+		...params,
 	}).then(data => {
 		data.snippets.forEach(snippet => processSnippet(snippet))
 		return data.snippets
@@ -45,8 +30,26 @@ interface Props {
 	langs: string[]
 }
 
-export default function Home({ langs }: Props) {
+export default function SnippetsPage({ langs }: Props) {
+	const [session] = useSession()
+	const userId = session ? session.user.id : null
 	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch()
+	const { data, loading, noResults } = useSnippets(
+		search.length > 0 ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY,
+		search.length > 0
+			? {
+					search,
+					programmingLang: activeLanguage,
+					userId,
+					isAuth: userId ? true : false,
+			  }
+			: {
+					programmingLang: activeLanguage,
+					userId,
+					isAuth: userId ? true : false,
+			  },
+		fetcher
+	)
 
 	useEffect(() => {
 		logPageView()
@@ -79,17 +82,7 @@ export default function Home({ langs }: Props) {
 				/>
 			</Flex>
 
-			<Snippets
-				query={
-					search.length > 0 ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY
-				}
-				variables={
-					search.length > 0
-						? { search: search, programmingLang: activeLanguage }
-						: { programmingLang: activeLanguage }
-				}
-				fetcher={search.length > 0 ? searchFetcher : fetcher}
-			/>
+			<Snippets data={data} loading={loading} noResults={noResults} />
 		</>
 	)
 }

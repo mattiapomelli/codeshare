@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import useSnippets from '../../hooks/useSnippets'
 import SnippetCard from './SnippetCard'
 import { Skeleton } from '../Skeleton'
 import Icon from '../Icon'
@@ -87,27 +86,43 @@ const NoResultsContainer = styled(Flex)`
 	}
 `
 
+// interface Props {
+// 	children?: React.ReactNode
+// 	query: string
+// 	variables: {
+// 		[key: string]: string
+// 	}
+// 	/* eslint-disable @typescript-eslint/no-explicit-any */
+// 	fetcher: (...args: any) => any
+// }
+
+type Snippet = {
+	code: string
+	programmingLang: string
+	title: string
+	id: string
+	likesNum: number
+	liked: boolean
+	user: { username: string }
+}
+
 interface Props {
 	children?: React.ReactNode
-	query: string
-	variables: {
-		[key: string]: string
-	}
-	/* eslint-disable @typescript-eslint/no-explicit-any */
-	fetcher: (...args: any) => any
+	data: Snippet[]
+	loading: boolean
+	noResults: boolean
 }
 
 export default function Snippets({
 	children,
-	query,
-	variables,
-	fetcher,
+	// query,
+	// variables,
+	// fetcher,
+	data,
+	loading,
+	noResults,
 }: Props) {
-	const { data, loading, setSize, noResults } = useSnippets(
-		query,
-		variables,
-		fetcher
-	)
+	// const { data, loading, noResults } = useSnippets(query, variables, fetcher)
 
 	return (
 		<>
@@ -123,13 +138,6 @@ export default function Snippets({
 				{loading &&
 					[1, 2, 3, 4, 5, 6].map(key => <SnippetSkeleton key={key} />)}
 			</SnippetsGrid>
-			<button
-				onClick={() => setSize(size => size + 1)}
-				id="loadMoreButton"
-				style={{ display: 'none' }}
-			>
-				Load More
-			</button>
 
 			<ScrollToTopButton />
 		</>

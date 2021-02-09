@@ -3,18 +3,31 @@ import { useSWRInfinite } from 'swr'
 import scrolledToBottom from '../utils/scrolled-to-bottom'
 import { useSession } from 'next-auth/client'
 
+const SNIPPETS_PER_PAGE = 6
+
 const useSnippets = (query, variables, fetcher) => {
-	const [session, loading] = useSession()
-	const userId = session ? session.user.id : null
+	const [, loading] = useSession()
 	const loadingMore = useRef(false)
 	const reachedEnd = useRef(false)
 
+	const getKey = index => {
+		if (loading) return null
+		return [query, index * SNIPPETS_PER_PAGE, ...Object.values(variables)]
+	}
+
+	const wrappedFetcher = (query, offset) => {
+		const params = {
+			limit: SNIPPETS_PER_PAGE,
+			offset,
+			...variables,
+		}
+
+		return fetcher(query, params)
+	}
+
 	const { data, error, size, setSize } = useSWRInfinite(
-		index => {
-			if (loading) return null
-			return [query, index * 6, userId, ...Object.values(variables)]
-		},
-		fetcher,
+		getKey,
+		wrappedFetcher,
 		{
 			revalidateAll: false,
 			revalidateOnFocus: false,
@@ -39,8 +52,7 @@ const useSnippets = (query, variables, fetcher) => {
 	useEffect(() => {
 		function handleScroll() {
 			if (scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
-				const button = document.getElementById('loadMoreButton')
-				button.click()
+				setSize(size => size + 1)
 			}
 		}
 
@@ -49,12 +61,11 @@ const useSnippets = (query, variables, fetcher) => {
 		return () => {
 			window.removeEventListener('scroll', handleScroll)
 		}
-	}, [])
+	}, [setSize])
 
 	return {
 		data: snippets,
 		loading: isLoadingMore,
-		setSize,
 		noResults: snippets.length == 0 && !isLoadingMore,
 	}
 }
