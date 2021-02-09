@@ -37,7 +37,7 @@ export default function Footer({ expanded = false }: FooterProps) {
 		<FooterContainer expanded={expanded}>
 			<Flex h="space-between" v="center" flexWrap="wrap">
 				<LinksList as="ul" flexWrap="wrap">
-					<li>&copy; 2020, Codeshare</li>
+					<li>&copy; 2021, Codeshare</li>
 					<Link href="/privacy-policy">
 						<li>
 							<a>Privacy</a>
@@ -52,14 +52,14 @@ export default function Footer({ expanded = false }: FooterProps) {
 						<a href="mailto:hello@codeshare.tech">Contact</a>
 					</li>
 				</LinksList>
-				<LinksList as="ul" flexWrap="wrap" h="flex-end">
+				{/* <LinksList as="ul" flexWrap="wrap" h="flex-end">
 					<li>
 						<Icon icon="instagram" variant="primary" size={18} />
 					</li>
 					<li>
 						<Icon icon="twitch" variant="primary" size={18} />
 					</li>
-				</LinksList>
+				</LinksList> */}
 			</Flex>
 		</FooterContainer>
 	)

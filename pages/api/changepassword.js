@@ -5,39 +5,44 @@ import bcrypt from 'bcrypt'
 import validatePassword from '../../utils/passwordValidation'
 
 export default async (req, res) => {
+	if (req.method === 'POST') {
+		try {
+			const { id, oldPassword, newPassword } = req.body
 
-  	if (req.method === 'POST') {
-        try {
-            const { id, oldPassword, newPassword } = req.body
+			const result = await graphQLClientAdmin.request(GET_USER_BY_ID_QUERY, {
+				id,
+			})
+			const { user } = result
+			if (!user) throw new Error()
 
-            const result = await graphQLClientAdmin.request( GET_USER_BY_ID_QUERY, { id })
-            const { user } = result
-            if(!user) throw new Error()
-            
-            const matched = await bcrypt.compare(oldPassword, user.password)
-            if(!matched) throw new Error("Current password is not correct")
+			const matched = await bcrypt.compare(oldPassword, user.password)
+			if (!matched) throw new Error('Current password is not correct')
 
-            const validationError = validatePassword(newPassword)
-			if(validationError) throw validationError
+			const validationError = validatePassword(newPassword)
+			if (validationError) throw validationError
 
 			//modify password
-			const hashedPassword = await bcrypt.hash(newPassword, 10);
-	
+			const hashedPassword = await bcrypt.hash(newPassword, 10)
+
 			//create variable object
 			const variables = {
 				id,
-				password: hashedPassword
+				password: hashedPassword,
 			}
-	
-			//call mutation query
-			await graphQLClientAdmin.request( MODIFY_USER_PASSWORD, variables);
-	
-            return res.status(201).send({ message: "Password changed succesfully", type: 'success'})
-        } catch(err) {
-            res.status(err.status || 500).send({ message: err.message || "Something went wrong"})
-        }
 
-  	} else  {	// Any method that is not POST or GET
-		res.status(401).send("Method unauthorized");
+			//call mutation query
+			await graphQLClientAdmin.request(MODIFY_USER_PASSWORD, variables)
+
+			return res
+				.status(201)
+				.send({ message: 'Password changed succesfully', type: 'success' })
+		} catch (err) {
+			res
+				.status(err.status || 500)
+				.send({ message: err.message || 'Something went wrong' })
+		}
+	} else {
+		// Any method that is not POST or GET
+		res.status(401).send('Method unauthorized')
 	}
 }

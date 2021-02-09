@@ -1,7 +1,9 @@
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import js from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript'
-import html from 'react-syntax-highlighter/dist/cjs/languages/hljs/htmlbars'
+import xml from 'react-syntax-highlighter/dist/cjs/languages/hljs/xml'
+import htmlbars from 'react-syntax-highlighter/dist/cjs/languages/hljs/htmlbars'
 import css from 'react-syntax-highlighter/dist/cjs/languages/hljs/css'
+import rust from 'react-syntax-highlighter/dist/cjs/languages/hljs/rust'
 import python from 'react-syntax-highlighter/dist/cjs/languages/hljs/python'
 import java from 'react-syntax-highlighter/dist/cjs/languages/hljs/java'
 import php from 'react-syntax-highlighter/dist/cjs/languages/hljs/php'
@@ -16,7 +18,8 @@ import theme from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark'
 // theme["hljs-title"].fontStyle = "normal";
 
 SyntaxHighlighter.registerLanguage('javascript', js)
-SyntaxHighlighter.registerLanguage('html', html)
+SyntaxHighlighter.registerLanguage('xml', xml)
+SyntaxHighlighter.registerLanguage('html', htmlbars)
 SyntaxHighlighter.registerLanguage('css', css)
 SyntaxHighlighter.registerLanguage('python', python)
 SyntaxHighlighter.registerLanguage('java', java)
@@ -26,6 +29,7 @@ SyntaxHighlighter.registerLanguage('go', go)
 SyntaxHighlighter.registerLanguage('c-like', cLike)
 SyntaxHighlighter.registerLanguage('c', c)
 SyntaxHighlighter.registerLanguage('cpp', cpp)
+SyntaxHighlighter.registerLanguage('rust', rust)
 
 interface Props {
 	codeString: string

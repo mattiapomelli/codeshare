@@ -70,7 +70,7 @@ const SnippetsGrid = styled.div`
 
 const SnippetSkeleton = () => (
 	<article>
-		<Skeleton h="280px" />
+		<Skeleton h="310px" />
 		<div style={{ marginLeft: '5px' }}>
 			<Skeleton h="1rem" w="80%" />
 			<Skeleton h="0.8rem" w="50%" />

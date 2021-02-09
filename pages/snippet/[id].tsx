@@ -50,8 +50,8 @@ const Info = styled(Flex)`
 const PageSkeleton = () => (
 	<article>
 		<div style={{ marginBottom: '1rem', marginTop: '0.5rem' }}>
-			<Skeleton h="3rem" w="40%" style={{ marginBottom: '0.7rem' }} />
-			<Skeleton h="1.5rem" />
+			<Skeleton h="2rem" w="40%" style={{ marginBottom: '0.7rem' }} />
+			<Skeleton h="1.4rem" />
 		</div>
 		<Skeleton h="280px" />
 	</article>

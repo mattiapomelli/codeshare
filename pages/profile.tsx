@@ -10,7 +10,6 @@ import {
 	GET_USER_SNIPPET_COUNT,
 	GET_LIKED_SNIPPETS_COUNT,
 } from '../graphql/queries'
-import { request } from 'graphql-request'
 import useSWR from 'swr'
 import processSnippet from '../utils/processSnippet'
 import PageHead from '../components/PageHead'
@@ -18,6 +17,7 @@ import Flex from '../components/Flex'
 import Button from '../components/Button'
 import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
+import { executeQuery } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 
 const Tab = styled.li<{ active: boolean }>`
@@ -72,18 +72,22 @@ const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 	)
 }
 
-const fetcher = (query, offset, userId) =>
-	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
-		limit: 6,
-		offset,
-		userId: userId,
-	}).then(data => {
+const fetcher = (query, offset, userId, token) =>
+	executeQuery(
+		query,
+		{
+			limit: 6,
+			offset,
+			userId: userId,
+		},
+		token
+	).then(data => {
 		data.snippets.forEach(snippet => processSnippet(snippet))
 		return data.snippets
 	})
 
-const countFetcher = (query, userId) =>
-	request(process.env.NEXT_PUBLIC_HASURA_URL, query, { userId }).then(res => {
+const countFetcher = (query, userId, token) =>
+	executeQuery(query, { userId }, token).then(res => {
 		return res.result.aggregate.count
 	})
 
@@ -91,14 +95,14 @@ function Profile() {
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
 	const { data: snippetsCount } = useSWR(
-		[GET_USER_SNIPPET_COUNT, session.user.id],
+		[GET_USER_SNIPPET_COUNT, session.user.id, session.user.jwt],
 		countFetcher,
 		{
 			revalidateOnFocus: false,
 		}
 	)
 	const { data: likedCount } = useSWR(
-		[GET_LIKED_SNIPPETS_COUNT, session.user.id],
+		[GET_LIKED_SNIPPETS_COUNT, session.user.id, session.user.jwt],
 		countFetcher,
 		{
 			revalidateOnFocus: false,
@@ -111,7 +115,7 @@ function Profile() {
 
 	return (
 		<>
-			<PageHead title="Sign Up – Codeshare" />
+			<PageHead title={`${session.user.username} – Codeshare`} />
 
 			<Flex v="center" h="space-between" flexWrap="wrap">
 				{session && <H2 overflowWrap>{session.user.username}</H2>}
@@ -143,7 +147,7 @@ function Profile() {
 						? GET_USER_SNIPPETS_QUERY
 						: GET_LIKED_SNIPPETS_QUERY
 				}
-				variables={{}}
+				variables={{ token: session.user.jwt }}
 				fetcher={fetcher}
 			>
 				{option === 'snippets' ? (

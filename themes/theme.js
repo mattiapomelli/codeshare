@@ -24,6 +24,7 @@ export default {
 			'c++': '#eb7195',
 			go: '#00ADD8',
 			php: '#4F5D95',
+			rust: '#d99c79',
 		},
 	},
 	breakpoints: {

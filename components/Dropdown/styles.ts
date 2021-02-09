@@ -24,7 +24,7 @@ export const DropdownMenu = styled.ul<{ right: boolean }>`
 export const DropdownItem = styled.li`
 	font-size: 0.7rem;
 	font-weight: 500;
-	padding: 0.7em 2.6em;
+	padding: 0.5em 2.5em;
 	cursor: pointer;
 	background-color: ${props => props.theme.colors.elements};
 	border-radius: ${props => props.theme.borderRadius};

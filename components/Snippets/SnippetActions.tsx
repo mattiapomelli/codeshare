@@ -31,6 +31,7 @@ const ActionItem = styled.li`
 const ActionsWrapper = styled.div`
 	position: relative;
 	margin-bottom: 0.2rem;
+	margin-left: 10px;
 	cursor: pointer;
 `
 const ActionsIcon = styled.div`
@@ -73,10 +74,10 @@ export default function SnippetActions({ id }: Props) {
 			</ActionsIcon>
 			{open && (
 				<ActionsMenu>
-					<ActionItem onClick={() => setShowModal(true)}>Delete</ActionItem>
 					<Link href={`/editor?edit=${id}`}>
 						<ActionItem>Edit</ActionItem>
 					</Link>
+					<ActionItem onClick={() => setShowModal(true)}>Delete</ActionItem>
 				</ActionsMenu>
 			)}
 			{showModal && (

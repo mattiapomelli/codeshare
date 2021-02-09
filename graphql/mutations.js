@@ -1,43 +1,58 @@
 import { gql } from 'graphql-request'
 
 export const CREATE_SNIPPET_MUTATION = gql`
-    mutation MyMutation ($code: String!, $description: String!, $programmingLang: String!, $title: String!){
-        insert_snippet(objects: {code: $code, description: $description, programmingLang: $programmingLang, title: $title}) {
-            returning {
-                title
-            }
-        }
-    }
-`;
+	mutation MyMutation(
+		$code: String!
+		$description: String!
+		$programmingLang: String!
+		$title: String!
+	) {
+		insert_snippet(
+			objects: {
+				code: $code
+				description: $description
+				programmingLang: $programmingLang
+				title: $title
+			}
+		) {
+			returning {
+				title
+			}
+		}
+	}
+`
 
 export const CREATE_USER_MUTATION = gql`
-  mutation($username:String!, $email:String!,$password:String!){
-    user: insert_user_one(object:{
-      email:$email
-      username:$username
-      password:$password
-    })
-    {
-      id
-      createdAt
-    }
-  } 
-`;
+	mutation($username: String!, $email: String!, $password: String!) {
+		user: insert_user_one(
+			object: { email: $email, username: $username, password: $password }
+		) {
+			id
+			createdAt
+		}
+	}
+`
 
 export const CREATE_USER_FROM_GITHUB_MUTATION = gql`
-  mutation($username:String!, $email:String!,$password:String, $provider: String){
-    user: insert_user_one(object:{
-        email:$email
-        username:$username
-        password:$password
-        provider:$provider
-        verificated: true
-    })
-        {
-            id
-            createdAt
-        }
-    }
+	mutation(
+		$username: String!
+		$email: String!
+		$password: String
+		$provider: String
+	) {
+		user: insert_user_one(
+			object: {
+				email: $email
+				username: $username
+				password: $password
+				provider: $provider
+				verificated: true
+			}
+		) {
+			id
+			createdAt
+		}
+	}
 `
 
 export const ADD_LIKE_MUTATION = `

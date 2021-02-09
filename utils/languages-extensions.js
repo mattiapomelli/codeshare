@@ -9,4 +9,5 @@ export default {
 	sql: 'sql',
 	'c++': 'cpp',
 	php: 'php',
+	rust: 'rs',
 }
