@@ -58,14 +58,10 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 			}
 
 			try {
-				await executeQuery(
-					query,
-					{
-						userId: session.user.id,
-						snippetId,
-					},
-					session.user.jwt
-				)
+				await executeQuery(query, {
+					userId: session.user.id,
+					snippetId,
+				})
 
 				if (cache.has(key)) {
 					mutate([GET_LIKED_SNIPPETS_COUNT, session.user.id])

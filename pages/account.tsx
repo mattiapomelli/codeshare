@@ -67,7 +67,7 @@ function Account() {
 	const { data: userData } = useSWR(
 		session ? [GET_USER_INFO_QUERY, session.user.id] : null,
 		(query, id) => {
-			return executeQuery(query, { id }, session.user.jwt).then(res => res.user)
+			return executeQuery(query, { id }).then(res => res.user)
 		}
 	)
 

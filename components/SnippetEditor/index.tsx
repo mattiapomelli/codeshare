@@ -100,11 +100,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		e.preventDefault()
 		setLoading(true)
 		try {
-			await executeQuery(
-				CREATE_SNIPPET_MUTATION,
-				{ ...snippet },
-				session.user.jwt
-			)
+			await executeQuery(CREATE_SNIPPET_MUTATION, { ...snippet })
 			setMessages(messages => [
 				...messages,
 				{ type: 'success', text: 'Snippet published!' },
@@ -130,11 +126,12 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		setLoading(true)
 		try {
 			const { title, description, code } = snippet
-			await executeQuery(
-				UPDATE_SNIPPET_MUTATION,
-				{ id, title, description, code },
-				session.user.jwt
-			)
+			await executeQuery(UPDATE_SNIPPET_MUTATION, {
+				id,
+				title,
+				description,
+				code,
+			})
 			setMessages(messages => [
 				...messages,
 				{ type: 'success', text: 'Snippet updated!' },

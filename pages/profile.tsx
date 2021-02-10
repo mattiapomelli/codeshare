@@ -20,6 +20,9 @@ import { logPageView } from '../utils/analytics'
 import { executeQuery } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 import useSnippets from '../hooks/use-snippets'
+import { Snippet, SnippetsResponse } from '../interfaces/snippet'
+import { request } from 'graphql-request'
+import { getSession } from 'next-auth/client'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
@@ -73,20 +76,8 @@ const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 	)
 }
 
-const fetcher = (query, params, token) =>
-	executeQuery(
-		query,
-		{
-			...params,
-		},
-		token
-	).then(data => {
-		data.snippets.forEach(snippet => processSnippet(snippet))
-		return data.snippets
-	})
-
-const countFetcher = (query, userId, token) =>
-	executeQuery(query, { userId }, token).then(res => {
+const countFetcher = async (query, userId) =>
+	executeQuery(query, { userId }).then(res => {
 		return res.result.aggregate.count
 	})
 
@@ -94,14 +85,14 @@ function Profile() {
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
 	const { data: snippetsCount } = useSWR(
-		[GET_USER_SNIPPET_COUNT, session.user.id, session.user.jwt],
+		[GET_USER_SNIPPET_COUNT, session.user.id],
 		countFetcher,
 		{
 			revalidateOnFocus: false,
 		}
 	)
 	const { data: likedCount } = useSWR(
-		[GET_LIKED_SNIPPETS_COUNT, session.user.id, session.user.jwt],
+		[GET_LIKED_SNIPPETS_COUNT, session.user.id],
 		countFetcher,
 		{
 			revalidateOnFocus: false,
@@ -110,7 +101,7 @@ function Profile() {
 	const { data, loading, noResults } = useSnippets(
 		option === 'snippets' ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY,
 		{ userId: session.user.id },
-		(query, params) => fetcher(query, params, session.user.jwt)
+		executeQuery
 	)
 
 	useEffect(() => {
