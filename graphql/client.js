@@ -10,16 +10,24 @@ const graphQLClientAdmin = new GraphQLClient(
 	}
 )
 
+export default graphQLClientAdmin
+
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL)
 
-export const executeQuery = async (query, variables) => {
+export const fetcher = async (query, variables) => {
+	return graphQLClient.request(query, variables)
+}
+
+export const authFetcher = async (query, variables) => {
 	const session = await getSession()
+
+	const headers = session && {
+		authorization: `Bearer ${session.user.jwt}`,
+	}
 
 	return graphQLClient
 		.setHeaders({
-			authorization: `Bearer ${session.user.jwt}`,
+			...headers,
 		})
 		.request(query, variables)
 }
-
-export default graphQLClientAdmin

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/client'
 import useSWR from 'swr'
-import { executeQuery } from '../graphql/client'
+import { authFetcher } from '../graphql/client'
 import { GET_USER_INFO_QUERY } from '../graphql/queries'
 import Button from '../components/Button'
 import withAuth from '../hocs/withAuth'
@@ -67,7 +67,7 @@ function Account() {
 	const { data: userData } = useSWR(
 		session ? [GET_USER_INFO_QUERY, session.user.id] : null,
 		(query, id) => {
-			return executeQuery(query, { id }).then(res => res.user)
+			return authFetcher(query, { id }).then(res => res.user)
 		}
 	)
 

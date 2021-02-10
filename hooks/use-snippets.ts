@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useSWRInfinite } from 'swr'
 import scrolledToBottom from '../utils/scrolled-to-bottom'
 import { useSession } from 'next-auth/client'
-import { Snippet } from '../interfaces/snippet'
+import { Snippet, SnippetsResponse } from '../interfaces/snippet'
+import processSnippet from '../utils/process-snippet'
 
 const PAGE_LIMIT = 6
 
@@ -10,7 +11,7 @@ type Params = {
 	[key: string]: any
 }
 
-type Fetcher = (query: string, params: Params) => Promise<Snippet[]>
+type Fetcher = (query: string, params: Params) => Promise<SnippetsResponse>
 
 const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 	const [, sessionLoading] = useSession()
@@ -30,7 +31,10 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 			...variables,
 		}
 
-		return fetcher(query, params)
+		return fetcher(query, params).then(data => {
+			data.snippets.forEach(snippet => processSnippet(snippet)) // map and plain function
+			return data.snippets
+		})
 	}
 
 	const { data, error, size, setSize } = useSWRInfinite(

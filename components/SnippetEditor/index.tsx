@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { executeQuery } from '../../graphql/client'
+import { authFetcher } from '../../graphql/client'
 import {
 	CREATE_SNIPPET_MUTATION,
 	UPDATE_SNIPPET_MUTATION,
@@ -100,7 +100,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		e.preventDefault()
 		setLoading(true)
 		try {
-			await executeQuery(CREATE_SNIPPET_MUTATION, { ...snippet })
+			await authFetcher(CREATE_SNIPPET_MUTATION, { ...snippet })
 			setMessages(messages => [
 				...messages,
 				{ type: 'success', text: 'Snippet published!' },
@@ -126,7 +126,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		setLoading(true)
 		try {
 			const { title, description, code } = snippet
-			await executeQuery(UPDATE_SNIPPET_MUTATION, {
+			await authFetcher(UPDATE_SNIPPET_MUTATION, {
 				id,
 				title,
 				description,

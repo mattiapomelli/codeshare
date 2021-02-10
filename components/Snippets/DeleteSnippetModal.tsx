@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { DELETE_SNIPPET } from '../../graphql/mutations'
-import { executeQuery } from '../../graphql/client'
+import { authFetcher } from '../../graphql/client'
 import Modal from '../Modal'
 import Button from '../Button'
 import Flex from '../Flex'
@@ -24,7 +24,7 @@ export default function DeleteSnippetModal({ close, id }: Props) {
 	const deleteSnippet = async () => {
 		try {
 			setLoading(true)
-			await executeQuery(DELETE_SNIPPET, { id })
+			await authFetcher(DELETE_SNIPPET, { id })
 			if (window.location.pathname.startsWith('/snippet/')) {
 				window.location.href = '/profile'
 			} else {

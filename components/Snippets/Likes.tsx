@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { executeQuery } from '../../graphql/client'
+import { authFetcher } from '../../graphql/client'
 import {
 	ADD_LIKE_MUTATION,
 	REMOVE_LIKE_MUTATION,
@@ -58,7 +58,7 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 			}
 
 			try {
-				await executeQuery(query, {
+				await authFetcher(query, {
 					userId: session.user.id,
 					snippetId,
 				})

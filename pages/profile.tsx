@@ -11,18 +11,14 @@ import {
 	GET_LIKED_SNIPPETS_COUNT,
 } from '../graphql/queries'
 import useSWR from 'swr'
-import processSnippet from '../utils/process-snippet'
 import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
 import Button from '../components/Button'
 import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
-import { executeQuery } from '../graphql/client'
+import { authFetcher } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 import useSnippets from '../hooks/use-snippets'
-import { Snippet, SnippetsResponse } from '../interfaces/snippet'
-import { request } from 'graphql-request'
-import { getSession } from 'next-auth/client'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
@@ -77,7 +73,7 @@ const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 }
 
 const countFetcher = async (query, userId) =>
-	executeQuery(query, { userId }).then(res => {
+	authFetcher(query, { userId }).then(res => {
 		return res.result.aggregate.count
 	})
 
@@ -101,7 +97,7 @@ function Profile() {
 	const { data, loading, noResults } = useSnippets(
 		option === 'snippets' ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY,
 		{ userId: session.user.id },
-		executeQuery
+		authFetcher
 	)
 
 	useEffect(() => {

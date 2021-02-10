@@ -10,22 +10,12 @@ import {
 	GET_LATEST_SNIPPETS_QUERY,
 	SEARCH_SNIPPETS_QUERY,
 } from '../graphql/queries'
-import { request } from 'graphql-request'
 import Snippets from '../components/Snippets'
-import processSnippet from '../utils/process-snippet'
 import PageHead from '../components/PageHead'
 import { logPageView } from '../utils/analytics'
 import useSnippets from '../hooks/use-snippets'
 import { useSession } from 'next-auth/client'
-import { Snippet } from '../interfaces/snippet'
-
-const fetcher = (query, params): Promise<Snippet[]> =>
-	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
-		...params,
-	}).then(data => {
-		data.snippets.forEach(snippet => processSnippet(snippet))
-		return data.snippets
-	})
+import { fetcher } from '../graphql/client'
 
 interface Props {
 	langs: string[]
