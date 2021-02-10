@@ -9,7 +9,7 @@ import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import request from 'graphql-request'
-import processSnippet from '../../utils/processSnippet'
+import processSnippet from '../../utils/process-snippet'
 import PageHead from '../../components/PageHead'
 
 const Description = styled.pre`

@@ -12,13 +12,14 @@ import {
 } from '../graphql/queries'
 import { request } from 'graphql-request'
 import Snippets from '../components/Snippets'
-import processSnippet from '../utils/processSnippet'
+import processSnippet from '../utils/process-snippet'
 import PageHead from '../components/PageHead'
 import { logPageView } from '../utils/analytics'
-import useSnippets from '../hooks/useSnippets'
+import useSnippets from '../hooks/use-snippets'
 import { useSession } from 'next-auth/client'
+import { Snippet } from '../interfaces/snippet'
 
-const fetcher = (query, params) =>
+const fetcher = (query, params): Promise<Snippet[]> =>
 	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
 		...params,
 	}).then(data => {

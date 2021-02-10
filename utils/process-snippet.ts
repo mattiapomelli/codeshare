@@ -1,3 +1,5 @@
+import { Snippet } from '../interfaces/snippet'
+
 function processSnippet(snippet) {
 	snippet.likesNum = snippet.likes_aggregate.aggregate.count
 	snippet.liked = snippet.likes ? snippet.likes.length > 0 : false

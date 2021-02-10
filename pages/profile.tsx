@@ -11,7 +11,7 @@ import {
 	GET_LIKED_SNIPPETS_COUNT,
 } from '../graphql/queries'
 import useSWR from 'swr'
-import processSnippet from '../utils/processSnippet'
+import processSnippet from '../utils/process-snippet'
 import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
 import Button from '../components/Button'
@@ -19,7 +19,7 @@ import Link from 'next/link'
 import { logPageView } from '../utils/analytics'
 import { executeQuery } from '../graphql/client'
 import { IconButton } from '../components/Icon'
-import useSnippets from '../hooks/useSnippets'
+import useSnippets from '../hooks/use-snippets'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
