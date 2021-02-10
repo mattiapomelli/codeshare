@@ -1,11 +1,21 @@
-import { Snippet } from '../interfaces/snippet'
+import { RawSnippet, Snippet } from '../interfaces/snippet'
 
-function processSnippet(snippet) {
-	snippet.likesNum = snippet.likes_aggregate.aggregate.count
-	snippet.liked = snippet.likes ? snippet.likes.length > 0 : false
-	delete snippet.likes_aggregate
-	delete snippet.likes
-	return snippet
+function processSnippet(snippet: RawSnippet): Snippet {
+	const {
+		likes_aggregate: {
+			aggregate: { count },
+		},
+		likes,
+		...rest
+	} = snippet
+
+	const newSnippet = {
+		...rest,
+		likesNum: count,
+		liked: likes ? likes.length > 0 : false,
+	}
+
+	return newSnippet
 }
 
 export default processSnippet

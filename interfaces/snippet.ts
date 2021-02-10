@@ -1,22 +1,25 @@
 export interface Snippet {
+	id: string
+	title: string
 	code: string
 	programmingLang: string
-	title: string
-	id: string
+	description: string
 	likesNum: number
 	liked: boolean
 	user: { username: string }
 }
 
 export interface RawSnippet {
-	code: string
-	description: string
 	id: string
 	title: string
+	code: string
 	programmingLang: string
-	likes: {
-		createdAt: string
-	}
+	description: string
+	likes?: [
+		{
+			createdAt: string
+		}
+	]
 	likes_aggregate: {
 		aggregate: {
 			count: number

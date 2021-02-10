@@ -31,10 +31,9 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 			...variables,
 		}
 
-		return fetcher(query, params).then(data => {
-			data.snippets.forEach(snippet => processSnippet(snippet)) // map and plain function
-			return data.snippets
-		})
+		return fetcher(query, params).then(data =>
+			data.snippets.map(snippet => processSnippet(snippet))
+		)
 	}
 
 	const { data, error, size, setSize } = useSWRInfinite(
@@ -46,7 +45,7 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 		}
 	)
 
-	const snippets = data ? [].concat(...data) : []
+	const snippets: Snippet[] = data ? [].concat(...data) : []
 
 	useEffect(() => {
 		loadingMore.current = isLoading
