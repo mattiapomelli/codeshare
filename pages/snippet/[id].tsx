@@ -8,9 +8,10 @@ import styled from 'styled-components'
 import { Skeleton } from '../../components/Skeleton'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
-import request from 'graphql-request'
 import processSnippet from '../../utils/process-snippet'
 import PageHead from '../../components/PageHead'
+import { Snippet } from '../../interfaces/snippet'
+import { fetcher } from '../../graphql/client'
 
 const Description = styled.pre`
 	white-space: pre-wrap;
@@ -21,9 +22,6 @@ const Description = styled.pre`
 	padding-left: 1.5rem;
 	color: #ccc;
 	border-left: 3px solid ${props => props.theme.colors.secondaryText};
-	/* border-right: 3px solid ${props => props.theme.colors.secondaryText}; */
-	/* background-color: ${props => props.theme.colors.sidebar}; */
-	/* border-radius: ${props => props.theme.borderRadius}; */
 `
 
 const Info = styled(Flex)`
@@ -36,17 +34,6 @@ const Info = styled(Flex)`
 	}
 `
 
-// const CategoryTag = styled.span`
-//     background: ${props => props.theme.colors.code[props.language]};
-//     border-radius: ${props => props.theme.borderRadius};
-//     font-family: monospace;
-//     text-transform: uppercase;
-//     padding: 0.3rem 0.8rem;
-//     display: inline-block;
-//     font-size: 0.9rem;
-//     color: ${props => props.theme.colors.background} !important;
-// `
-
 const PageSkeleton = () => (
 	<article>
 		<div style={{ marginBottom: '1rem', marginTop: '0.5rem' }}>
@@ -57,19 +44,7 @@ const PageSkeleton = () => (
 	</article>
 )
 
-interface Props {
-	code: string
-	programmingLang: string
-	title: string
-	id: string
-	likesNum: number
-	liked: boolean
-	user: { username: string }
-	createdAt: string
-	description: string
-}
-
-const Snippet = ({
+const SnippetContent = ({
 	code,
 	programmingLang,
 	title,
@@ -79,13 +54,12 @@ const Snippet = ({
 	user,
 	createdAt,
 	description,
-}: Props) => {
+}: Snippet) => {
 	const [session] = useSession()
 
 	return (
-		<>
+		<article>
 			<H2 overflowWrap>{title}</H2>
-			{/* <CategoryTag language={programmingLang.toLowerCase()}>{programmingLang}</CategoryTag>s */}
 			<Info h="space-between" v="center" flexWrap="wrap">
 				<span>
 					{user.username} &middot; {createdAt.slice(0, 10)}
@@ -100,19 +74,16 @@ const Snippet = ({
 			<CodeBlock codeString={code + '\n'} language={programmingLang} />
 			<Label style={{ marginTop: '1rem' }}>Description</Label>
 			<Description>{description}</Description>
-		</>
+		</article>
 	)
 }
 
-const fetcher = (query, snippetId, userId) =>
-	request(process.env.NEXT_PUBLIC_HASURA_URL, query, {
+const snippetFetcher = (query, snippetId, userId) =>
+	fetcher(query, {
 		id: snippetId,
 		userId: userId,
 		isAuth: userId ? true : false,
-	}).then(data => {
-		const { snippet } = data
-		return processSnippet(snippet)
-	})
+	}).then(data => processSnippet(data.snippet))
 
 const SnippetPage = () => {
 	const router = useRouter()
@@ -120,7 +91,7 @@ const SnippetPage = () => {
 	const userId = session ? session.user.id : null
 	const { data } = useSWR(
 		[GET_SINGLE_SNIPPET_QUERY, router.query.id, userId],
-		fetcher,
+		snippetFetcher,
 		{
 			revalidateOnMount: true,
 		}
@@ -131,7 +102,7 @@ const SnippetPage = () => {
 	return (
 		<>
 			<PageHead title={data.title} />
-			<Snippet {...data} />
+			<SnippetContent {...data} />
 		</>
 	)
 }

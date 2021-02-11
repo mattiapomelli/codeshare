@@ -96,7 +96,7 @@ const Home = () => {
 				<h1 id="heading"></h1>
 				<p>
 					The place where you can find the code snippets you need and share your
-					best code to help others{' '}
+					best code to help others
 				</p>
 				<Flex h="center" flexWrap="wrap">
 					<Link href="/snippets">
@@ -106,13 +106,7 @@ const Home = () => {
 						<Button variant="primary">GET STARTED</Button>
 					</Link>
 				</Flex>
-				<Image
-					src="/hero.svg"
-					width={612}
-					height={392}
-					layout="responsive"
-					className="image"
-				/>
+				<Image src="/hero.svg" width={612} height={392} className="image" />
 			</Hero>
 			<Footer />
 			<CookiesPopup />

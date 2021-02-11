@@ -7,7 +7,7 @@ interface DropdownProps {
 	options: string[]
 	value: string
 	as?: string
-	onSelect: (string) => void
+	onSelect: (value: string) => void
 	right?: boolean
 }
 

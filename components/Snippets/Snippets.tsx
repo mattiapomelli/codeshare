@@ -4,6 +4,7 @@ import { Skeleton } from '../Skeleton'
 import Icon from '../Icon'
 import Flex from '../Flex'
 import styled from 'styled-components'
+import { Snippet } from '../../interfaces/snippet'
 
 const ScrollButton = styled.button`
 	border: none;
@@ -86,26 +87,6 @@ const NoResultsContainer = styled(Flex)`
 	}
 `
 
-// interface Props {
-// 	children?: React.ReactNode
-// 	query: string
-// 	variables: {
-// 		[key: string]: string
-// 	}
-// 	/* eslint-disable @typescript-eslint/no-explicit-any */
-// 	fetcher: (...args: any) => any
-// }
-
-type Snippet = {
-	code: string
-	programmingLang: string
-	title: string
-	id: string
-	likesNum: number
-	liked: boolean
-	user: { username: string }
-}
-
 interface Props {
 	children?: React.ReactNode
 	data: Snippet[]
@@ -115,15 +96,10 @@ interface Props {
 
 export default function Snippets({
 	children,
-	// query,
-	// variables,
-	// fetcher,
 	data,
 	loading,
 	noResults,
 }: Props) {
-	// const { data, loading, noResults } = useSnippets(query, variables, fetcher)
-
 	return (
 		<>
 			{noResults && (

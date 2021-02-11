@@ -7,6 +7,7 @@ export interface Snippet {
 	likesNum: number
 	liked: boolean
 	user: { username: string }
+	createdAt: string
 }
 
 export interface RawSnippet {
@@ -28,6 +29,7 @@ export interface RawSnippet {
 	user: {
 		username: string
 	}
+	createdAt: string
 }
 
 export interface SnippetsResponse {
