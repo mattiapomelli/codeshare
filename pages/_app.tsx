@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import SearchProvider from '../contexts/SearchContext'
 import { Provider } from 'next-auth/client'
 import Layout from '../components/Layout/Layout'
 import theme from '../themes/theme'
@@ -56,20 +55,18 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<Provider session={pageProps.session}>
-			<SearchProvider>
-				<ThemeProvider theme={theme}>
-					<GlobalStyle />
-					{paths.includes(router.pathname) ? (
-						<>
-							<Component {...pageProps} />
-						</>
-					) : (
-						<Layout>
-							<Component {...pageProps} />
-						</Layout>
-					)}
-				</ThemeProvider>
-			</SearchProvider>
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+				{paths.includes(router.pathname) ? (
+					<>
+						<Component {...pageProps} />
+					</>
+				) : (
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				)}
+			</ThemeProvider>
 		</Provider>
 	)
 }

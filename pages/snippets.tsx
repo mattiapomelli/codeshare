@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useSearch } from '../contexts/SearchContext'
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react'
+import { useRouter } from 'next/router'
 import Dropdown from '../components/Dropdown'
 import { IconInput } from '../components/Input'
 import Flex from '../components/Flex'
@@ -21,24 +21,55 @@ interface Props {
 	langs: string[]
 }
 
+const getURLFromParams = (params: { [key: string]: string }): string => {
+	const urlParams = []
+
+	for (const key in params) {
+		if (!params[key]) continue
+
+		const value = params[key]
+
+		urlParams.push(`${key}=${value.replace(' ', '+')}`)
+	}
+
+	return urlParams.length > 0 ? '?' + urlParams.join('&') : ''
+}
+
+function useInitialStateFromQuery(
+	key: string,
+	defaultValue: string | null
+): [string, Dispatch<SetStateAction<string>>] {
+	const router = useRouter()
+	const value = router.query[key]
+
+	const [state, setState] = useState<string>(() => {
+		if (!value) return defaultValue
+		return Array.isArray(value) ? value[0] : value
+	})
+
+	return [state, setState]
+}
+
 export default function SnippetsPage({ langs }: Props) {
 	const [session] = useSession()
+	const router = useRouter()
+	const typingTimer = useRef<number>()
+	const [searchValue, setSearchValue] = useInitialStateFromQuery('q', '')
+	const [search, setSearch] = useInitialStateFromQuery('q', '')
+	const [lang, setLang] = useInitialStateFromQuery('lang', null)
+
 	const userId = session ? session.user.id : null
-	const { search, setSearch, activeLanguage, setActiveLanguage } = useSearch()
+	const isSearch = search.length > 0
+	const params = {
+		programmingLang: lang,
+		userId,
+		isAuth: userId ? true : false,
+		...(isSearch && { search }),
+	}
+
 	const { data, loading, noResults } = useSnippets(
-		search.length > 0 ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY,
-		search.length > 0
-			? {
-					search,
-					programmingLang: activeLanguage,
-					userId,
-					isAuth: userId ? true : false,
-			  }
-			: {
-					programmingLang: activeLanguage,
-					userId,
-					isAuth: userId ? true : false,
-			  },
+		isSearch ? SEARCH_SNIPPETS_QUERY : GET_LATEST_SNIPPETS_QUERY,
+		params,
 		fetcher
 	)
 
@@ -46,9 +77,27 @@ export default function SnippetsPage({ langs }: Props) {
 		logPageView()
 	}, [])
 
-	const handleLanguageChange = value => {
-		setActiveLanguage(value === 'All' ? null : value)
+	const handleLanguageChange = (value: string) => {
+		setLang(value === 'All' ? null : value)
 	}
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchValue(e.target.value)
+	}
+
+	useEffect(() => {
+		window.clearTimeout(typingTimer.current)
+
+		typingTimer.current = window.setTimeout(() => {
+			const href = getURLFromParams({ q: searchValue, lang: lang })
+
+			router.push(`/snippets${href}`, undefined, {
+				shallow: true,
+			})
+
+			setSearch(searchValue)
+		}, 250)
+	}, [searchValue, lang])
 
 	return (
 		<>
@@ -59,17 +108,15 @@ export default function SnippetsPage({ langs }: Props) {
 			<Flex>
 				<IconInput
 					placeholder="Search..."
-					value={search}
-					onChange={e => {
-						setSearch(e.target.value.toLowerCase())
-					}}
+					value={searchValue}
+					onChange={handleSearchChange}
 					icon="search"
 					style={{ marginRight: '0.9rem' }}
 				/>
 				<Dropdown
 					options={['All'].concat(langs)}
 					onSelect={handleLanguageChange}
-					value={activeLanguage || 'All'}
+					value={lang || 'All'}
 				/>
 			</Flex>
 
