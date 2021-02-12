@@ -24,7 +24,7 @@ export default function SnippetsPage({ langs }: Props) {
 	const [session] = useSession()
 	const typingTimer = useRef<number>()
 	const [search, setSearch] = useCache('search', '')
-	const [lang, setLang] = useCache('lang', '')
+	const [lang, setLang] = useCache('lang', null)
 	const [searchValue, setSearchValue] = useState(search)
 
 	const userId = session ? session.user.id : null
