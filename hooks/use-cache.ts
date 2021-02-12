@@ -1,21 +1,24 @@
-import { likesCache } from '../utils/cache'
-import { useState } from 'react'
+import { useState, useCallback, Dispatch, SetStateAction } from 'react'
+import { cache } from '../utils/cache'
 
-function useCache<T>(key: string, initialValue: T) {
+function useCache<T>(
+	key: string,
+	initialValue: T
+): [T, Dispatch<SetStateAction<T>>] {
 	const [value, setValue] = useState<T>(() => {
-		const cachedValue = likesCache.get(key)
+		const cachedValue = cache.get(key)
 		return typeof cachedValue !== 'undefined' ? cachedValue : initialValue
 	})
 
-	const changeCache = (newValue: T) => {
-		setValue(newValue)
-		likesCache.set(key, newValue)
-	}
+	const changeCache = useCallback(
+		(newValue: T) => {
+			setValue(newValue)
+			cache.set(key, newValue)
+		},
+		[key]
+	)
 
-	return {
-		changeCache,
-		value,
-	}
+	return [value, changeCache]
 }
 
 export default useCache

@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useEffect, useRef } from 'react'
 import Dropdown from '../components/Dropdown'
 import { IconInput } from '../components/Input'
 import Flex from '../components/Flex'
@@ -15,47 +14,18 @@ import PageHead from '../components/PageHead'
 import useSnippets from '../hooks/use-snippets'
 import { useSession } from 'next-auth/client'
 import { fetcher } from '../graphql/client'
+import useCache from '../hooks/use-cache'
 
 interface Props {
 	langs: string[]
 }
 
-const getURLFromParams = (params: { [key: string]: string }): string => {
-	const urlParams = []
-
-	for (const key in params) {
-		if (!params[key]) continue
-
-		const value = params[key]
-
-		urlParams.push(`${key}=${value.replace(' ', '+')}`)
-	}
-
-	return urlParams.length > 0 ? '?' + urlParams.join('&') : ''
-}
-
-function useInitialStateFromQuery(
-	key: string,
-	defaultValue: string | null
-): [string, Dispatch<SetStateAction<string>>] {
-	const router = useRouter()
-	const value = router.query[key]
-
-	const [state, setState] = useState<string>(() => {
-		if (!value) return defaultValue
-		return Array.isArray(value) ? value[0] : value
-	})
-
-	return [state, setState]
-}
-
 export default function SnippetsPage({ langs }: Props) {
 	const [session] = useSession()
-	const router = useRouter()
 	const typingTimer = useRef<number>()
-	const [searchValue, setSearchValue] = useInitialStateFromQuery('q', '')
-	const [search, setSearch] = useInitialStateFromQuery('q', '')
-	const [lang, setLang] = useInitialStateFromQuery('lang', null)
+	const [search, setSearch] = useCache('search', '')
+	const [lang, setLang] = useCache('lang', '')
+	const [searchValue, setSearchValue] = useState(search)
 
 	const userId = session ? session.user.id : null
 	const isSearch = search.length > 0
@@ -84,17 +54,9 @@ export default function SnippetsPage({ langs }: Props) {
 		window.clearTimeout(typingTimer.current)
 
 		typingTimer.current = window.setTimeout(() => {
-			const href = getURLFromParams({ q: searchValue, lang: lang })
-
-			if (window.location.search !== href) {
-				router.push(`/snippets${href}`, undefined, {
-					shallow: true,
-				})
-			}
-
 			setSearch(searchValue)
 		}, 250)
-	}, [searchValue, lang])
+	}, [searchValue, setSearch])
 
 	return (
 		<>
