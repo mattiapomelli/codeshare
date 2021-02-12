@@ -12,7 +12,6 @@ import {
 } from '../graphql/queries'
 import Snippets from '../components/Snippets'
 import PageHead from '../components/PageHead'
-import { logPageView } from '../utils/analytics'
 import useSnippets from '../hooks/use-snippets'
 import { useSession } from 'next-auth/client'
 import { fetcher } from '../graphql/client'
@@ -73,10 +72,6 @@ export default function SnippetsPage({ langs }: Props) {
 		fetcher
 	)
 
-	useEffect(() => {
-		logPageView()
-	}, [])
-
 	const handleLanguageChange = (value: string) => {
 		setLang(value === 'All' ? null : value)
 	}
@@ -91,9 +86,11 @@ export default function SnippetsPage({ langs }: Props) {
 		typingTimer.current = window.setTimeout(() => {
 			const href = getURLFromParams({ q: searchValue, lang: lang })
 
-			router.push(`/snippets${href}`, undefined, {
-				shallow: true,
-			})
+			if (window.location.search !== href) {
+				router.push(`/snippets${href}`, undefined, {
+					shallow: true,
+				})
+			}
 
 			setSearch(searchValue)
 		}, 250)

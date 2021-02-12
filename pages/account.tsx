@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/client'
 import useSWR from 'swr'
 import { authFetcher } from '../graphql/client'
@@ -11,7 +10,6 @@ import { Skeleton } from '../components/Skeleton'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import ChangePasswordForm from '../components/PasswordForm'
-import { logPageView } from '../utils/analytics'
 
 const SettingsGrid = styled.div`
 	display: grid;
@@ -70,10 +68,6 @@ function Account() {
 			return authFetcher(query, { id }).then(res => res.user)
 		}
 	)
-
-	useEffect(() => {
-		logPageView()
-	}, [])
 
 	const logOut = () => {
 		signOut({ callbackUrl: process.env.NEXT_PUBLIC_BASE_URL })

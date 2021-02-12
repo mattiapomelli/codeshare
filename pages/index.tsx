@@ -8,7 +8,6 @@ import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import CookiesPopup from '../components/CookiesPopup'
 import Footer from '../components/Footer'
-import { logPageView } from '../utils/analytics'
 import Button from '../components/Button'
 
 const Hero = styled.section`
@@ -82,10 +81,6 @@ const Home = () => {
 		return () => {
 			clearTimeout(timeout)
 		}
-	}, [])
-
-	useEffect(() => {
-		logPageView()
 	}, [])
 
 	return (

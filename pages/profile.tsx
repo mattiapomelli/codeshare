@@ -1,4 +1,4 @@
-import { useEffect, useState, LiHTMLAttributes } from 'react'
+import { useState, LiHTMLAttributes } from 'react'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 import { H2, Label } from '../components/Typography'
@@ -15,7 +15,6 @@ import PageHead from '../components/PageHead'
 import Flex from '../components/Flex'
 import Button from '../components/Button'
 import Link from 'next/link'
-import { logPageView } from '../utils/analytics'
 import { authFetcher } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 import useSnippets from '../hooks/use-snippets'
@@ -99,10 +98,6 @@ function Profile() {
 		{ userId: session.user.id },
 		authFetcher
 	)
-
-	useEffect(() => {
-		logPageView()
-	}, [])
 
 	return (
 		<>

@@ -9,7 +9,6 @@ import Popups from '../components/Popup/Popup'
 import Link from 'next/link'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
-import { logPageView } from '../utils/analytics'
 import Icon from '../components/Icon'
 
 const Login = () => {
@@ -34,10 +33,6 @@ const Login = () => {
 			])
 		}
 	}, [router.query])
-
-	useEffect(() => {
-		logPageView()
-	}, [])
 
 	const onChange = e => {
 		setCredentials({ ...credentials, [e.target.name]: e.target.value })

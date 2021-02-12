@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { signIn } from 'next-auth/client'
 import { IconInput } from '../components/Input'
 import Button from '../components/Button'
@@ -8,7 +8,6 @@ import Popups from '../components/Popup/Popup'
 import Link from 'next/link'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
-import { logPageView } from '../utils/analytics'
 import Icon from '../components/Icon'
 
 const Signup = () => {
@@ -77,10 +76,6 @@ const Signup = () => {
 				setLoading(false)
 			})
 	}
-
-	useEffect(() => {
-		logPageView()
-	}, [])
 
 	return (
 		<>

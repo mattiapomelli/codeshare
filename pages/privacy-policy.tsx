@@ -1,9 +1,7 @@
-import { useEffect } from 'react'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import { H2 } from '../components/Typography'
 import Logo from '../components/Logo'
-import { logPageView } from '../utils/analytics'
 import PageHead from '../components/PageHead'
 
 const FlexContainer = styled(Flex)`
@@ -15,10 +13,6 @@ const FlexContainer = styled(Flex)`
 `
 
 export default function PrivacyPolicy() {
-	useEffect(() => {
-		logPageView()
-	}, [])
-
 	return (
 		<>
 			<PageHead title="Privay Policy – Codeshare" />

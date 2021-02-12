@@ -1,11 +1,11 @@
 import type { AppProps } from 'next/app'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Provider } from 'next-auth/client'
 import Layout from '../components/Layout/Layout'
 import theme from '../themes/theme'
 import { useRouter } from 'next/router'
-import { initGA } from '../utils/analytics'
+import { initGA, logPageView } from '../utils/analytics'
 // import dynamic from 'next/dynamic'
 
 // const Layout = dynamic(() => import('../components/Layout/Layout'))
@@ -36,6 +36,8 @@ const GlobalStyle = createGlobalStyle`
 		props.theme.breakpoints.desktop} { :root{font-size: 16px;} } */
 `
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+
 declare global {
 	interface Window {
 		GA_INITIALIZED: boolean
@@ -45,13 +47,33 @@ declare global {
 export default function App({ Component, pageProps }: AppProps) {
 	const router = useRouter()
 	const paths = ['/', '/login', '/signup', '/resetpassword']
+	const prevPath = useRef(null)
 
 	useEffect(() => {
 		if (!window.GA_INITIALIZED) {
 			initGA()
 			window.GA_INITIALIZED = true
 		}
-	}, [])
+
+		logPageView()
+
+		const handleRouteChangeStart = () => {
+			prevPath.current = window.location.pathname
+		}
+
+		const handleRouteChangeComplete = () => {
+			if (window.location.pathname !== prevPath.current && IS_PRODUCTION) {
+				logPageView()
+			}
+		}
+
+		router.events.on('routeChangeStart', handleRouteChangeStart)
+		router.events.on('routeChangeComplete', handleRouteChangeComplete)
+		return () => {
+			router.events.off('routeChangeStart', handleRouteChangeStart)
+			router.events.off('routeChangeComplete', handleRouteChangeComplete)
+		}
+	}, [router.events])
 
 	return (
 		<Provider session={pageProps.session}>
