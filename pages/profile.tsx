@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { authFetcher } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 import useSnippets from '../hooks/use-snippets'
+import useNotification from '../hooks/use-notification'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
@@ -77,6 +78,7 @@ const countFetcher = async (query, userId) =>
 	})
 
 function Profile() {
+	const addNotification = useNotification()
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
 	const { data: snippetsCount } = useSWR(
@@ -102,6 +104,12 @@ function Profile() {
 	return (
 		<>
 			<PageHead title={`${session.user.username} – Codeshare`} />
+
+			<button
+				onClick={() => addNotification({ type: 'success', content: 'wow' })}
+			>
+				Click
+			</button>
 
 			<Flex v="center" h="space-between" flexWrap="wrap">
 				{session && <H2 overflowWrap>{session.user.username}</H2>}

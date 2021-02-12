@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Popups from './Popup/Popup'
 import Input from './Input'
 import { Label } from './Typography'
 import Button from './Button'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
+import useNotification from '../hooks/use-notification'
 
 const PasswordForm = styled.form`
 	${Input} {
@@ -24,8 +24,8 @@ export default function ChangePasswordForm() {
 		newPassword: '',
 		newPassword2: '',
 	})
-	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
+	const addNotification = useNotification()
 
 	const onChange = e => {
 		setPasswords({ ...passwords, [e.target.name]: e.target.value })
@@ -35,10 +35,7 @@ export default function ChangePasswordForm() {
 		e.preventDefault()
 
 		if (passwords.newPassword !== passwords.newPassword2) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'error', text: 'Passwords must match' },
-			])
+			addNotification({ type: 'error', content: 'Passwords must match' })
 			return
 		}
 
@@ -57,10 +54,7 @@ export default function ChangePasswordForm() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				setMessages(messages => [
-					...messages,
-					{ type: data.type || 'error', text: data.message },
-				])
+				addNotification({ type: data.type || 'error', content: data.message })
 				if (data.type == 'success') {
 					setPasswords({ current: '', newPassword: '', newPassword2: '' })
 				}
@@ -105,7 +99,6 @@ export default function ChangePasswordForm() {
 			>
 				Change
 			</Button>
-			<Popups popups={messages} setPopups={setMessages} />
 		</PasswordForm>
 	)
 }

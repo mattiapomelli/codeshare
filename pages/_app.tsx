@@ -6,6 +6,7 @@ import Layout from '../components/Layout/Layout'
 import theme from '../themes/theme'
 import { useRouter } from 'next/router'
 import { initGA, logPageView } from '../utils/analytics'
+import { NotificationProvider } from '../hooks/use-notification'
 // import dynamic from 'next/dynamic'
 
 // const Layout = dynamic(() => import('../components/Layout/Layout'))
@@ -78,16 +79,18 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<Provider session={pageProps.session}>
 			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				{paths.includes(router.pathname) ? (
-					<>
-						<Component {...pageProps} />
-					</>
-				) : (
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				)}
+				<NotificationProvider>
+					<GlobalStyle />
+					{paths.includes(router.pathname) ? (
+						<>
+							<Component {...pageProps} />
+						</>
+					) : (
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					)}
+				</NotificationProvider>
 			</ThemeProvider>
 		</Provider>
 	)

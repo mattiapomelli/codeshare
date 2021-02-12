@@ -22,10 +22,10 @@ import TextLimiter from './TextLimiter'
 import Button from '../Button'
 import Dropdown from '../Dropdown'
 import InfoModal from './InfoModal'
-import Popups from '../Popup/Popup'
 import useSWR from 'swr'
 import request from 'graphql-request'
 import { useRouter } from 'next/router'
+import useNotification from '../../hooks/use-notification'
 
 const defaultCode = `function yourAwesomeFunction() {
     // copy or write your code!
@@ -57,8 +57,8 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 	})
 	const [session] = useSession()
 	const [showModal, setShowModal] = useState(false)
-	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
+	const addNotification = useNotification()
 
 	const cancelEdit = useCallback(() => {
 		setSnippet(prevSnippet => ({
@@ -101,10 +101,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		setLoading(true)
 		try {
 			await authFetcher(CREATE_SNIPPET_MUTATION, { ...snippet })
-			setMessages(messages => [
-				...messages,
-				{ type: 'success', text: 'Snippet published!' },
-			])
+			addNotification({ type: 'success', content: 'Snippet published!' })
 			setSnippet(prevSnippet => ({
 				...prevSnippet,
 				title: '',
@@ -113,10 +110,10 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 			}))
 			setLoading(false)
 		} catch (err) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'error', text: 'Something went wrong, please try again' },
-			])
+			addNotification({
+				type: 'error',
+				content: 'Something went wrong, please try again',
+			})
 			setLoading(false)
 		}
 	}
@@ -132,17 +129,14 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 				description,
 				code,
 			})
-			setMessages(messages => [
-				...messages,
-				{ type: 'success', text: 'Snippet updated!' },
-			])
+			addNotification({ type: 'success', content: 'Snippet updated!' })
 			setLoading(false)
 			cancelEdit()
 		} catch (err) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'error', text: 'Something went wrong, please try again' },
-			])
+			addNotification({
+				type: 'error',
+				content: 'Something went wrong, please try again',
+			})
 			setLoading(false)
 		}
 	}
@@ -241,7 +235,6 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 				</SubmitArea>
 			</EditorForm>
 			{showModal && <InfoModal close={() => setShowModal(false)} />}
-			<Popups popups={messages} setPopups={setMessages} />
 		</>
 	)
 }

@@ -3,13 +3,13 @@ import { IconInput } from '../components/Input'
 import Button from '../components/Button'
 import { LoginForm } from '../components/LoginForm'
 import Logo from '../components/Logo'
-import Popups from '../components/Popup/Popup'
 import withNoAuth from '../hocs/withNoAuth'
+import useNotification from '../hooks/use-notification'
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState('')
-	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
+	const addNotification = useNotification()
 
 	const sendResetPassword = e => {
 		e.preventDefault()
@@ -26,10 +26,7 @@ const ForgotPassword = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				setMessages(messages => [
-					...messages,
-					{ type: data.type || 'error', text: data.message },
-				])
+				addNotification({ type: data.type || 'error', content: data.message })
 				if (data.type == 'success') {
 					setEmail('')
 				}
@@ -70,7 +67,6 @@ const ForgotPassword = () => {
 					with your account
 				</p>
 			</LoginForm>
-			<Popups popups={messages} setPopups={setMessages} />
 		</>
 	)
 }

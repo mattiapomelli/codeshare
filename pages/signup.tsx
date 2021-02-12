@@ -4,11 +4,11 @@ import { IconInput } from '../components/Input'
 import Button from '../components/Button'
 import { LoginForm } from '../components/LoginForm'
 import Logo from '../components/Logo'
-import Popups from '../components/Popup/Popup'
 import Link from 'next/link'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import Icon from '../components/Icon'
+import useNotification from '../hooks/use-notification'
 
 const Signup = () => {
 	const [credentials, setCredentials] = useState({
@@ -17,8 +17,8 @@ const Signup = () => {
 		username: '',
 		password2: '',
 	})
-	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
+	const addNotification = useNotification()
 
 	const onChange = e => {
 		setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -36,10 +36,7 @@ const Signup = () => {
 		e.preventDefault()
 
 		if (credentials.password !== credentials.password2) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'error', text: 'Passwords must match' },
-			])
+			addNotification({ type: 'error', content: 'Passwords must match' })
 			return
 		}
 
@@ -58,10 +55,7 @@ const Signup = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				setMessages(messages => [
-					...messages,
-					{ type: data.type || 'error', text: data.message },
-				])
+				addNotification({ type: data.type || 'error', content: data.message })
 				if (data.type == 'success') {
 					setCredentials({
 						email: '',
@@ -147,7 +141,6 @@ const Signup = () => {
 					</Link>
 				</p>
 			</LoginForm>
-			<Popups popups={messages} setPopups={setMessages} />
 		</>
 	)
 }

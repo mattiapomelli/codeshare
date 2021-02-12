@@ -5,17 +5,17 @@ import { IconInput } from '../components/Input'
 import Button from '../components/Button'
 import { LoginForm } from '../components/LoginForm'
 import Logo from '../components/Logo'
-import Popups from '../components/Popup/Popup'
 import Link from 'next/link'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import Icon from '../components/Icon'
+import useNotification from '../hooks/use-notification'
 
 const Login = () => {
 	const router = useRouter()
 	const [credentials, setCredentials] = useState({ email: '', password: '' })
-	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
+	const addNotification = useNotification()
 
 	useEffect(() => {
 		if (router.query.error) {
@@ -25,12 +25,12 @@ const Login = () => {
 					? errors.replace('Error: ', '')
 					: errors[0].replace('Error: ', '')
 
-			setMessages(messages => [...messages, { type: 'error', text: errorMsg }])
+			addNotification({ type: 'error', content: errorMsg })
 		} else if (router.query.message) {
-			setMessages(messages => [
-				...messages,
-				{ type: 'success', text: router.query.message },
-			])
+			addNotification({
+				type: 'success',
+				content: router.query.message as string,
+			})
 		}
 	}, [router.query])
 
@@ -111,7 +111,6 @@ const Login = () => {
 					</Link>
 				</p>
 			</LoginForm>
-			<Popups popups={messages} setPopups={setMessages} />
 		</>
 	)
 }
