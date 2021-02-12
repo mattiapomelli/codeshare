@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			window.GA_INITIALIZED = true
 		}
 
-		logPageView()
+		if (IS_PRODUCTION) logPageView()
 
 		const handleRouteChangeStart = () => {
 			prevPath.current = window.location.pathname
