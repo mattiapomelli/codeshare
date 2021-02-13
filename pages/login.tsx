@@ -36,7 +36,7 @@ const Login = () => {
 				content: router.query.message as string,
 			})
 		}
-	}, [router.query])
+	}, [router.query, addNotification])
 
 	const signInWithCredentials = (data) => {
 		setLoading(true)

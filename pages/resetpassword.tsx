@@ -14,29 +14,33 @@ const ForgotPassword = () => {
 	const [loading, setLoading] = useState(false)
 	const addNotification = useNotification()
 
-	const sendResetPassword = (data) => {
+	const sendResetPassword = async (data) => {
 		setLoading(true)
-		fetch('/api/retrievepassword', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				email: data.email.toLowerCase(),
-			}),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				addNotification({ type: data.type || 'error', content: data.message })
-				if (data.type == 'success') {
-					resetForm()
-				}
-				setLoading(false)
+
+		try {
+			const res = await fetch('/api/retrievepassword', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					email: data.email.toLowerCase(),
+				}),
 			})
-			.catch(() => {
-				setLoading(false)
-			})
+
+			const result = await res.json()
+
+			addNotification({ type: result.type || 'error', content: result.message })
+			if (result.type == 'success') {
+				resetForm()
+			}
+			setLoading(false)
+		} catch (err) {
+			addNotification({ type: 'error', content: 'Something went wrong' })
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	return (

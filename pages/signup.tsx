@@ -29,36 +29,38 @@ const Signup = () => {
 		})
 	}
 
-	const signUp = (data) => {
+	const signUp = async (data) => {
 		if (data.password !== data.password2) {
 			addNotification({ type: 'error', content: 'Passwords must match' })
 			return
 		}
-
 		setLoading(true)
-		fetch('/api/register', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				email: data.email.toLowerCase(),
-				username: data.username,
-				password: data.password,
-			}),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				addNotification({ type: data.type || 'error', content: data.message })
-				if (data.type == 'success') {
-					resetForm()
-				}
-				setLoading(false)
+
+		try {
+			const res = await fetch('/api/register', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					email: data.email.toLowerCase(),
+					username: data.username,
+					password: data.password,
+				}),
 			})
-			.catch(() => {
-				setLoading(false)
-			})
+
+			const result = await res.json()
+
+			addNotification({ type: result.type || 'error', content: result.message })
+			if (result.type == 'success') {
+				resetForm()
+			}
+		} catch (err) {
+			addNotification({ type: 'error', content: 'Something went wrong' })
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	return (
