@@ -22,8 +22,10 @@ export const authFetcher = async (query: string, variables) => {
 	const session = await getSession()
 
 	const headers = session && {
-		authorization: `Bearer ${session.user.jwt}`,
+		authorization: `Bearer ${session.accessToken.jwt}`,
 	}
+
+	console.log(session.accessToken.jwt)
 
 	return graphQLClient
 		.setHeaders({

@@ -4,7 +4,7 @@ import graphQLClientAdmin from '../../../graphql/client'
 import { GET_USER_BY_EMAIL_QUERY } from '../../../graphql/queries'
 import { CREATE_USER_FROM_GITHUB_MUTATION } from '../../../graphql/mutations'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { signAccessToken } from '../../../utils/auth'
 
 async function getUserByEmail(email) {
 	const variables = { email: email }
@@ -49,14 +49,14 @@ const providers = [
 			const matched = await bcrypt.compare(credentials.password, user.password)
 			if (!matched) return Promise.reject(new Error('Wrong password'))
 
-			return Promise.resolve(user) // user object gets passed to signIn callback
+			return Promise.resolve(user) // user object gets passed to signIn callback and then to jwt callback
 		},
 	}),
 ]
-// TODO: error handling
+// TODO: better error handling
 const callbacks = {
 	signIn: async (user, account, metadata) => {
-		// if user signed in with credentials validation has already been made in 'authorize' function, so skip to jwt callback
+		// if user signed in with credentials validation has already been made in 'authorize' callback, so skip to jwt callback
 		if (account.id === 'credentials') {
 			// metadata here contains email&password?
 			return true
@@ -102,27 +102,28 @@ const callbacks = {
 
 	jwt: async (token, user) => {
 		if (user) {
+			// user is signin in, sign hasura access token
+
+			token.accessToken = await signAccessToken(user.id)
+
 			token.id = user.id
 			token.username = user.username
-			delete token.email // if don't want to save the email in the jwt
+			delete token.email // don't save the email in the jwt
+		} else {
+			// if access token is expired get a new access token
+			if (token.accessToken.expires <= Date.now() / 1000) {
+				token.accessToken = await signAccessToken(token.id)
+			}
 		}
+
 		return Promise.resolve(token) // token object gets passed to session callback
 	},
 
 	session: async (session, token) => {
-		const hasuraToken = {}
-		hasuraToken['https://hasura.io/jwt/claims'] = {
-			'x-hasura-allowed-roles': ['viewer', 'user'],
-			'x-hasura-default-role': 'user',
-			'x-hasura-user-id': token.id,
-		}
-		// attach user id, username and hasuraJWT to session object
+		// attach user id, username and hasura access token to session object
 		session.user.id = token.id
 		session.user.username = token.username
-		session.user.jwt = await jwt.sign(hasuraToken, process.env.JWT_SECRET, {
-			algorithm: 'HS256',
-			expiresIn: '31d',
-		})
+		session.accessToken = token.accessToken
 
 		return Promise.resolve(session) // session returned here will be available on the client
 	},
