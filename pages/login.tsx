@@ -10,10 +10,14 @@ import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import Icon from '../components/Icon'
 import useNotification from '../hooks/use-notification'
+import useForm from '../hooks/use-form'
 
 const Login = () => {
 	const router = useRouter()
-	const [credentials, setCredentials] = useState({ email: '', password: '' })
+	const { formData, handleInputChange, handleSubmit } = useForm({
+		email: '',
+		password: '',
+	})
 	const [loading, setLoading] = useState(false)
 	const addNotification = useNotification()
 
@@ -34,21 +38,16 @@ const Login = () => {
 		}
 	}, [router.query])
 
-	const onChange = e => {
-		setCredentials({ ...credentials, [e.target.name]: e.target.value })
-	}
-
-	const signInWithCredentials = e => {
-		e.preventDefault()
+	const signInWithCredentials = (data) => {
 		setLoading(true)
 		signIn('credentials', {
-			email: credentials.email.toLowerCase(),
-			password: credentials.password,
+			email: data.email.toLowerCase(),
+			password: data.password,
 			callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/snippets`,
 		})
 	}
 
-	const signInWithGitHub = e => {
+	const signInWithGitHub = (e) => {
 		e.preventDefault()
 		setLoading(true)
 		signIn('github', {
@@ -60,13 +59,13 @@ const Login = () => {
 		<>
 			<PageHead title="Login – Codeshare" />
 			<Logo vertical style={{ paddingTop: '3rem' }} />
-			<LoginForm>
+			<LoginForm onSubmit={handleSubmit(signInWithCredentials)}>
 				<h3>Log in</h3>
 				<IconInput
 					className="input-field"
 					icon="user"
-					value={credentials.email}
-					onChange={onChange}
+					value={formData.email}
+					onChange={handleInputChange}
 					name="email"
 					type="text"
 					placeholder="email"
@@ -76,19 +75,15 @@ const Login = () => {
 				<IconInput
 					className="input-field"
 					icon="lock"
-					value={credentials.password}
-					onChange={onChange}
+					value={formData.password}
+					onChange={handleInputChange}
 					name="password"
 					type="password"
 					placeholder="password"
 					iconSize={20}
 					big
 				/>
-				<Button
-					onClick={signInWithCredentials}
-					variant="primary"
-					disabled={loading}
-				>
+				<Button type="submit" variant="primary" disabled={loading}>
 					LOGIN
 				</Button>
 				<hr />
@@ -101,9 +96,9 @@ const Login = () => {
 					<Icon icon="github" />
 				</Button>
 				<p>
-					Don't have an account?{' '}
+					Don't have an account?
 					<Link href="/signup">
-						<a>Sign up</a>
+						<a> Sign up</a>
 					</Link>
 					<br />
 					<Link href="/resetpassword">

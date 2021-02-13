@@ -9,22 +9,19 @@ import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import Icon from '../components/Icon'
 import useNotification from '../hooks/use-notification'
+import useForm from '../hooks/use-form'
 
 const Signup = () => {
-	const [credentials, setCredentials] = useState({
+	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		email: '',
-		password: '',
 		username: '',
+		password: '',
 		password2: '',
 	})
 	const [loading, setLoading] = useState(false)
 	const addNotification = useNotification()
 
-	const onChange = e => {
-		setCredentials({ ...credentials, [e.target.name]: e.target.value })
-	}
-
-	const signInWithGitHub = e => {
+	const signInWithGitHub = (e) => {
 		e.preventDefault()
 		setLoading(true)
 		signIn('github', {
@@ -32,10 +29,8 @@ const Signup = () => {
 		})
 	}
 
-	const signUp = e => {
-		e.preventDefault()
-
-		if (credentials.password !== credentials.password2) {
+	const signUp = (data) => {
+		if (data.password !== data.password2) {
 			addNotification({ type: 'error', content: 'Passwords must match' })
 			return
 		}
@@ -48,21 +43,16 @@ const Signup = () => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				email: credentials.email.toLowerCase(),
-				username: credentials.username,
-				password: credentials.password,
+				email: data.email.toLowerCase(),
+				username: data.username,
+				password: data.password,
 			}),
 		})
-			.then(res => res.json())
-			.then(data => {
+			.then((res) => res.json())
+			.then((data) => {
 				addNotification({ type: data.type || 'error', content: data.message })
 				if (data.type == 'success') {
-					setCredentials({
-						email: '',
-						password: '',
-						username: '',
-						password2: '',
-					})
+					resetForm()
 				}
 				setLoading(false)
 			})
@@ -76,13 +66,13 @@ const Signup = () => {
 			<PageHead title="Sign Up – Codeshare" />
 
 			<Logo vertical style={{ paddingTop: '3rem' }} />
-			<LoginForm>
+			<LoginForm onSubmit={handleSubmit(signUp)}>
 				<h3>Sign up</h3>
 				<IconInput
 					className="input-field"
 					icon="user"
-					value={credentials.email}
-					onChange={onChange}
+					value={formData.email}
+					onChange={handleInputChange}
 					name="email"
 					type="text"
 					placeholder="email"
@@ -92,8 +82,8 @@ const Signup = () => {
 				<IconInput
 					className="input-field"
 					icon="user"
-					value={credentials.username}
-					onChange={onChange}
+					value={formData.username}
+					onChange={handleInputChange}
 					name="username"
 					type="text"
 					placeholder="username"
@@ -103,8 +93,8 @@ const Signup = () => {
 				<IconInput
 					className="input-field"
 					icon="lock"
-					value={credentials.password}
-					onChange={onChange}
+					value={formData.password}
+					onChange={handleInputChange}
 					name="password"
 					type="password"
 					placeholder="password"
@@ -114,15 +104,15 @@ const Signup = () => {
 				<IconInput
 					className="input-field"
 					icon="lock"
-					value={credentials.password2}
-					onChange={onChange}
+					value={formData.password2}
+					onChange={handleInputChange}
 					name="password2"
 					type="password"
 					placeholder="confirm password"
 					iconSize={20}
 					big
 				/>
-				<Button onClick={signUp} variant="primary" disabled={loading}>
+				<Button type="submit" variant="primary" disabled={loading}>
 					SIGN UP
 				</Button>
 				<hr />
@@ -135,9 +125,9 @@ const Signup = () => {
 					<Icon icon="github" />
 				</Button>
 				<p>
-					Already have an account?{' '}
+					Already have an account?
 					<Link href="/login">
-						<a>Sign in</a>
+						<a> Sign in</a>
 					</Link>
 				</p>
 			</LoginForm>
