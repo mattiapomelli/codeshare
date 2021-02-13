@@ -5,14 +5,16 @@ import { LoginForm } from '../components/LoginForm'
 import Logo from '../components/Logo'
 import withNoAuth from '../hocs/withNoAuth'
 import useNotification from '../hooks/use-notification'
+import useForm from '../hooks/use-form'
 
 const ForgotPassword = () => {
-	const [email, setEmail] = useState('')
+	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
+		email: '',
+	})
 	const [loading, setLoading] = useState(false)
 	const addNotification = useNotification()
 
-	const sendResetPassword = e => {
-		e.preventDefault()
+	const sendResetPassword = (data) => {
 		setLoading(true)
 		fetch('/api/retrievepassword', {
 			method: 'POST',
@@ -21,14 +23,14 @@ const ForgotPassword = () => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				email,
+				email: data.email.toLowerCase(),
 			}),
 		})
-			.then(res => res.json())
-			.then(data => {
+			.then((res) => res.json())
+			.then((data) => {
 				addNotification({ type: data.type || 'error', content: data.message })
 				if (data.type == 'success') {
-					setEmail('')
+					resetForm()
 				}
 				setLoading(false)
 			})
@@ -40,26 +42,20 @@ const ForgotPassword = () => {
 	return (
 		<>
 			<Logo vertical style={{ paddingTop: '3rem' }} />
-			<LoginForm>
+			<LoginForm onSubmit={handleSubmit(sendResetPassword)}>
 				<h3>Reset Password</h3>
 				<IconInput
 					className="input-field"
 					icon="email"
-					value={email}
-					onChange={e => {
-						setEmail(e.target.value)
-					}}
+					value={formData.email}
+					onChange={handleInputChange}
 					name="email"
 					type="text"
 					placeholder="email"
 					iconSize={20}
 					big
 				/>
-				<Button
-					onClick={sendResetPassword}
-					variant="primary"
-					disabled={loading}
-				>
+				<Button type="submit" variant="primary" disabled={loading}>
 					Reset Password
 				</Button>
 				<p>
