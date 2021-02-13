@@ -20,7 +20,7 @@ const SettingsGrid = styled.div`
 `
 
 const Card = styled.div`
-	background-color: ${props => props.theme.colors.elements};
+	background-color: ${(props) => props.theme.colors.elements};
 	padding: 1rem;
 	border-radius: 0.8rem;
 	width: 100%;
@@ -35,12 +35,17 @@ const Field = styled.div`
 	}
 `
 
-interface Props {
+interface SettingCardProps {
 	children: React.ReactNode
 	title: string
 }
 
-const SettingCard = ({ children, title }: Props) => {
+interface InfoFieldProps {
+	children: React.ReactNode
+	label: string
+}
+
+const SettingCard = ({ children, title }: SettingCardProps) => {
 	return (
 		<Flex dir="column">
 			<Label>{title}</Label>
@@ -49,9 +54,9 @@ const SettingCard = ({ children, title }: Props) => {
 	)
 }
 
-const InfoField = ({ children, title }: Props) => (
+const InfoField = ({ children, label }: InfoFieldProps) => (
 	<Field>
-		<Label>{title} </Label>
+		<Label>{label} </Label>
 		{children ? (
 			<span>{children}</span>
 		) : (
@@ -65,7 +70,7 @@ function Account() {
 	const { data: userData } = useSWR(
 		session ? [GET_USER_INFO_QUERY, session.user.id] : null,
 		(query, id) => {
-			return authFetcher(query, { id }).then(res => res.user)
+			return authFetcher(query, { id }).then((res) => res.user)
 		}
 	)
 
@@ -81,14 +86,10 @@ function Account() {
 
 			<SettingsGrid>
 				<SettingCard title="Account Setting">
-					<InfoField title="Username">
-						{userData ? userData.username : ''}
-					</InfoField>
-					<InfoField title="Email">{userData ? userData.email : ''}</InfoField>
-					<InfoField title="Joined on">
-						{userData
-							? new Date(userData.createdAt).toDateString().slice(4)
-							: ''}
+					<InfoField label="Username">{userData?.username}</InfoField>
+					<InfoField label="Email">{userData?.email}</InfoField>
+					<InfoField label="Joined on">
+						{userData && new Date(userData.createdAt).toDateString().slice(4)}
 					</InfoField>
 				</SettingCard>
 				{userData?.provider === 'email' && (

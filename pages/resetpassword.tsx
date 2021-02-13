@@ -35,7 +35,6 @@ const ForgotPassword = () => {
 			if (result.type == 'success') {
 				resetForm()
 			}
-			setLoading(false)
 		} catch (err) {
 			addNotification({ type: 'error', content: 'Something went wrong' })
 		} finally {

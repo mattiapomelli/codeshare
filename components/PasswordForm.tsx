@@ -5,12 +5,13 @@ import Button from './Button'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 import useNotification from '../hooks/use-notification'
+import useForm from '../hooks/use-form'
 
 const PasswordForm = styled.form`
 	${Input} {
 		margin-bottom: 0.6rem;
 		width: 100%;
-		background-color: ${props => props.theme.colors.accent};
+		background-color: ${(props) => props.theme.colors.accent};
 	}
 	${Button} {
 		margin-top: 0.6rem;
@@ -19,7 +20,7 @@ const PasswordForm = styled.form`
 
 export default function ChangePasswordForm() {
 	const [session] = useSession()
-	const [passwords, setPasswords] = useState({
+	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		current: '',
 		newPassword: '',
 		newPassword2: '',
@@ -27,76 +28,67 @@ export default function ChangePasswordForm() {
 	const [loading, setLoading] = useState(false)
 	const addNotification = useNotification()
 
-	const onChange = e => {
-		setPasswords({ ...passwords, [e.target.name]: e.target.value })
-	}
-
-	const changePassword = e => {
-		e.preventDefault()
-
-		if (passwords.newPassword !== passwords.newPassword2) {
+	const changePassword = async (data) => {
+		if (data.newPassword !== data.newPassword2) {
 			addNotification({ type: 'error', content: 'Passwords must match' })
 			return
 		}
-
 		setLoading(true)
-		fetch('/api/changepassword', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				id: session.user.id,
-				oldPassword: passwords.current,
-				newPassword: passwords.newPassword,
-			}),
-		})
-			.then(res => res.json())
-			.then(data => {
-				addNotification({ type: data.type || 'error', content: data.message })
-				if (data.type == 'success') {
-					setPasswords({ current: '', newPassword: '', newPassword2: '' })
-				}
-				setLoading(false)
+
+		try {
+			const res = await fetch('/api/changepassword', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					id: session.user.id,
+					oldPassword: data.current,
+					newPassword: data.newPassword,
+				}),
 			})
-			.catch(() => {
-				setLoading(false)
-			})
+
+			const result = await res.json()
+
+			addNotification({ type: result.type || 'error', content: result.message })
+			if (result.type == 'success') {
+				resetForm()
+			}
+		} catch (err) {
+			addNotification({ type: 'error', content: 'Something went wrong' })
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	return (
-		<PasswordForm>
+		<PasswordForm onSubmit={handleSubmit(changePassword)}>
 			<Label small>Current password</Label>
 			<Input
 				type="password"
 				small
 				name="current"
-				value={passwords.current}
-				onChange={onChange}
+				value={formData.current}
+				onChange={handleInputChange}
 			/>
 			<Label small>New password</Label>
 			<Input
 				type="password"
 				small
 				name="newPassword"
-				value={passwords.newPassword}
-				onChange={onChange}
+				value={formData.newPassword}
+				onChange={handleInputChange}
 			/>
 			<Label small>Confirm password</Label>
 			<Input
 				type="password"
 				small
 				name="newPassword2"
-				value={passwords.newPassword2}
-				onChange={onChange}
+				value={formData.newPassword2}
+				onChange={handleInputChange}
 			/>
-			<Button
-				small
-				onClick={changePassword}
-				variant="primary"
-				disabled={loading}
-			>
+			<Button type="submit" small variant="primary" disabled={loading}>
 				Change
 			</Button>
 		</PasswordForm>
