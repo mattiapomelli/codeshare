@@ -1,7 +1,7 @@
 import { SidebarLayout, SideNavItem } from './styles'
-import Flex from '../Flex'
-import Logo from '../Logo'
-import Icon, { IconName } from '../Icon'
+import Flex from '@/components/Flex'
+import Logo from '@/components/Logo'
+import Icon, { IconName } from '@/components/Icon'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
@@ -12,7 +12,7 @@ const CloseIcon = styled(Icon)`
 	top: 0.5rem;
 	right: 0.5rem;
 	cursor: pointer;
-	@media ${props => props.theme.breakpoints.tablet} {
+	@media ${(props) => props.theme.breakpoints.tablet} {
 		display: none;
 	}
 `

@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import Flex from '../Flex'
+import Flex from '@/components/Flex'
 
 export const PopupsContainer = styled.div`
 	position: fixed;
@@ -21,7 +21,7 @@ export const StyledPopup = styled(Flex)`
 	top: 0;
 	right: 0;
 	font-size: 0.9rem;
-	background: ${props => props.theme.colors.text};
+	background: ${(props) => props.theme.colors.text};
 	animation: ${slideInRight} 0.7s;
 	position: relative;
 	padding: 1.2rem 1.4rem 1.2rem 1rem;
@@ -29,7 +29,7 @@ export const StyledPopup = styled(Flex)`
 	width: 19rem;
 	max-width: 100%;
 	border-radius: 10px;
-	color: ${props => props.theme.colors.background};
+	color: ${(props) => props.theme.colors.background};
 	line-height: 1;
 	> svg {
 		margin-right: 10px;

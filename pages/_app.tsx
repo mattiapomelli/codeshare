@@ -2,11 +2,11 @@ import type { AppProps } from 'next/app'
 import { useEffect, useRef } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Provider } from 'next-auth/client'
-import DefaultLayout from '../layouts/DefaultLayout'
+import DefaultLayout from '@/layouts/DefaultLayout'
 import theme from '../themes/theme'
 import { useRouter } from 'next/router'
-import { initGA, logPageView } from '../utils/analytics'
-import { NotificationProvider } from '../hooks/use-notification'
+import { initGA, logPageView } from '@/utils/analytics'
+import { NotificationProvider } from '@/hooks/use-notification'
 
 const GlobalStyle = createGlobalStyle`
 	* {

@@ -1,5 +1,5 @@
-import Modal from '../Modal'
-import { P } from '../Typography'
+import Modal from '@/components/Modal'
+import { P } from '@/components/Typography'
 import styled from 'styled-components'
 
 const BulletList = styled.ul`

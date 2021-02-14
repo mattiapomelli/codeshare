@@ -1,9 +1,9 @@
-import { MODIFY_USER_PASSWORD } from '../../graphql/mutations'
-import { GET_USER_BY_EMAIL_QUERY } from '../../graphql/queries'
-import graphQLClientAdmin from '../../graphql/client'
+import { MODIFY_USER_PASSWORD } from '@/graphql/mutations'
+import { GET_USER_BY_EMAIL_QUERY } from '@/graphql/queries'
+import graphQLClientAdmin from '@/graphql/client'
 import bcrypt from 'bcrypt'
-import sendMail from '../../utils/mailer'
-import { retrieveMail, newPasswordEmail } from '../../utils/emailHTML'
+import sendMail from '@/utils/mailer'
+import { retrieveMail, newPasswordEmail } from '@/utils/emailHTML'
 
 function makeNewPassword(length) {
 	var result = ''
@@ -38,12 +38,10 @@ export default async (req, res) => {
 				retrieveMail(email, userData[0].id)
 			)
 
-			return res
-				.status(201)
-				.send({
-					message: 'Check your email to complete password reset',
-					type: 'success',
-				})
+			return res.status(201).send({
+				message: 'Check your email to complete password reset',
+				type: 'success',
+			})
 		} catch (err) {
 			res
 				.status(err.status || 500)

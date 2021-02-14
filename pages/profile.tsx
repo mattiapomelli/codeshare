@@ -1,24 +1,24 @@
 import { useState, LiHTMLAttributes } from 'react'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
-import { H2, Label } from '../components/Typography'
-import Snippets from '../components/Snippets'
-import withAuth from '../hocs/withAuth'
+import { H2, Label } from '@/components/Typography'
+import Snippets from '@/components/Snippets'
+import withAuth from '@/hocs/withAuth'
 import {
 	GET_USER_SNIPPETS_QUERY,
 	GET_LIKED_SNIPPETS_QUERY,
 	GET_USER_SNIPPET_COUNT,
 	GET_LIKED_SNIPPETS_COUNT,
-} from '../graphql/queries'
+} from '@/graphql/queries'
 import useSWR from 'swr'
-import PageHead from '../components/PageHead'
-import Flex from '../components/Flex'
-import Button from '../components/Button'
+import PageHead from '@/components/PageHead'
+import Flex from '@/components/Flex'
+import Button from '@/components/Button'
 import Link from 'next/link'
-import { authFetcher } from '../graphql/client'
-import { IconButton } from '../components/Icon'
-import useSnippets from '../hooks/use-snippets'
-import DashboardLayout from '../layouts/DashboardLayout'
+import { authFetcher } from '@/graphql/client'
+import { IconButton } from '@/components/Icon'
+import useSnippets from '@/hooks/use-snippets'
+import DashboardLayout from '@/layouts/DashboardLayout'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;

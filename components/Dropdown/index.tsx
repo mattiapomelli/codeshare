@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import Button from '../Button'
-import Icon from '../Icon'
+import Button from '@/components/Button'
+import Icon from '@/components/Icon'
 import { DropdownWrapper, DropdownMenu, DropdownItem } from './styles'
 
 interface DropdownProps {

@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { IconInput } from '../components/Input'
-import Button from '../components/Button'
-import { LoginForm } from '../components/LoginForm'
-import withNoAuth from '../hocs/withNoAuth'
-import useNotification from '../hooks/use-notification'
-import useForm from '../hooks/use-form'
-import BlankLayout from '../layouts/BlankLayout'
+import { IconInput } from '@/components/Input'
+import Button from '@/components/Button'
+import { LoginForm } from '@/components/LoginForm'
+import withNoAuth from '@/hocs/withNoAuth'
+import useNotification from '@/hooks/use-notification'
+import useForm from '@/hooks/use-form'
+import BlankLayout from '@/layouts/BlankLayout'
 
 const ForgotPasswordPage = () => {
 	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({

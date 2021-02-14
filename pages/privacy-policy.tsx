@@ -1,8 +1,8 @@
-import Flex from '../components/Flex'
+import Flex from '@/components/Flex'
 import styled from 'styled-components'
-import { H2 } from '../components/Typography'
-import Logo from '../components/Logo'
-import PageHead from '../components/PageHead'
+import { H2 } from '@/components/Typography'
+import Logo from '@/components/Logo'
+import PageHead from '@/components/PageHead'
 
 const Container = styled(Flex)`
 	max-width: 840px;

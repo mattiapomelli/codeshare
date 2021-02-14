@@ -1,11 +1,10 @@
-import { H1 } from '../components/Typography'
-import SnippetEditor from '../components/SnippetEditor'
-import withAuth from '../hocs/withAuth'
-import graphQLClientAdmin from '../graphql/client'
-import { GET_PROGRAMMING_LANGS_QUERY } from '../graphql/queries'
-import PageHead from '../components/PageHead'
-import DashBoardLayout from '../layouts/DashboardLayout'
-import DashboardLayout from '../layouts/DashboardLayout'
+import { H1 } from '@/components/Typography'
+import SnippetEditor from '@/components/SnippetEditor'
+import withAuth from '@/hocs/withAuth'
+import graphQLClientAdmin from '@/graphql/client'
+import { GET_PROGRAMMING_LANGS_QUERY } from '@/graphql/queries'
+import PageHead from '@/components/PageHead'
+import DashboardLayout from '@/layouts/DashboardLayout'
 
 interface Props {
 	langs: string[]
@@ -21,12 +20,6 @@ function EditorPage({ langs }: Props) {
 	)
 }
 
-// eslint-disable react/display-name
-// EditorPage.getLayout = (Page: any, pageProps: any) => (
-// 	<DashBoardLayout>
-// 		<Page {...pageProps} />
-// 	</DashBoardLayout>
-// )
 EditorPage.layout = DashboardLayout
 
 export default withAuth(EditorPage)

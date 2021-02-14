@@ -1,10 +1,10 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import graphQLClientAdmin from '../../../graphql/client'
-import { GET_USER_BY_EMAIL_QUERY } from '../../../graphql/queries'
-import { CREATE_USER_FROM_GITHUB_MUTATION } from '../../../graphql/mutations'
+import graphQLClientAdmin from '@/graphql/client'
+import { GET_USER_BY_EMAIL_QUERY } from '@/graphql/queries'
+import { CREATE_USER_FROM_GITHUB_MUTATION } from '@/graphql/mutations'
 import bcrypt from 'bcrypt'
-import { signAccessToken } from '../../../utils/auth'
+import { signAccessToken } from '@/utils/auth'
 
 async function getUserByEmail(email) {
 	const variables = { email: email }
@@ -31,7 +31,7 @@ const providers = [
 	}),
 	Providers.Credentials({
 		name: 'credentials',
-		authorize: async credentials => {
+		authorize: async (credentials) => {
 			// get user from database
 			const result = await getUserByEmail(credentials.email)
 			const user = result[0]
@@ -71,7 +71,7 @@ const callbacks = {
 		})
 
 		const emails = await emailRes.json()
-		const primaryEmail = emails.find(e => e.primary).email
+		const primaryEmail = emails.find((e) => e.primary).email
 		// check if user already exists in the database
 		const res = await getUserByEmail(primaryEmail)
 		const userData = res[0]

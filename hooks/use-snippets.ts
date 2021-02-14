@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSWRInfinite } from 'swr'
-import scrolledToBottom from '../utils/scrolled-to-bottom'
+import scrolledToBottom from '@/utils/scrolled-to-bottom'
 import { useSession } from 'next-auth/client'
-import { Snippet, SnippetsResponse } from '../interfaces/snippet'
-import processSnippet from '../utils/process-snippet'
+import { Snippet, SnippetsResponse } from '@/interfaces/snippet'
+import processSnippet from '@/utils/process-snippet'
 
 const PAGE_LIMIT = 6
 
@@ -31,8 +31,8 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 			...variables,
 		}
 
-		return fetcher(query, params).then(data =>
-			data.snippets.map(snippet => processSnippet(snippet))
+		return fetcher(query, params).then((data) =>
+			data.snippets.map((snippet) => processSnippet(snippet))
 		)
 	}
 
@@ -68,7 +68,7 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 	useEffect(() => {
 		function handleScroll() {
 			if (scrolledToBottom() && !loadingMore.current && !reachedEnd.current) {
-				setSize(size => size + 1)
+				setSize((size) => size + 1)
 			}
 		}
 

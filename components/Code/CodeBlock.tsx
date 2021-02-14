@@ -2,8 +2,8 @@ import { useState } from 'react'
 import CodeHighlight from './CodeHighlight'
 import CodeLayout from './CodeLayout'
 import ScrollWrapper from './ScrollWrapper'
-import Icon from '../Icon'
-import copyToClipboard from '../../utils/copy-to-clipboard'
+import Icon from '@/components/Icon'
+import copyToClipboard from '@/utils/copy-to-clipboard'
 import styled from 'styled-components'
 
 const CopyButton = styled.div`
@@ -13,9 +13,9 @@ const CopyButton = styled.div`
 	border-radius: 5rem;
 	padding: 0.6em;
 	cursor: pointer;
-	background-color: ${props => props.theme.colors.elements};
+	background-color: ${(props) => props.theme.colors.elements};
 	&:hover {
-		background-color: ${props => props.theme.colors.accent};
+		background-color: ${(props) => props.theme.colors.accent};
 	}
 	svg {
 		display: block;
@@ -28,7 +28,7 @@ const CopiedText = styled.span`
 	bottom: 22px;
 	right: 20px;
 	font-family: monospace;
-	background-color: ${props => props.theme.colors.elements};
+	background-color: ${(props) => props.theme.colors.elements};
 	padding: 0.3rem;
 `
 
@@ -41,7 +41,7 @@ interface Props {
 const CodeBlock = ({ codeString, language, preview }: Props) => {
 	const [copied, setCopied] = useState(false)
 
-	const clickHandler = e => {
+	const clickHandler = (e) => {
 		e.preventDefault()
 		copyToClipboard(codeString)
 		setCopied(true)

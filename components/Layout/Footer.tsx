@@ -1,5 +1,5 @@
 import Flex from '../Flex'
-import Icon from '../Icon'
+// import Icon from '../Icon'
 import Link from 'next/link'
 import styled from 'styled-components'
 

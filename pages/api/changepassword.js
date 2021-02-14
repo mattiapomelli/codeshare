@@ -1,8 +1,8 @@
-import { MODIFY_USER_PASSWORD } from '../../graphql/mutations'
-import { GET_USER_BY_ID_QUERY } from '../../graphql/queries'
-import graphQLClientAdmin from '../../graphql/client'
+import { MODIFY_USER_PASSWORD } from '@/graphql/mutations'
+import { GET_USER_BY_ID_QUERY } from '@/graphql/queries'
+import graphQLClientAdmin from '@/graphql/client'
 import bcrypt from 'bcrypt'
-import validatePassword from '../../utils/passwordValidation'
+import validatePassword from '@/utils/passwordValidation'
 
 export default async (req, res) => {
 	if (req.method === 'POST') {

@@ -4,8 +4,8 @@ import { Label } from './Typography'
 import Button from './Button'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
-import useNotification from '../hooks/use-notification'
-import useForm from '../hooks/use-form'
+import useNotification from '@/hooks/use-notification'
+import useForm from '@/hooks/use-form'
 
 const PasswordForm = styled.form`
 	${Input} {

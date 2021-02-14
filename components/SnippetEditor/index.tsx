@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
-import { authFetcher } from '../../graphql/client'
+import { authFetcher } from '@/graphql/client'
 import {
 	CREATE_SNIPPET_MUTATION,
 	UPDATE_SNIPPET_MUTATION,
-} from '../../graphql/mutations'
-import { GET_SNIPPET_INFO } from '../../graphql/queries'
+} from '@/graphql/mutations'
+import { GET_SNIPPET_INFO } from '@/graphql/queries'
 import { useSession } from 'next-auth/client'
-import { CodeEditor } from '../Code'
-import { TextArea } from '../TextArea'
-import Input from '../Input'
-import { Label } from '../Typography'
+import { CodeEditor } from '@/components/Code'
+import { TextArea } from '@/components/TextArea'
+import Input from '@/components/Input'
+import { Label } from '@/components/Typography'
 import {
 	EditorForm,
 	EditorArea,
@@ -19,13 +19,13 @@ import {
 	InfoIcon,
 } from './styles'
 import TextLimiter from './TextLimiter'
-import Button from '../Button'
-import Dropdown from '../Dropdown'
+import Button from '@/components/Button'
+import Dropdown from '@/components/Dropdown'
 import InfoModal from './InfoModal'
 import useSWR from 'swr'
 import request from 'graphql-request'
 import { useRouter } from 'next/router'
-import useNotification from '../../hooks/use-notification'
+import useNotification from '@/hooks/use-notification'
 
 const defaultCode = `function yourAwesomeFunction() {
     // copy or write your code!

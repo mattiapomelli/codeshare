@@ -1,9 +1,8 @@
 import { StyledPopup, CloseButton } from './styles'
 export { PopupsContainer } from './styles'
-import Icon from '../Icon'
+import Icon from '@/components/Icon'
 
 interface Props {
-	// text: string
 	children: string | React.ReactNode
 	type: 'error' | 'success'
 	onClose: () => void

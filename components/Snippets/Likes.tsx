@@ -1,14 +1,11 @@
 import { useRef } from 'react'
-import { authFetcher } from '../../graphql/client'
-import {
-	ADD_LIKE_MUTATION,
-	REMOVE_LIKE_MUTATION,
-} from '../../graphql/mutations'
-import { GET_LIKED_SNIPPETS_COUNT } from '../../graphql/queries'
+import { authFetcher } from '@/graphql/client'
+import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from '@/graphql/mutations'
+import { GET_LIKED_SNIPPETS_COUNT } from '@/graphql/queries'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
-import Icon from '../Icon'
-import useCache from '../../hooks/use-cache'
+import Icon from '@/components/Icon'
+import useCache from '@/hooks/use-cache'
 import { useRouter } from 'next/router'
 import { mutate, cache } from 'swr'
 
@@ -54,7 +51,7 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 			// mutate snippets liked by logged user count, if already exists in cache
 			const key = [GET_LIKED_SNIPPETS_COUNT, session.user.id]
 			if (cache.has(key)) {
-				mutate(key, async data => data + increment, false)
+				mutate(key, async (data) => data + increment, false)
 			}
 
 			try {

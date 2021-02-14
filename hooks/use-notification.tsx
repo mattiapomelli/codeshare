@@ -5,7 +5,7 @@ import {
 	useCallback,
 	createContext,
 } from 'react'
-import Popup, { PopupsContainer } from '../components/Popup'
+import Popup, { PopupsContainer } from '@/components/Popup'
 
 interface ProviderProps {
 	children: React.ReactNode
@@ -43,7 +43,7 @@ const notificationReducer = (state: State, action: Action) => {
 				},
 			]
 		case 'REMOVE':
-			return state.filter(t => t.id !== action.payload.id)
+			return state.filter((t) => t.id !== action.payload.id)
 		case 'REMOVE_FIRST':
 			return state.slice(1)
 		default:
@@ -76,7 +76,7 @@ export const NotificationProvider = ({ children }: ProviderProps) => {
 		<NotificationContext.Provider value={addNotification}>
 			{children}
 			<PopupsContainer>
-				{messages.map(toast => (
+				{messages.map((toast) => (
 					<Popup
 						key={toast.id}
 						type={toast.type}

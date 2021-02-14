@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Icon from '../Icon'
+import Icon from '@/components/Icon'
 
 export const EditorArea = styled.div`
 	position: relative;
@@ -32,7 +32,7 @@ export const DescriptionArea = styled.div`
 	display: flex;
 	flex-direction: column;
 	div {
-		border-radius: ${props => props.theme.borderRadius};
+		border-radius: ${(props) => props.theme.borderRadius};
 		overflow: hidden;
 		position: relative;
 		flex: 1;
@@ -44,7 +44,7 @@ export const DescriptionArea = styled.div`
 			right: 0;
 			width: 20px;
 			height: 20px;
-			background-color: ${props => props.theme.colors.elements};
+			background-color: ${(props) => props.theme.colors.elements};
 		}
 		&::before {
 			/* Square to hide corner of scrollbars */
@@ -54,7 +54,7 @@ export const DescriptionArea = styled.div`
 			right: 0;
 			width: 20px;
 			height: 20px;
-			background-color: ${props => props.theme.colors.elements};
+			background-color: ${(props) => props.theme.colors.elements};
 		}
 	}
 	textarea {

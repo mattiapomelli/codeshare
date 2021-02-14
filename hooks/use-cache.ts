@@ -1,5 +1,5 @@
 import { useState, useCallback, Dispatch, SetStateAction } from 'react'
-import { cache } from '../utils/cache'
+import { cache } from '@/utils/cache'
 
 function useCache<T>(
 	key: string,

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Icon from '../Icon'
+import Icon from '@/components/Icon'
 import DeleteSnippetModal from './DeleteSnippetModal'
 import styled from 'styled-components'
 import Link from 'next/link'
@@ -9,8 +9,8 @@ const ActionsMenu = styled.ul`
 	position: absolute;
 	top: 100%;
 	border-radius: 0.5em;
-	background-color: ${props => props.theme.colors.elements};
-	border: 1px solid ${props => props.theme.colors.details};
+	background-color: ${(props) => props.theme.colors.elements};
+	border: 1px solid ${(props) => props.theme.colors.details};
 	padding: 0.1em 0.3em;
 	right: 0;
 	z-index: 3;
@@ -21,10 +21,10 @@ const ActionItem = styled.li`
 	font-weight: 400;
 	padding: 0.3em 0.5em;
 	cursor: pointer;
-	background-color: ${props => props.theme.colors.elements};
+	background-color: ${(props) => props.theme.colors.elements};
 	border-radius: 0.5em;
 	&:hover {
-		background-color: ${props => props.theme.colors.accent};
+		background-color: ${(props) => props.theme.colors.accent};
 	}
 `
 
@@ -36,7 +36,7 @@ const ActionsWrapper = styled.div`
 `
 const ActionsIcon = styled.div`
 	line-height: 1;
-	background-color: ${props => props.theme.colors.accent};
+	background-color: ${(props) => props.theme.colors.accent};
 	border-radius: 5rem;
 	svg {
 		display: block;
@@ -67,7 +67,7 @@ export default function SnippetActions({ id }: Props) {
 		<ActionsWrapper ref={dropdownRef}>
 			<ActionsIcon
 				onClick={() => {
-					setOpen(open => !open)
+					setOpen((open) => !open)
 				}}
 			>
 				<Icon icon="arrowdown" variant="primary" size={20} />

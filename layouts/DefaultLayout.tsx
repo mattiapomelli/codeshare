@@ -1,4 +1,4 @@
-import { Navbar, Footer } from '../components/Layout'
+import { Navbar, Footer } from '@/components/Layout'
 import styled from 'styled-components'
 
 interface Props {

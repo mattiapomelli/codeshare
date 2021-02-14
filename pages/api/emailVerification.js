@@ -1,9 +1,9 @@
-import graphQLClientAdmin from '../../graphql/client'
-import { CONFIRM_USER_EMAIL } from '../../graphql/mutations'
+import graphQLClientAdmin from '@/graphql/client'
+import { CONFIRM_USER_EMAIL } from '@/graphql/mutations'
 
 export default async (req, res) => {
 	// saves user to the database
-	const execute = async variables => {
+	const execute = async (variables) => {
 		const data = await graphQLClientAdmin.request(CONFIRM_USER_EMAIL, variables)
 		// return: data to return have to be JSON FORMAT !!
 		return data

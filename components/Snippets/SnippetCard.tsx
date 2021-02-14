@@ -1,6 +1,6 @@
-import { CodeBlock } from '../Code'
+import { CodeBlock } from '@/components/Code'
 import Link from 'next/link'
-import Flex from '../Flex'
+import Flex from '@/components/Flex'
 import Likes from './Likes'
 import styled from 'styled-components'
 import { useSession } from 'next-auth/client'
@@ -14,7 +14,7 @@ const SnippetTitle = styled.div`
 	flex: 1;
 	min-width: 0;
 	a {
-		color: ${props => props.theme.colors.text};
+		color: ${(props) => props.theme.colors.text};
 		text-decoration: none;
 		display: block;
 		white-space: nowrap;

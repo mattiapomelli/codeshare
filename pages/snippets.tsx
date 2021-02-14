@@ -1,21 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
-import Dropdown from '../components/Dropdown'
-import { IconInput } from '../components/Input'
-import Flex from '../components/Flex'
-import { H1 } from '../components/Typography'
-import graphQLClientAdmin from '../graphql/client'
+import Dropdown from '@/components/Dropdown'
+import { IconInput } from '@/components/Input'
+import Flex from '@/components/Flex'
+import { H1 } from '@/components/Typography'
+import graphQLClientAdmin from '@/graphql/client'
 import {
 	GET_PROGRAMMING_LANGS_QUERY,
 	GET_LATEST_SNIPPETS_QUERY,
 	SEARCH_SNIPPETS_QUERY,
-} from '../graphql/queries'
-import Snippets from '../components/Snippets'
-import PageHead from '../components/PageHead'
-import useSnippets from '../hooks/use-snippets'
+} from '@/graphql/queries'
+import Snippets from '@/components/Snippets'
+import PageHead from '@/components/PageHead'
+import useSnippets from '@/hooks/use-snippets'
 import { useSession } from 'next-auth/client'
-import { fetcher } from '../graphql/client'
-import useCache from '../hooks/use-cache'
-import DashboardLayout from '../layouts/DashboardLayout'
+import { fetcher } from '@/graphql/client'
+import useCache from '@/hooks/use-cache'
+import DashboardLayout from '@/layouts/DashboardLayout'
 
 interface Props {
 	langs: string[]

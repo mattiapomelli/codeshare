@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import extensions from '../../utils/languages-extensions'
+import extensions from '@/utils/languages-extensions'
 
 export const CodeWrapper = styled.div`
-	border-radius: ${props => props.theme.borderRadius};
-	background-color: ${props => props.theme.colors.elements};
+	border-radius: ${(props) => props.theme.borderRadius};
+	background-color: ${(props) => props.theme.colors.elements};
 	padding: 40px 0px 0px 0px;
 	position: relative;
 	overflow: hidden;
@@ -30,8 +30,8 @@ export const CodeWrapper = styled.div`
 		width: 20px;
 		height: 20px;
 		content: '';
-		background-color: ${props => props.theme.colors.elements};
-		border-radius: 0 0 ${props => props.theme.borderRadius} 0;
+		background-color: ${(props) => props.theme.colors.elements};
+		border-radius: 0 0 ${(props) => props.theme.borderRadius} 0;
 	}
 	&::before {
 		/* Square to hide corner of scrollbars */
@@ -41,8 +41,8 @@ export const CodeWrapper = styled.div`
 		width: 20px;
 		height: 20px;
 		content: '';
-		background-color: ${props => props.theme.colors.elements};
-		border-radius: 0 0 0 ${props => props.theme.borderRadius};
+		background-color: ${(props) => props.theme.colors.elements};
+		border-radius: 0 0 0 ${(props) => props.theme.borderRadius};
 	}
 `
 
@@ -51,7 +51,7 @@ const Dot = styled.span`
 	width: 0.8rem;
 	height: 0.8rem;
 	top: 10px;
-	background-color: ${props => props.theme.colors.details};
+	background-color: ${(props) => props.theme.colors.details};
 	border-radius: 50%;
 	&:first-child {
 		left: 20px;
@@ -67,7 +67,7 @@ const Dot = styled.span`
 const Tooltip = styled.span<{ language: string }>`
 	border-radius: 0 0 0.35rem 0.35rem;
 	color: black;
-	background-color: ${props => props.theme.colors.code[props.language]};
+	background-color: ${(props) => props.theme.colors.code[props.language]};
 	font-size: 0.8rem;
 	padding: 0.3rem 0.6rem;
 	position: absolute;

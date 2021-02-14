@@ -1,7 +1,7 @@
-import Flex from '../components/Flex'
+import Flex from '@/components/Flex'
 import styled from 'styled-components'
-import { H2 } from '../components/Typography'
-import Logo from '../components/Logo'
+import { H2 } from '@/components/Typography'
+import Logo from '@/components/Logo'
 
 const FlexContainer = styled(Flex)`
 	height: 70vh;

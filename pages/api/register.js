@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt'
-import { CREATE_USER_MUTATION } from '../../graphql/mutations'
+import { CREATE_USER_MUTATION } from '@/graphql/mutations'
 import {
 	GET_USER_BY_EMAIL_QUERY,
 	GET_USER_BY_USERNAME_QUERY,
-} from '../../graphql/queries'
-import graphQLClientAdmin from '../../graphql/client'
-import { emailVerification } from '../../utils/emailHTML'
-import validateRegisterInput from '../../utils/registerValidation'
-import sendMail from '../../utils/mailer'
+} from '@/graphql/queries'
+import graphQLClientAdmin from '@/graphql/client'
+import { emailVerification } from '@/utils/emailHTML'
+import validateRegisterInput from '@/utils/registerValidation'
+import sendMail from '@/utils/mailer'
 
 async function getUserByEmail(email) {
 	const data = await graphQLClientAdmin.request(GET_USER_BY_EMAIL_QUERY, {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import SnippetCard from './SnippetCard'
-import { Skeleton } from '../Skeleton'
-import Icon from '../Icon'
-import Flex from '../Flex'
+import { Skeleton } from '@/components/Skeleton'
+import Icon from '@/components/Icon'
+import Flex from '@/components/Flex'
 import styled from 'styled-components'
-import { Snippet } from '../../interfaces/snippet'
+import { Snippet } from '@/interfaces/snippet'
 
 const ScrollButton = styled.button`
 	border: none;
@@ -19,7 +19,7 @@ const ScrollButton = styled.button`
 	bottom: 0.6rem;
 	right: 0.6rem;
 	animation: opacity 200ms;
-	background: ${props => props.theme.colors.primary};
+	background: ${(props) => props.theme.colors.primary};
 `
 
 const ScrollToTopButton = () => {
@@ -63,7 +63,7 @@ const SnippetsGrid = styled.div`
 		grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
 	}
 
-	@media ${props => props.theme.breakpoints.tablet} {
+	@media ${(props) => props.theme.breakpoints.tablet} {
 		grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
 	}
 `
@@ -108,11 +108,11 @@ export default function Snippets({
 				</NoResultsContainer>
 			)}
 			<SnippetsGrid>
-				{data.map(snippet => (
+				{data.map((snippet) => (
 					<SnippetCard {...snippet} key={snippet.id} />
 				))}
 				{loading &&
-					[1, 2, 3, 4, 5, 6].map(key => <SnippetSkeleton key={key} />)}
+					[1, 2, 3, 4, 5, 6].map((key) => <SnippetSkeleton key={key} />)}
 			</SnippetsGrid>
 
 			<ScrollToTopButton />

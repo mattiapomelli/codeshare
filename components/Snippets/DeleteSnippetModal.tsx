@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { DELETE_SNIPPET } from '../../graphql/mutations'
-import { authFetcher } from '../../graphql/client'
-import Modal from '../Modal'
-import Button from '../Button'
-import Flex from '../Flex'
+import { DELETE_SNIPPET } from '@/graphql/mutations'
+import { authFetcher } from '@/graphql/client'
+import Modal from '@/components/Modal'
+import Button from '@/components/Button'
+import Flex from '@/components/Flex'
 import styled from 'styled-components'
 
 const Buttons = styled(Flex)`

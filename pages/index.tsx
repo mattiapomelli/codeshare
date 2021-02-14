@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import styled from 'styled-components'
-import Flex from '../components/Flex'
-import withNoAuth from '../hocs/withNoAuth'
-import PageHead from '../components/PageHead'
-import CookiesPopup from '../components/CookiesPopup'
-import Button from '../components/Button'
+import Flex from '@/components/Flex'
+import withNoAuth from '@/hocs/withNoAuth'
+import PageHead from '@/components/PageHead'
+import CookiesPopup from '@/components/CookiesPopup'
+import Button from '@/components/Button'
 
 const Hero = styled.section`
 	margin-top: 1rem;
