@@ -6,7 +6,9 @@ function getDisplayName(WrappedComponent) {
 	return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
-function withAuth<P>(WrappedComponent: React.ComponentType<P>) {
+function withAuth<P>(
+	WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
+) {
 	const ComponentWithAuth = (props: P) => {
 		const [session, loading] = useSession()
 		const router = useRouter()

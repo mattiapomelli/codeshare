@@ -6,7 +6,9 @@ function getDisplayName(WrappedComponent) {
 	return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
-function withNoAuth<P>(WrappedComponent: React.ComponentType<P>) {
+function withNoAuth<P>(
+	WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
+) {
 	const ComponentWithNoAuth = (props: P) => {
 		const [session, loading] = useSession()
 		const router = useRouter()
