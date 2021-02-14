@@ -23,19 +23,13 @@ async function getUserByUsername(username) {
 	return data.user
 }
 
-// TODO: error handling
-export default async (req, res) => {
-	// saves user to the database
-	const execute = async variables => {
-		//console.log(variables)
-		const data = await graphQLClientAdmin.request(
-			CREATE_USER_MUTATION,
-			variables
-		)
-		// return: data to return have to be JSON FORMAT !!
-		return data.user
-	}
+const saveUser = async (variables) => {
+	const data = await graphQLClientAdmin.request(CREATE_USER_MUTATION, variables)
 
+	return data.user
+}
+
+export default async (req, res) => {
 	if (req.method === 'POST') {
 		try {
 			const validationError = validateRegisterInput(req.body)
@@ -55,25 +49,23 @@ export default async (req, res) => {
 
 			const user = { username, email, password: hashedPassword }
 
-			const userData = await execute(user)
+			const userData = await saveUser(user)
 
-			// after query return send email verification link,
-			//if error in query the @try@catch block will catch the error
-			//all sensitive data are located in process.env file
+			// after query returns send email verification link
 			await sendMail(
 				user.email,
 				'Email verification',
 				emailVerification(username, userData.id)
 			)
 
-			return res
-				.status(201)
-				.send({
-					message: 'Check your email to verify your account',
-					type: 'success',
-				})
+			return res.status(201).send({
+				message: 'Check your email to verify your account',
+				type: 'success',
+			})
 		} catch (err) {
-			res.status(err.status || 500).send({ message: err.message })
+			res
+				.status(err.status || 500)
+				.send({ message: err.message || 'Something went wrong' })
 		}
 	} else {
 		// Any method that is not POST

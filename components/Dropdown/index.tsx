@@ -32,26 +32,24 @@ export default function Dropdown({
 		return () => window.removeEventListener('click', handleClick)
 	}, [])
 
-	const clickHandler = option => {
+	const clickHandler = (option) => {
 		onSelect(option)
 		setOpen(false)
 	}
 
+	const toggle = () => {
+		setOpen((open) => !open)
+	}
+
 	return (
 		<DropdownWrapper ref={dropdownRef}>
-			<Button
-				onClick={() => {
-					setOpen(open => !open)
-				}}
-				small
-				as="span"
-			>
+			<Button onClick={toggle} small as="span">
 				{value}
 				<Icon icon="arrowdown" variant="primary" size={12} />
 			</Button>
 			{open && (
 				<DropdownMenu right={right}>
-					{options.map(option => (
+					{options.map((option) => (
 						<DropdownItem key={option} onClick={() => clickHandler(option)}>
 							{option}
 						</DropdownItem>

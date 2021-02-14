@@ -6,7 +6,7 @@ import CodeLayout from './CodeLayout'
 import ScrollWrapper from './ScrollWrapper'
 
 const StyledEditor = styled(Editor)`
-	border-right: 10px solid ${props => props.theme.colors.elements};
+	border-right: 10px solid ${(props) => props.theme.colors.elements};
 	font-family: monospace;
 	min-height: 100%;
 	textarea {
@@ -18,18 +18,18 @@ const StyledEditor = styled(Editor)`
 		font-size: 0.9rem !important;
 		padding-left: 20px !important;
 
-		/* &::selection { background-color: ${props =>
+		/* &::selection { background-color: ${(props) =>
 			props.theme.colors.text} !important; } */
 	}
 `
 
 interface Props {
-	onChangeHandler: (string) => void
-	valueHandler: string
+	onChangeHandler: (codeString: string) => void
+	value: string
 	language: string
 }
 
-const CodeEditor = ({ onChangeHandler, valueHandler, language }: Props) => {
+const CodeEditor = ({ onChangeHandler, value, language }: Props) => {
 	useEffect(() => {
 		function scrollOnNewLine(event) {
 			// if enter is pressed in textarea scroll to bottom as much as lineheight is
@@ -64,9 +64,9 @@ const CodeEditor = ({ onChangeHandler, valueHandler, language }: Props) => {
 		<CodeLayout language={language.toLowerCase()}>
 			<ScrollWrapper id="scroller">
 				<StyledEditor
-					value={valueHandler}
+					value={value}
 					onValueChange={onChangeHandler}
-					highlight={codeString => highlight(codeString)}
+					highlight={(codeString) => highlight(codeString)}
 					tabSize={2}
 					textareaId="editor-textarea"
 				/>

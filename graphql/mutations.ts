@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 export const CREATE_SNIPPET_MUTATION = gql`
-	mutation MyMutation(
+	mutation CreateSnippetMutation(
 		$code: String!
 		$description: String!
 		$programmingLang: String!
@@ -23,7 +23,11 @@ export const CREATE_SNIPPET_MUTATION = gql`
 `
 
 export const CREATE_USER_MUTATION = gql`
-	mutation($username: String!, $email: String!, $password: String!) {
+	mutation CreateUserMutation(
+		$username: String!
+		$email: String!
+		$password: String!
+	) {
 		user: insert_user_one(
 			object: { email: $email, username: $username, password: $password }
 		) {
@@ -34,7 +38,7 @@ export const CREATE_USER_MUTATION = gql`
 `
 
 export const CREATE_USER_FROM_GITHUB_MUTATION = gql`
-	mutation(
+	mutation CreateUserFromGithubMutation(
 		$username: String!
 		$email: String!
 		$password: String

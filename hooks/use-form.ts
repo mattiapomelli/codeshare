@@ -6,10 +6,12 @@ type FormData = {
 
 type OnSubmit = (data: FormData) => void
 
+type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+
 const useForm = (initialData: FormData = {}) => {
 	const [formData, setFormData] = useState(initialData)
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: Event) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value })
 	}
 

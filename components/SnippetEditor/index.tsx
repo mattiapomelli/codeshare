@@ -35,7 +35,7 @@ const limits = { title: 80, code: 2000, description: 1000 }
 
 const fetcher = (query, id) =>
 	request(process.env.NEXT_PUBLIC_HASURA_URL, query, { id }).then(
-		data => data.snippet
+		(data) => data.snippet
 	)
 
 export default function SnippetEditor({ langs }: { langs: string[] }) {
@@ -61,13 +61,13 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 	const addNotification = useNotification()
 
 	const cancelEdit = useCallback(() => {
-		setSnippet(prevSnippet => ({
+		setSnippet((prevSnippet) => ({
 			...prevSnippet,
 			title: '',
 			description: '',
 			code: defaultCode,
 		}))
-		router.push('/editor')
+		router.push('/editor', undefined, { shallow: true })
 	}, [router])
 
 	useEffect(() => {
@@ -84,41 +84,41 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		}
 	}, [data, error, cancelEdit])
 
-	const onCodeChange = codeString => {
+	const onCodeChange = (codeString) => {
 		setSnippet({ ...snippet, code: codeString })
 	}
 
-	const onLanguageChange = programmingLang => {
+	const onLanguageChange = (programmingLang) => {
 		setSnippet({ ...snippet, programmingLang })
 	}
 
-	const onChange = e => {
+	const onChange = (e) => {
 		setSnippet({ ...snippet, [e.target.name]: e.target.value })
 	}
 
-	const publishSnippet = async e => {
+	const publishSnippet = async (e) => {
 		e.preventDefault()
 		setLoading(true)
 		try {
 			await authFetcher(CREATE_SNIPPET_MUTATION, { ...snippet })
 			addNotification({ type: 'success', content: 'Snippet published!' })
-			setSnippet(prevSnippet => ({
+			setSnippet((prevSnippet) => ({
 				...prevSnippet,
 				title: '',
 				description: '',
 				code: defaultCode,
 			}))
-			setLoading(false)
 		} catch (err) {
 			addNotification({
 				type: 'error',
 				content: 'Something went wrong, please try again',
 			})
+		} finally {
 			setLoading(false)
 		}
 	}
 
-	const updateSnippet = async e => {
+	const updateSnippet = async (e) => {
 		e.preventDefault()
 		setLoading(true)
 		try {
@@ -130,13 +130,13 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 				code,
 			})
 			addNotification({ type: 'success', content: 'Snippet updated!' })
-			setLoading(false)
 			cancelEdit()
 		} catch (err) {
 			addNotification({
 				type: 'error',
 				content: 'Something went wrong, please try again',
 			})
+		} finally {
 			setLoading(false)
 		}
 	}
@@ -148,7 +148,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 					<Label>Code</Label>
 					<CodeEditor
 						onChangeHandler={onCodeChange}
-						valueHandler={snippet.code}
+						value={snippet.code}
 						language={snippet.programmingLang}
 					/>
 					<TextLimiter value={snippet.code} limit={limits.code} />
@@ -208,7 +208,7 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 					{isEdit && (
 						<Button
 							variant="secondary"
-							onClick={e => {
+							onClick={(e) => {
 								e.preventDefault()
 								cancelEdit()
 							}}

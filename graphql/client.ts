@@ -25,8 +25,6 @@ export const authFetcher = async (query: string, variables) => {
 		authorization: `Bearer ${session.accessToken.jwt}`,
 	}
 
-	console.log(session.accessToken.jwt)
-
 	return graphQLClient
 		.setHeaders({
 			...headers,
