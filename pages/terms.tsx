@@ -4,9 +4,13 @@ import { H2 } from '../components/Typography'
 import Logo from '../components/Logo'
 import PageHead from '../components/PageHead'
 
-const FlexContainer = styled(Flex)`
+const Container = styled(Flex)`
+	max-width: 840px;
 	margin-bottom: 3rem;
 	font-weight: 300;
+	h2 {
+		margin: 1rem 0 3rem 0;
+	}
 	h3 {
 		margin-top: 1rem;
 	}
@@ -22,9 +26,9 @@ export default function Terms() {
 	return (
 		<>
 			<PageHead title="Terms of Service – Codeshare" />
-			<FlexContainer v="center" dir="column">
+			<Container v="center" dir="column">
 				<Logo noText />
-				<H2 style={{ margin: '1rem 0 3rem 0' }}>Terms of service</H2>
+				<H2>Terms of service</H2>
 				<div>
 					<h3>1. Terms</h3>
 					<p>
@@ -133,7 +137,7 @@ export default function Terms() {
 						exclusive jurisdiction of the courts in that State or location.
 					</p>
 				</div>
-			</FlexContainer>
+			</Container>
 		</>
 	)
 }

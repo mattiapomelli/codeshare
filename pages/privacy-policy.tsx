@@ -4,11 +4,15 @@ import { H2 } from '../components/Typography'
 import Logo from '../components/Logo'
 import PageHead from '../components/PageHead'
 
-const FlexContainer = styled(Flex)`
+const Container = styled(Flex)`
+	max-width: 840px;
 	margin-bottom: 3rem;
 	font-weight: 300;
 	p {
 		margin-bottom: 1rem;
+	}
+	a {
+		color: #5698e4;
 	}
 `
 
@@ -16,7 +20,7 @@ export default function PrivacyPolicy() {
 	return (
 		<>
 			<PageHead title="Privay Policy – Codeshare" />
-			<FlexContainer v="center" dir="column">
+			<Container v="center" dir="column">
 				<Logo noText />
 				<H2 style={{ margin: '1rem 0 3rem 0' }}>Privacy-policy</H2>
 				<div>
@@ -24,10 +28,8 @@ export default function PrivacyPolicy() {
 						Your privacy is important to us. It is codeshare's policy to respect
 						your privacy regarding any information we may collect from you
 						across our website,{' '}
-						<a style={{ color: '#AF90F2' }} href="http://codeshare.tech">
-							http://codeshare.tech
-						</a>
-						, and other sites we own and operate.
+						<a href="https://codeshare.tech">https://codeshare.tech</a>, and
+						other sites we own and operate.
 					</p>
 					<p>
 						We only ask for personal information when we truly need it to
@@ -65,7 +67,7 @@ export default function PrivacyPolicy() {
 					</p>
 					<p>This policy is effective as of 24 December 2020.</p>
 				</div>
-			</FlexContainer>
+			</Container>
 		</>
 	)
 }

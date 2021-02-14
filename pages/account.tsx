@@ -10,6 +10,7 @@ import { Skeleton } from '../components/Skeleton'
 import Flex from '../components/Flex'
 import styled from 'styled-components'
 import ChangePasswordForm from '../components/PasswordForm'
+import DashboardLayout from '../layouts/DashboardLayout'
 
 const SettingsGrid = styled.div`
 	display: grid;
@@ -65,7 +66,7 @@ const InfoField = ({ children, label }: InfoFieldProps) => (
 	</Field>
 )
 
-function Account() {
+const AccountPage = () => {
 	const [session] = useSession()
 	const { data: userData } = useSWR(
 		session ? [GET_USER_INFO_QUERY, session.user.id] : null,
@@ -106,4 +107,6 @@ function Account() {
 	)
 }
 
-export default withAuth(Account)
+AccountPage.layout = DashboardLayout
+
+export default withAuth(AccountPage)

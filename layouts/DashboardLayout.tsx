@@ -1,18 +1,28 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { Header, Page, Main } from './LayoutElements'
-import Sidebar from '../Sidebar'
-import Button from '../Button'
-import { IconButton } from '../Icon'
-import Footer from '../Footer'
+import { Header, Page } from '../components/Layout'
+import Sidebar from '../components/Sidebar'
+import Button from '../components/Button'
+import { IconButton } from '../components/Icon'
+import Footer from '../components/Layout/Footer'
 import { useSession } from 'next-auth/client'
+import styled from 'styled-components'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+interface Props {
+	children: React.ReactNode
+}
+
+export const Main = styled.main`
+	padding: 0.5rem 0 4rem 0;
+	flex: 1;
+`
+
+const DashboardLayout = ({ children }: Props) => {
 	const [collapsed, setCollapsed] = useState(false)
 	const [session] = useSession()
 
 	const clickHandler = () => {
-		setCollapsed(collapsed => !collapsed)
+		setCollapsed((collapsed) => !collapsed)
 	}
 
 	return (
@@ -32,4 +42,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 	)
 }
 
-export default Layout
+export default DashboardLayout

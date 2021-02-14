@@ -1,5 +1,5 @@
-import Flex from './Flex'
-import Icon from './Icon'
+import Flex from '../Flex'
+import Icon from '../Icon'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -10,9 +10,9 @@ interface FooterProps {
 const FooterContainer = styled.footer<FooterProps>`
 	font-size: 0.8rem;
 	padding: 2rem 0;
-	width: ${props => (props.expanded ? '100%' : '90%')};
-	max-width: ${props => (props.expanded ? 'auto' : '1200px')};
-	border-top: 1px solid ${props => props.theme.colors.details};
+	width: ${(props) => (props.expanded ? '100%' : '90%')};
+	max-width: ${(props) => (props.expanded ? 'auto' : '1200px')};
+	border-top: 1px solid ${(props) => props.theme.colors.details};
 	margin: 3rem auto 0 auto;
 	ul:first-of-type {
 		flex: 1;

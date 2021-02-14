@@ -22,6 +22,8 @@ function withNoAuth<P>(WrappedComponent: React.ComponentType<P>) {
 		WrappedComponent
 	)})`
 
+	ComponentWithNoAuth.layout = WrappedComponent.layout
+
 	return ComponentWithNoAuth
 }
 

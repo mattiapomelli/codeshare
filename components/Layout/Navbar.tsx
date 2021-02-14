@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import Logo from './Logo'
-import Button from './Button'
-import Icon from './Icon'
-import Flex from './Flex'
+import Logo from '../Logo'
+import Button from '../Button'
+import Icon from '../Icon'
+import Flex from '../Flex'
 import Link from 'next/link'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
@@ -17,12 +17,12 @@ const List = styled.ul<{ show: boolean }>`
 	align-items: center;
 	padding: 1rem;
 	padding-top: 4rem;
-	background-color: ${props => props.theme.colors.background};
-	border-radius: ${props => props.theme.borderRadius};
-	border: 1px solid ${props => props.theme.colors.details};
+	background-color: ${(props) => props.theme.colors.background};
+	border-radius: ${(props) => props.theme.borderRadius};
+	border: 1px solid ${(props) => props.theme.colors.details};
 	z-index: 2;
 
-	${props =>
+	${(props) =>
 		!props.show &&
 		css`
 			display: none;
@@ -33,7 +33,7 @@ const List = styled.ul<{ show: boolean }>`
 		margin-bottom: 1rem;
 	}
 
-	@media ${props => props.theme.breakpoints.tablet} {
+	@media ${(props) => props.theme.breakpoints.tablet} {
 		display: block;
 		position: inherit;
 		width: auto;
@@ -68,7 +68,7 @@ const HamIcon = styled(Icon)`
 	z-index: 30;
 	position: relative;
 	cursor: pointer;
-	@media ${props => props.theme.breakpoints.tablet} {
+	@media ${(props) => props.theme.breakpoints.tablet} {
 		display: none;
 	}
 `
@@ -100,7 +100,7 @@ export default function Navbar() {
 				<HamIcon
 					icon={showNavbar ? 'cross' : 'menu'}
 					variant="primary"
-					onClick={() => setShowNavbar(prev => !prev)}
+					onClick={() => setShowNavbar((prev) => !prev)}
 				/>
 			</nav>
 		</NavMenu>

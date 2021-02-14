@@ -18,18 +18,19 @@ import Link from 'next/link'
 import { authFetcher } from '../graphql/client'
 import { IconButton } from '../components/Icon'
 import useSnippets from '../hooks/use-snippets'
+import DashboardLayout from '../layouts/DashboardLayout'
 
 const Tab = styled.li<{ active: boolean }>`
 	display: inline-block;
 	padding: 0.6rem 1rem 0.6rem 0;
 	margin-right: 1rem;
 	cursor: pointer;
-	${props =>
+	${(props) =>
 		props.active
 			? css`
 					border-bottom: 3px solid;
 					border-image-slice: 1;
-					border-image-source: ${props => props.theme.colors.primary};
+					border-image-source: ${(props) => props.theme.colors.primary};
 					// needed for safari bug that keeps all borders
 					border-left: 0px;
 					border-right: 0px;
@@ -37,19 +38,19 @@ const Tab = styled.li<{ active: boolean }>`
 			  `
 			: css`
 					${Label} {
-						color: ${props => props.theme.colors.secondaryText};
+						color: ${(props) => props.theme.colors.secondaryText};
 					}
 					&:hover {
 						${Label} {
-							color: ${props => props.theme.colors.text};
+							color: ${(props) => props.theme.colors.text};
 						}
 					}
 			  `}
 `
 
 const Tag = styled.span`
-	background: ${props => props.theme.colors.primary};
-	border-radius: ${props => props.theme.borderRadius};
+	background: ${(props) => props.theme.colors.primary};
+	border-radius: ${(props) => props.theme.borderRadius};
 	padding: 0.1rem 0.5rem;
 	margin-left: 1rem;
 	font-size: 0.9rem;
@@ -72,11 +73,11 @@ const TabItem = ({ children, count, active, ...rest }: TabProps) => {
 }
 
 const countFetcher = async (query, userId) =>
-	authFetcher(query, { userId }).then(res => {
+	authFetcher(query, { userId }).then((res) => {
 		return res.result.aggregate.count
 	})
 
-function Profile() {
+const ProfilePage = () => {
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
 	const { data: snippetsCount } = useSWR(
@@ -143,4 +144,6 @@ function Profile() {
 	)
 }
 
-export default withAuth(Profile)
+ProfilePage.layout = DashboardLayout
+
+export default withAuth(ProfilePage)

@@ -3,15 +3,15 @@ import { signIn } from 'next-auth/client'
 import { IconInput } from '../components/Input'
 import Button from '../components/Button'
 import { LoginForm } from '../components/LoginForm'
-import Logo from '../components/Logo'
 import Link from 'next/link'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import Icon from '../components/Icon'
 import useNotification from '../hooks/use-notification'
 import useForm from '../hooks/use-form'
+import BlankLayout from '../layouts/BlankLayout'
 
-const Signup = () => {
+const SignupPage = () => {
 	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		email: '',
 		username: '',
@@ -66,8 +66,6 @@ const Signup = () => {
 	return (
 		<>
 			<PageHead title="Sign Up – Codeshare" />
-
-			<Logo vertical style={{ paddingTop: '3rem' }} />
 			<LoginForm onSubmit={handleSubmit(signUp)}>
 				<h3>Sign up</h3>
 				<IconInput
@@ -137,4 +135,6 @@ const Signup = () => {
 	)
 }
 
-export default withNoAuth(Signup)
+SignupPage.layout = BlankLayout
+
+export default withNoAuth(SignupPage)

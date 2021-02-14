@@ -24,6 +24,9 @@ function withAuth<P>(WrappedComponent: React.ComponentType<P>) {
 		WrappedComponent
 	)})`
 
+	// ComponentWithAuth.getLayout = WrappedComponent.getLayout
+	ComponentWithAuth.layout = WrappedComponent.layout
+
 	return ComponentWithAuth
 }
 

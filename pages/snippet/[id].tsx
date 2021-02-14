@@ -12,6 +12,7 @@ import processSnippet from '../../utils/process-snippet'
 import PageHead from '../../components/PageHead'
 import { Snippet } from '../../interfaces/snippet'
 import { fetcher } from '../../graphql/client'
+import DashboardLayout from '../../layouts/DashboardLayout'
 
 const Description = styled.pre`
 	white-space: pre-wrap;
@@ -21,7 +22,7 @@ const Description = styled.pre`
 	margin-left: 5px;
 	padding-left: 1.5rem;
 	color: #ccc;
-	border-left: 3px solid ${props => props.theme.colors.secondaryText};
+	border-left: 3px solid ${(props) => props.theme.colors.secondaryText};
 `
 
 const Info = styled(Flex)`
@@ -83,7 +84,7 @@ const snippetFetcher = (query, snippetId, userId) =>
 		id: snippetId,
 		userId: userId,
 		isAuth: userId ? true : false,
-	}).then(data => processSnippet(data.snippet))
+	}).then((data) => processSnippet(data.snippet))
 
 const SnippetPage = () => {
 	const router = useRouter()
@@ -106,5 +107,7 @@ const SnippetPage = () => {
 		</>
 	)
 }
+
+SnippetPage.layout = DashboardLayout
 
 export default SnippetPage

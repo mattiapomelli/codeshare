@@ -1,22 +1,18 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
-import Navbar from '../components/Navbar'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Flex from '../components/Flex'
 import withNoAuth from '../hocs/withNoAuth'
 import PageHead from '../components/PageHead'
 import CookiesPopup from '../components/CookiesPopup'
-import Footer from '../components/Footer'
 import Button from '../components/Button'
 
 const Hero = styled.section`
+	margin-top: 1rem;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	width: 90%;
-	max-width: 1200px;
-	margin: 4rem auto 8rem auto;
 
 	h1 {
 		font-size: 3rem;
@@ -37,7 +33,7 @@ const Hero = styled.section`
 	p {
 		font-size: 1rem;
 		font-weight: 300;
-		color: ${props => props.theme.colors.text};
+		color: ${(props) => props.theme.colors.text};
 		width: 90%;
 		max-width: 500px;
 		text-align: center;
@@ -53,7 +49,7 @@ const Hero = styled.section`
 
 const titles = ['Find the code you need', 'Share the code you are proud of']
 
-const Home = () => {
+const LandingPage = () => {
 	useEffect(() => {
 		const heading = document.getElementById('heading')
 		let i = 1,
@@ -86,7 +82,6 @@ const Home = () => {
 	return (
 		<>
 			<PageHead title="Codeshare – Share the code you are proud of" />
-			<Navbar />
 			<Hero>
 				<h1 id="heading"></h1>
 				<p>
@@ -103,10 +98,9 @@ const Home = () => {
 				</Flex>
 				<Image src="/hero.svg" width={612} height={392} className="image" />
 			</Hero>
-			<Footer />
 			<CookiesPopup />
 		</>
 	)
 }
 
-export default withNoAuth(Home)
+export default withNoAuth(LandingPage)

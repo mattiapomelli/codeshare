@@ -15,12 +15,13 @@ import useSnippets from '../hooks/use-snippets'
 import { useSession } from 'next-auth/client'
 import { fetcher } from '../graphql/client'
 import useCache from '../hooks/use-cache'
+import DashboardLayout from '../layouts/DashboardLayout'
 
 interface Props {
 	langs: string[]
 }
 
-export default function SnippetsPage({ langs }: Props) {
+const SnippetsPage = ({ langs }: Props) => {
 	const [session] = useSession()
 	const typingTimer = useRef<number>()
 	const [search, setSearch] = useCache('search', '')
@@ -84,11 +85,15 @@ export default function SnippetsPage({ langs }: Props) {
 	)
 }
 
+SnippetsPage.layout = DashboardLayout
+
+export default SnippetsPage
+
 export async function getStaticProps() {
 	const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
 
 	const langs = []
-	data.langs.forEach(lang => {
+	data.langs.forEach((lang) => {
 		langs.push(lang.name)
 	})
 
