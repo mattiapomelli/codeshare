@@ -1,5 +1,5 @@
-export const emailVerification = (username, userId) => {
-	var html = `
+export const emailVerification = (username: string, userId: string) => {
+	const html = `
   <!DOCTYPE html>
   <html>
   
@@ -183,8 +183,8 @@ export const emailVerification = (username, userId) => {
 	return html
 }
 
-export const retrieveMail = (email, userId) => {
-	var html = `
+export const retrieveMail = (email: string, userId: string) => {
+	const html = `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -517,8 +517,8 @@ export const retrieveMail = (email, userId) => {
 	return html
 }
 
-export const newPasswordEmail = password => {
-	var html = `
+export const newPasswordEmail = (password: string) => {
+	const html = `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 

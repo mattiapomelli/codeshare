@@ -1,6 +1,6 @@
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
-function validatePassword(password) {
+const validatePassword = (password: string) => {
 	if (password.length < 8)
 		return new Error('Password must be at least 8 characters long')
 	if (!password.match(passwordRegex))

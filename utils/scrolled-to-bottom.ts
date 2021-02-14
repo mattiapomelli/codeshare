@@ -1,13 +1,14 @@
 const scrolledToBottom = () => {
-	var scrollTop =
+	const scrollTop =
 		(document.documentElement && document.documentElement.scrollTop) ||
 		document.body.scrollTop
 
-	var scrollHeight =
+	const scrollHeight =
 		(document.documentElement && document.documentElement.scrollHeight) ||
 		document.body.scrollHeight
 
-	var clientHeight = document.documentElement.clientHeight || window.innerHeight
+	const clientHeight =
+		document.documentElement.clientHeight || window.innerHeight
 
 	return Math.ceil(scrollTop + clientHeight) >= scrollHeight - 400
 }

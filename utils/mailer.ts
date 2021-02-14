@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
 //initialization and settings of nodemailer module
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
 	host: process.env.SMTP_HOST,
 	port: 465,
 	// secure: false, // upgrade later with STARTTLS
@@ -11,8 +11,8 @@ let transporter = nodemailer.createTransport({
 	},
 })
 
-export default async function sendMail(to, subject, html) {
-	return new Promise((resolve, reject) => {
+const sendMail = async (to, subject, html) => {
+	return new Promise<void>((resolve, reject) => {
 		transporter.sendMail(
 			{
 				from: 'hello@codeshare.tech',
@@ -20,7 +20,7 @@ export default async function sendMail(to, subject, html) {
 				subject,
 				html,
 			},
-			err => {
+			(err) => {
 				if (err) {
 					reject('Something went wrong')
 				}
@@ -29,3 +29,5 @@ export default async function sendMail(to, subject, html) {
 		)
 	})
 }
+
+export default sendMail
