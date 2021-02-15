@@ -57,19 +57,8 @@ const Tag = styled.span`
 `
 
 interface TabProps extends LiHTMLAttributes<HTMLLIElement> {
-	count: number
+	query: string
 	active: boolean
-}
-
-const TabItem = ({ children, count, active, ...rest }: TabProps) => {
-	return (
-		<Tab active={active} {...rest}>
-			<Label as="span" inline>
-				{children}
-			</Label>
-			<Tag>{count}</Tag>
-		</Tab>
-	)
 }
 
 const countFetcher = async (query, userId) =>
@@ -77,23 +66,23 @@ const countFetcher = async (query, userId) =>
 		return res.result.aggregate.count
 	})
 
+const TabItem = ({ children, query, active, ...rest }: TabProps) => {
+	const [session] = useSession()
+	const { data: count } = useSWR([query, session.user.id], countFetcher)
+
+	return (
+		<Tab active={active} {...rest}>
+			<Label as="span" inline>
+				{children}
+			</Label>
+			<Tag>{count || '-'}</Tag>
+		</Tab>
+	)
+}
+
 const ProfilePage = () => {
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
-	const { data: snippetsCount } = useSWR(
-		[GET_USER_SNIPPET_COUNT, session.user.id],
-		countFetcher,
-		{
-			revalidateOnFocus: false,
-		}
-	)
-	const { data: likedCount } = useSWR(
-		[GET_LIKED_SNIPPETS_COUNT, session.user.id],
-		countFetcher,
-		{
-			revalidateOnFocus: false,
-		}
-	)
 	const { data, loading, noResults } = useSnippets(
 		option === 'snippets' ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY,
 		{ userId: session.user.id },
@@ -114,14 +103,14 @@ const ProfilePage = () => {
 			</Flex>
 
 			<TabItem
-				count={snippetsCount !== undefined ? snippetsCount : '-'}
+				query={GET_USER_SNIPPET_COUNT}
 				active={option === 'snippets'}
 				onClick={() => setOption('snippets')}
 			>
 				Snippets
 			</TabItem>
 			<TabItem
-				count={likedCount !== undefined ? likedCount : '-'}
+				query={GET_LIKED_SNIPPETS_COUNT}
 				active={option === 'liked'}
 				onClick={() => setOption('liked')}
 			>

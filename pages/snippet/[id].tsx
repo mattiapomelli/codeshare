@@ -92,10 +92,7 @@ const SnippetPage = () => {
 	const userId = session ? session.user.id : null
 	const { data } = useSWR(
 		[GET_SINGLE_SNIPPET_QUERY, router.query.id, userId],
-		snippetFetcher,
-		{
-			revalidateOnMount: true,
-		}
+		snippetFetcher
 	)
 
 	if (!data) return <PageSkeleton />

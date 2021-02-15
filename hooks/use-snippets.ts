@@ -36,14 +36,7 @@ const useSnippets = (query: string, variables: Params, fetcher: Fetcher) => {
 		)
 	}
 
-	const { data, error, size, setSize } = useSWRInfinite(
-		getKey,
-		wrappedFetcher,
-		{
-			revalidateAll: false,
-			revalidateOnFocus: false,
-		}
-	)
+	const { data, error, size, setSize } = useSWRInfinite(getKey, wrappedFetcher)
 
 	const snippets: Snippet[] = data ? [].concat(...data) : []
 
