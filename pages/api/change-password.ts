@@ -1,10 +1,11 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { MODIFY_USER_PASSWORD } from '@/graphql/mutations'
 import { GET_USER_BY_ID_QUERY } from '@/graphql/queries'
 import graphQLClientAdmin from '@/graphql/client'
 import bcrypt from 'bcrypt'
-import validatePassword from '@/utils/passwordValidation'
+import validatePassword from '@/utils/password-validation'
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		try {
 			const { id, oldPassword, newPassword } = req.body

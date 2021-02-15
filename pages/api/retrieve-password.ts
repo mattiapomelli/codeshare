@@ -3,16 +3,19 @@ import { GET_USER_BY_EMAIL_QUERY } from '@/graphql/queries'
 import graphQLClientAdmin from '@/graphql/client'
 import bcrypt from 'bcrypt'
 import sendMail from '@/utils/mailer'
-import { retrieveMail, newPasswordEmail } from '@/utils/emailHTML'
+import { retrieveMail, newPasswordEmail } from '@/utils/email-html'
 
 function makeNewPassword(length) {
-	var result = ''
-	var characters =
+	let result = ''
+	const characters =
 		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-	var charactersLength = characters.length
-	for (var i = 0; i < length; i++) {
+
+	const charactersLength = characters.length
+
+	for (let i = 0; i < length; i++) {
 		result += characters.charAt(Math.floor(Math.random() * charactersLength))
 	}
+
 	return result
 }
 
@@ -63,22 +66,17 @@ export default async (req, res) => {
 			}
 
 			//call mutation query
-			const data = await graphQLClientAdmin.request(
-				MODIFY_USER_PASSWORD,
-				variables
-			)
+			await graphQLClientAdmin.request(MODIFY_USER_PASSWORD, variables)
 
 			sendMail(email, 'New Password', newPasswordEmail(newPassword))
 
-			res
-				.status(301)
-				.redirect(
-					`/login?message=${'Your new password has been sent to your email'}`
-				)
+			const message = 'Your new password has been sent to your email'
+
+			res.status(301).redirect(`/login?message=${message}`)
 		} catch (err) {
-			res
-				.status(err.status || 500)
-				.redirect(`/login?error=${'Something went wrong'}`)
+			const message = 'Something went wrong'
+
+			res.status(err.status || 500).redirect(`/login?error=${message}`)
 		}
 	} else {
 		// Any method that is not POST or GET

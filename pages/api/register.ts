@@ -1,3 +1,4 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import { CREATE_USER_MUTATION } from '@/graphql/mutations'
 import {
@@ -5,8 +6,8 @@ import {
 	GET_USER_BY_USERNAME_QUERY,
 } from '@/graphql/queries'
 import graphQLClientAdmin from '@/graphql/client'
-import { emailVerification } from '@/utils/emailHTML'
-import validateRegisterInput from '@/utils/registerValidation'
+import { emailVerification } from '@/utils/email-html'
+import validateRegisterInput from '@/utils/register-validation'
 import sendMail from '@/utils/mailer'
 
 async function getUserByEmail(email) {
@@ -29,7 +30,7 @@ const saveUser = async (variables) => {
 	return data.user
 }
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		try {
 			const validationError = validateRegisterInput(req.body)

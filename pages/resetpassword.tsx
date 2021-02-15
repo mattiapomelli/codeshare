@@ -18,7 +18,7 @@ const ForgotPasswordPage = () => {
 		setLoading(true)
 
 		try {
-			const res = await fetch('/api/retrievepassword', {
+			const res = await fetch('/api/retrieve-password', {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',

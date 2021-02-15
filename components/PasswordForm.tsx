@@ -36,7 +36,7 @@ export default function ChangePasswordForm() {
 		setLoading(true)
 
 		try {
-			const res = await fetch('/api/changepassword', {
+			const res = await fetch('/api/change-password', {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
