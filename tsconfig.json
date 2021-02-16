@@ -20,7 +20,7 @@
 			"@/layouts/*": ["layouts/*"],
 			"@/hooks/*": ["hooks/*"],
 			"@/utils/*": ["utils/*"],
-			"@/interfaces/*": ["interfaces/*"],
+			"@/types/*": ["types/*"],
 			"@/graphql/*": ["graphql/*"]
 		}
 	},

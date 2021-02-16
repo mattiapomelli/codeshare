@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/Skeleton'
 import Icon from '@/components/Icon'
 import Flex from '@/components/Flex'
 import styled from 'styled-components'
-import { Snippet } from '@/interfaces/snippet'
+import { Snippet } from 'types'
 
 const ScrollButton = styled.button`
 	border: none;
@@ -88,14 +88,16 @@ const NoResultsContainer = styled(Flex)`
 `
 
 interface Props {
-	children?: React.ReactNode
+	// children?: React.ReactNode
+	noResultsScreen?: React.ReactNode
 	data: Snippet[]
 	loading: boolean
 	noResults: boolean
 }
 
 export default function Snippets({
-	children,
+	// children,
+	noResultsScreen,
 	data,
 	loading,
 	noResults,
@@ -104,7 +106,7 @@ export default function Snippets({
 		<>
 			{noResults && (
 				<NoResultsContainer dir="column" v="center">
-					{children || 'No results found'}
+					{noResultsScreen || 'No results found'}
 				</NoResultsContainer>
 			)}
 			<SnippetsGrid>

@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import processSnippet from '@/utils/process-snippet'
 import PageHead from '@/components/PageHead'
-import { Snippet } from '@/interfaces/snippet'
+import { Snippet } from 'types'
 import { fetcher } from '@/graphql/client'
 import DashboardLayout from '@/layouts/DashboardLayout'
 

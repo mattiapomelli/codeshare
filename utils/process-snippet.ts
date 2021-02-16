@@ -1,4 +1,4 @@
-import { RawSnippet, Snippet } from '../interfaces/snippet'
+import { RawSnippet, Snippet } from 'types'
 
 function processSnippet(snippet: RawSnippet): Snippet {
 	const {

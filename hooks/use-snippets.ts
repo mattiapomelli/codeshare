@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useSWRInfinite } from 'swr'
 import scrolledToBottom from '@/utils/scrolled-to-bottom'
 import { useSession } from 'next-auth/client'
-import { Snippet, SnippetsResponse } from '@/interfaces/snippet'
+import { Snippet, SnippetsResponse } from 'types'
 import processSnippet from '@/utils/process-snippet'
 
 const PAGE_LIMIT = 6
