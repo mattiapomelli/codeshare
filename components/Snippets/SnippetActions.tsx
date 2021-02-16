@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, FunctionComponent } from 'react'
+import { useState, FunctionComponent } from 'react'
 import Icon from '@/components/Icon'
 import DeleteSnippetModal from './DeleteSnippetModal'
 import styled from 'styled-components'
 import Link from 'next/link'
+import useOnClickOutside from '@/hooks/use-click-outside'
 
 const ActionsMenu = styled.ul`
 	list-style-type: none;
@@ -46,18 +47,7 @@ const ActionsIcon = styled.div`
 const SnippetActions: FunctionComponent<{ id: string }> = ({ id }) => {
 	const [open, setOpen] = useState(false)
 	const [showModal, setShowModal] = useState(false)
-	const dropdownRef = useRef<HTMLDivElement>()
-
-	useEffect(() => {
-		function handleClick(event) {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-				setOpen(false)
-			}
-		}
-		window.addEventListener('click', handleClick)
-
-		return () => window.removeEventListener('click', handleClick)
-	}, [])
+	const dropdownRef = useOnClickOutside<HTMLDivElement>(() => setOpen(false))
 
 	return (
 		<ActionsWrapper ref={dropdownRef}>

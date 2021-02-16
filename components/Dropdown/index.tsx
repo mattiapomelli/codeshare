@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, FunctionComponent } from 'react'
+import { useState, FunctionComponent } from 'react'
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 import { DropdownWrapper, DropdownMenu, DropdownItem } from './styles'
+import useOnClickOutside from '@/hooks/use-click-outside'
 
 interface DropdownProps {
 	options: string[]
@@ -18,19 +19,7 @@ const Dropdown: FunctionComponent<DropdownProps> = ({
 	right,
 }) => {
 	const [open, setOpen] = useState(false)
-	const dropdownRef = useRef<HTMLDivElement>()
-
-	useEffect(() => {
-		function handleClick(event) {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-				setOpen(false)
-			}
-		}
-
-		window.addEventListener('click', handleClick)
-
-		return () => window.removeEventListener('click', handleClick)
-	}, [])
+	const dropdownRef = useOnClickOutside<HTMLDivElement>(() => setOpen(false))
 
 	const clickHandler = (option) => {
 		onSelect(option)
