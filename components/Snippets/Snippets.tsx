@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import SnippetCard from './SnippetCard'
 import { Skeleton } from '@/components/Skeleton'
 import Icon from '@/components/Icon'
@@ -87,21 +87,19 @@ const NoResultsContainer = styled(Flex)`
 	}
 `
 
-interface Props {
-	// children?: React.ReactNode
+interface SnippetsProps {
 	noResultsScreen?: React.ReactNode
 	data: Snippet[]
 	loading: boolean
 	noResults: boolean
 }
 
-export default function Snippets({
-	// children,
+const Snippets: FunctionComponent<SnippetsProps> = ({
 	noResultsScreen,
 	data,
 	loading,
 	noResults,
-}: Props) {
+}) => {
 	return (
 		<>
 			{noResults && (
@@ -121,3 +119,5 @@ export default function Snippets({
 		</>
 	)
 }
+
+export default Snippets

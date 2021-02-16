@@ -15,7 +15,7 @@ export const H2 = styled.h2<{ overflowWrap?: boolean }>`
 	color: white;
 	margin-bottom: 0.5rem;
 	line-height: 1;
-	${props =>
+	${(props) =>
 		props.overflowWrap &&
 		css`
 			overflow-wrap: break-word;
@@ -24,11 +24,11 @@ export const H2 = styled.h2<{ overflowWrap?: boolean }>`
 `
 
 export const Label = styled.label<{ small?: boolean; inline?: boolean }>`
-	font-size: ${props => (props.small ? '0.8rem' : '0.9rem')};
-	font-weight: ${props => (props.small ? '300' : '500')};
+	font-size: ${(props) => (props.small ? '0.8rem' : '0.9rem')};
+	font-weight: ${(props) => (props.small ? '300' : '500')};
 	margin-left: 5px;
 	margin-bottom: 5px;
-	display: ${props => (props.inline ? 'inline-block' : 'block')};
+	display: ${(props) => (props.inline ? 'inline-block' : 'block')};
 	cursor: inherit;
 `
 

@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import extensions from '@/utils/languages-extensions'
 
@@ -79,12 +80,15 @@ const Tooltip = styled.span<{ language: string }>`
 	font-family: monospace;
 `
 
-interface Props {
+interface CodeLayoutProps {
 	children: React.ReactNode
 	language: string
 }
 
-const CodeLayout = ({ children, language }: Props) => {
+const CodeLayout: FunctionComponent<CodeLayoutProps> = ({
+	children,
+	language,
+}) => {
 	return (
 		<CodeWrapper>
 			<Dot />

@@ -1,6 +1,7 @@
+import { FunctionComponent } from 'react'
 import NextHead from 'next/head'
 
-export default function PageHead({ title }: { title: string }) {
+const PageHead: FunctionComponent<{ title: string }> = ({ title }) => {
 	return (
 		<NextHead>
 			<title>{title}</title>
@@ -11,3 +12,5 @@ export default function PageHead({ title }: { title: string }) {
 		</NextHead>
 	)
 }
+
+export default PageHead

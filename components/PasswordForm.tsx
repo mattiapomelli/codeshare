@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import Input from './Input'
 import { Label } from './Typography'
 import Button from './Button'
@@ -18,7 +18,7 @@ const PasswordForm = styled.form`
 	}
 `
 
-export default function ChangePasswordForm() {
+const ChangePasswordForm: FunctionComponent = () => {
 	const [session] = useSession()
 	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		current: '',
@@ -94,3 +94,5 @@ export default function ChangePasswordForm() {
 		</PasswordForm>
 	)
 }
+
+export default ChangePasswordForm

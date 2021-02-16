@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, FunctionComponent } from 'react'
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 import { DropdownWrapper, DropdownMenu, DropdownItem } from './styles'
@@ -11,12 +11,12 @@ interface DropdownProps {
 	right?: boolean
 }
 
-export default function Dropdown({
+const Dropdown: FunctionComponent<DropdownProps> = ({
 	options,
 	onSelect,
 	value,
 	right,
-}: DropdownProps) {
+}) => {
 	const [open, setOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>()
 
@@ -59,3 +59,5 @@ export default function Dropdown({
 		</DropdownWrapper>
 	)
 }
+
+export default Dropdown

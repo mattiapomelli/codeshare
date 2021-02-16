@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import { CodeBlock } from '@/components/Code'
 import Link from 'next/link'
 import Flex from '@/components/Flex'
@@ -36,7 +37,7 @@ const SnippetTitle = styled.div`
 	}
 `
 
-interface Props {
+interface SnippetCardProps {
 	code: string
 	programmingLang: string
 	title: string
@@ -46,7 +47,7 @@ interface Props {
 	user: { username: string }
 }
 
-const SnippetCard = ({
+const SnippetCard: FunctionComponent<SnippetCardProps> = ({
 	code,
 	programmingLang,
 	title,
@@ -54,7 +55,7 @@ const SnippetCard = ({
 	likesNum,
 	liked,
 	user,
-}: Props) => {
+}) => {
 	const [session] = useSession()
 
 	return (

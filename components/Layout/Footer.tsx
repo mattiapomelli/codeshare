@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import Flex from '../Flex'
 // import Icon from '../Icon'
 import Link from 'next/link'
@@ -32,7 +33,7 @@ const LinksList = styled(Flex)`
 	}
 `
 
-export default function Footer({ expanded = false }: FooterProps) {
+const Footer: FunctionComponent<FooterProps> = ({ expanded = false }) => {
 	return (
 		<FooterContainer expanded={expanded}>
 			<Flex h="space-between" v="center" flexWrap="wrap">
@@ -64,3 +65,5 @@ export default function Footer({ expanded = false }: FooterProps) {
 		</FooterContainer>
 	)
 }
+
+export default Footer

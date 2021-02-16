@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Flex from './Flex'
@@ -9,14 +10,14 @@ const LogoWrapper = styled(Flex)<{ vertical: boolean }>`
 		line-height: 1;
 		margin-left: 5px;
 		font-size: 1.3rem;
-		margin-top: ${props => (props.vertical ? '0.5rem' : 0)};
+		margin-top: ${(props) => (props.vertical ? '0.5rem' : 0)};
 	}
 	span {
 		font-size: 30px;
 	}
 `
 
-const LogoSVG = ({ size }: { size: number }) => (
+const LogoSVG: FunctionComponent<{ size: number }> = ({ size }) => (
 	<svg
 		width={size}
 		height={size}
@@ -31,7 +32,7 @@ const LogoSVG = ({ size }: { size: number }) => (
 	</svg>
 )
 
-interface Props {
+interface LogoProps {
 	size?: number
 	noText?: boolean
 	href?: string
@@ -39,13 +40,13 @@ interface Props {
 	style?: React.CSSProperties
 }
 
-export default function Logo({
+const Logo: FunctionComponent<LogoProps> = ({
 	size = 42,
 	noText = false,
 	vertical = false,
 	href = '/',
 	...rest
-}: Props) {
+}) => {
 	return (
 		<Link href={href}>
 			<LogoWrapper
@@ -61,3 +62,5 @@ export default function Logo({
 		</Link>
 	)
 }
+
+export default Logo

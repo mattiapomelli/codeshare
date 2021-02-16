@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import { useState, useEffect, useRef } from 'react'
 import Dropdown from '@/components/Dropdown'
 import { IconInput } from '@/components/Input'
@@ -89,7 +90,7 @@ SnippetsPage.layout = DashboardLayout
 
 export default SnippetsPage
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
 	const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
 
 	const langs = []

@@ -75,7 +75,7 @@ const TabItem = ({ children, query, active, ...rest }: TabProps) => {
 			<Label as="span" inline>
 				{children}
 			</Label>
-			<Tag>{count || '-'}</Tag>
+			<Tag>{count ?? '-'}</Tag>
 		</Tab>
 	)
 }
@@ -88,6 +88,18 @@ const ProfilePage = () => {
 		{ userId: session.user.id },
 		authFetcher
 	)
+
+	const noResultsScreen =
+		option === 'snippets' ? (
+			<>
+				<div>You haven't created any snippets yet</div>
+				<Link href="/editor">
+					<Button variant="primary">Create your first snippet</Button>
+				</Link>
+			</>
+		) : (
+			"You don't have any liked snippets"
+		)
 
 	return (
 		<>
@@ -117,18 +129,12 @@ const ProfilePage = () => {
 				Liked
 			</TabItem>
 
-			<Snippets data={data} loading={loading} noResults={noResults}>
-				{option === 'snippets' ? (
-					<>
-						<div>You haven't created any snippets yet</div>
-						<Link href="/editor">
-							<Button variant="primary">Create your first snippet</Button>
-						</Link>
-					</>
-				) : (
-					"You don't have any liked snippets"
-				)}
-			</Snippets>
+			<Snippets
+				data={data}
+				loading={loading}
+				noResults={noResults}
+				noResultsScreen={noResultsScreen}
+			/>
 		</>
 	)
 }

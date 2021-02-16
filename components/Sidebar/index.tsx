@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import { SidebarLayout, SideNavItem } from './styles'
 import Flex from '@/components/Flex'
 import Logo from '@/components/Logo'
@@ -24,7 +25,12 @@ interface NavLinkProps {
 	onClick: () => void
 }
 
-const NavLink = ({ children, href, icon, onClick }: NavLinkProps) => {
+const NavLink: FunctionComponent<NavLinkProps> = ({
+	children,
+	href,
+	icon,
+	onClick,
+}) => {
 	const router = useRouter()
 	const active = router.pathname === href
 
@@ -45,7 +51,10 @@ interface SidebarProps {
 	setCollapsed: (collapsed: boolean) => void
 }
 
-export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
+const Sidebar: FunctionComponent<SidebarProps> = ({
+	collapsed,
+	setCollapsed,
+}) => {
 	const [session] = useSession()
 
 	const closeSidebar = () => {
@@ -82,3 +91,5 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
 		</SidebarLayout>
 	)
 }
+
+export default Sidebar

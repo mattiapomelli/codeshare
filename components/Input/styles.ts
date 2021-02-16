@@ -9,20 +9,20 @@ export const Input = styled.input<InputProps>`
 	border: none;
 	outline: none;
 	font-family: inherit;
-	font-size: ${props => (props.big ? '0.9rem' : '0.8rem')};
+	font-size: ${(props) => (props.big ? '0.9rem' : '0.8rem')};
 	font-weight: 500;
-	padding: ${props =>
+	padding: ${(props) =>
 		props.small ? '0.7em 1.4em 0.7em 20px' : '1.1em 1.4em 1.1em 20px'};
 	border-radius: 10em;
-	background-color: ${props => props.theme.colors.elements};
-	color: ${props => props.theme.colors.text};
+	background-color: ${(props) => props.theme.colors.elements};
+	color: ${(props) => props.theme.colors.text};
 
-	@media ${props => props.theme.breakpoints.tablet} {
+	@media ${(props) => props.theme.breakpoints.tablet} {
 		min-width: 16rem;
 	}
 
 	::placeholder {
-		color: ${props => props.theme.colors.secondaryText};
+		color: ${(props) => props.theme.colors.secondaryText};
 	}
 `
 

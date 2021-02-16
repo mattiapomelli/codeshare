@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, FunctionComponent } from 'react'
 import CodeHighlight from './CodeHighlight'
 import CodeLayout from './CodeLayout'
 import ScrollWrapper from './ScrollWrapper'
@@ -32,13 +32,17 @@ const CopiedText = styled.span`
 	padding: 0.3rem;
 `
 
-interface Props {
+interface CodeBlockProps {
 	codeString: string
 	language: string
 	preview?: boolean
 }
 
-const CodeBlock = ({ codeString, language, preview }: Props) => {
+const CodeBlock: FunctionComponent<CodeBlockProps> = ({
+	codeString,
+	language,
+	preview,
+}) => {
 	const [copied, setCopied] = useState(false)
 
 	const clickHandler = (e) => {

@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import js from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript'
 import xml from 'react-syntax-highlighter/dist/cjs/languages/hljs/xml'
@@ -31,14 +32,19 @@ SyntaxHighlighter.registerLanguage('c', c)
 SyntaxHighlighter.registerLanguage('cpp', cpp)
 SyntaxHighlighter.registerLanguage('rust', rust)
 
-interface Props {
+interface CodeHighlightProps {
 	codeString: string
 	language: string
 	wrapLongLines?: boolean
 	pre?: React.ReactNode
 }
 
-const CodeHighlight = ({ codeString, language, wrapLongLines, pre }: Props) => {
+const CodeHighlight: FunctionComponent<CodeHighlightProps> = ({
+	codeString,
+	language,
+	wrapLongLines,
+	pre,
+}) => {
 	return (
 		<SyntaxHighlighter
 			language={language.toLowerCase()}

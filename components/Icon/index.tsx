@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { FunctionComponent, MouseEvent } from 'react'
 import * as icons from './icons'
 import type { IconNames } from './icons'
 import styled from 'styled-components'
@@ -18,7 +18,7 @@ interface IconProps extends SVGProps {
 }
 
 const SVG = styled.svg<SVGProps>`
-	fill: ${props => {
+	fill: ${(props) => {
 		switch (props.variant) {
 			case 'primary':
 				return 'white'
@@ -28,8 +28,8 @@ const SVG = styled.svg<SVGProps>`
 				return props.theme.colors.details
 		}
 	}};
-	width: ${props => (props.size ? `${props.size / 16}rem` : '1.5rem')};
-	height: ${props => (props.size ? `${props.size / 16}rem` : '1.5rem')};
+	width: ${(props) => (props.size ? `${props.size / 16}rem` : '1.5rem')};
+	height: ${(props) => (props.size ? `${props.size / 16}rem` : '1.5rem')};
 `
 
 const Icon = ({ icon, ...rest }: IconProps) => {
@@ -49,7 +49,10 @@ interface IconButtonProps {
 	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const IconButton = ({ icon, ...rest }: IconButtonProps) => {
+export const IconButton: FunctionComponent<IconButtonProps> = ({
+	icon,
+	...rest
+}) => {
 	return (
 		<StyledIconButton {...rest}>
 			<Icon icon={icon} variant="primary" />

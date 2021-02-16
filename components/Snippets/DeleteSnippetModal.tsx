@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { DELETE_SNIPPET } from '@/graphql/mutations'
 import { authFetcher } from '@/graphql/client'
 import Modal from '@/components/Modal'
@@ -13,12 +13,12 @@ const Buttons = styled(Flex)`
 	}
 `
 
-interface Props {
+interface ModalProps {
 	close: () => void
 	id: string
 }
 
-export default function DeleteSnippetModal({ close, id }: Props) {
+const DeleteSnippetModal: FunctionComponent<ModalProps> = ({ close, id }) => {
 	const [loading, setLoading] = useState(false)
 
 	const deleteSnippet = async () => {
@@ -51,3 +51,5 @@ export default function DeleteSnippetModal({ close, id }: Props) {
 		</Modal>
 	)
 }
+
+export default DeleteSnippetModal

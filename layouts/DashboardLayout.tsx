@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import Link from 'next/link'
 import { Header, Page } from '@/components/Layout'
 import Sidebar from '@/components/Sidebar'
@@ -8,16 +8,12 @@ import Footer from '@/components/Layout/Footer'
 import { useSession } from 'next-auth/client'
 import styled from 'styled-components'
 
-interface Props {
-	children: React.ReactNode
-}
-
 export const Main = styled.main`
 	padding: 0.5rem 0 4rem 0;
 	flex: 1;
 `
 
-const DashboardLayout = ({ children }: Props) => {
+const DashboardLayout: FunctionComponent = ({ children }) => {
 	const [collapsed, setCollapsed] = useState(false)
 	const [session] = useSession()
 

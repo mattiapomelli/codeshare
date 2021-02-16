@@ -11,6 +11,7 @@ import Flex from '@/components/Flex'
 import styled from 'styled-components'
 import ChangePasswordForm from '@/components/PasswordForm'
 import DashboardLayout from '@/layouts/DashboardLayout'
+import { FunctionComponent } from 'react'
 
 const SettingsGrid = styled.div`
 	display: grid;
@@ -36,17 +37,10 @@ const Field = styled.div`
 	}
 `
 
-interface SettingCardProps {
-	children: React.ReactNode
-	title: string
-}
-
-interface InfoFieldProps {
-	children: React.ReactNode
-	label: string
-}
-
-const SettingCard = ({ children, title }: SettingCardProps) => {
+const SettingCard: FunctionComponent<{ title: string }> = ({
+	children,
+	title,
+}) => {
 	return (
 		<Flex dir="column">
 			<Label>{title}</Label>
@@ -55,7 +49,10 @@ const SettingCard = ({ children, title }: SettingCardProps) => {
 	)
 }
 
-const InfoField = ({ children, label }: InfoFieldProps) => (
+const InfoField: FunctionComponent<{ label: string }> = ({
+	children,
+	label,
+}) => (
 	<Field>
 		<Label>{label} </Label>
 		{children ? (

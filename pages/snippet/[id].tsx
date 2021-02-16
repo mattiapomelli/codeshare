@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
 import { CodeBlock } from '@/components/Code'
 import { H2, Label } from '@/components/Typography'
@@ -45,7 +46,7 @@ const PageSkeleton = () => (
 	</article>
 )
 
-const SnippetContent = ({
+const SnippetContent: FunctionComponent<Snippet> = ({
 	code,
 	programmingLang,
 	title,
@@ -55,7 +56,7 @@ const SnippetContent = ({
 	user,
 	createdAt,
 	description,
-}: Snippet) => {
+}) => {
 	const [session] = useSession()
 
 	return (

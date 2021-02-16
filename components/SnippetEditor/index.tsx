@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, FunctionComponent } from 'react'
 import { authFetcher } from '@/graphql/client'
 import {
 	CREATE_SNIPPET_MUTATION,
@@ -38,7 +38,7 @@ const fetcher = (query, id) =>
 		(data) => data.snippet
 	)
 
-export default function SnippetEditor({ langs }: { langs: string[] }) {
+const SnippetEditor: FunctionComponent<{ langs: string[] }> = ({ langs }) => {
 	const router = useRouter()
 	const id = router.query.edit
 	const isEdit = id !== undefined
@@ -238,3 +238,5 @@ export default function SnippetEditor({ langs }: { langs: string[] }) {
 		</>
 	)
 }
+
+export default SnippetEditor

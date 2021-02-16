@@ -7,15 +7,15 @@ export const TextArea = styled.textarea`
 	font-size: 0.8rem;
 	font-weight: 500;
 	padding: 20px;
-	border-radius: ${props => props.theme.borderRadius};
-	background-color: ${props => props.theme.colors.elements};
-	color: ${props => props.theme.colors.text};
+	border-radius: ${(props) => props.theme.borderRadius};
+	background-color: ${(props) => props.theme.colors.elements};
+	color: ${(props) => props.theme.colors.text};
 	resize: none;
 	display: block;
 	width: 100%;
 
 	::placeholder {
-		color: ${props => props.theme.colors.secondaryText};
+		color: ${(props) => props.theme.colors.secondaryText};
 	}
 
 	&::-webkit-scrollbar {

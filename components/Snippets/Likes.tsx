@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { FunctionComponent, useRef } from 'react'
 import { authFetcher } from '@/graphql/client'
 import { ADD_LIKE_MUTATION, REMOVE_LIKE_MUTATION } from '@/graphql/mutations'
 import { GET_LIKED_SNIPPETS_COUNT } from '@/graphql/queries'
@@ -19,13 +19,17 @@ const LikesWrapper = styled.div`
 	}
 `
 
-interface Props {
+interface LikesProps {
 	isLiked: boolean
 	count: number
 	snippetId: string
 }
 
-export default function Likes({ isLiked, count, snippetId }: Props) {
+const Likes: FunctionComponent<LikesProps> = ({
+	isLiked,
+	count,
+	snippetId,
+}) => {
 	const [session] = useSession()
 	const router = useRouter()
 	const fetching = useRef(false)
@@ -34,7 +38,7 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 		liked: isLiked,
 	})
 
-	const changeLikeWithCache = async () => {
+	const toggleLike = async () => {
 		if (!session) {
 			router.push('/login')
 			return
@@ -48,7 +52,7 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 			const newValue = { liked: !value.liked, count: value.count + increment }
 			setValue(newValue)
 
-			// mutate snippets liked by logged user count, if already exists in cache
+			// mutate count of snippets liked by logged user, if already exists in cache
 			const key = [GET_LIKED_SNIPPETS_COUNT, session.user.id]
 			if (cache.has(key)) {
 				mutate(key, async (data) => data + increment, false)
@@ -74,13 +78,11 @@ export default function Likes({ isLiked, count, snippetId }: Props) {
 	return (
 		<LikesWrapper>
 			{value.count}
-			<span
-				onClick={() => {
-					changeLikeWithCache()
-				}}
-			>
+			<span onClick={toggleLike}>
 				<Icon icon={value.liked ? 'star' : 'starEmpty'} variant="primary" />
 			</span>
 		</LikesWrapper>
 	)
 }
+
+export default Likes

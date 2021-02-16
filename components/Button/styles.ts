@@ -11,12 +11,12 @@ const Button = styled.button<ButtonProps>`
 	font-family: inherit;
 	font-size: 0.8rem;
 	font-weight: 500;
-	padding: ${props => (props.small ? '1.1em 2.6em' : '1.4em 2.6em')};
+	padding: ${(props) => (props.small ? '1.1em 2.6em' : '1.4em 2.6em')};
 	border-radius: 10em;
 	cursor: pointer;
 	text-align: center;
 
-	background: ${props => {
+	background: ${(props) => {
 		switch (props.variant) {
 			case 'primary':
 				return props.theme.colors.primary
@@ -29,7 +29,7 @@ const Button = styled.button<ButtonProps>`
 		}
 	}};
 
-	color: ${props => {
+	color: ${(props) => {
 		switch (props.variant) {
 			case 'primary':
 				return 'white'
@@ -41,7 +41,7 @@ const Button = styled.button<ButtonProps>`
 	}};
 
 	&:hover:not(:disabled) {
-		background: ${props => {
+		background: ${(props) => {
 			switch (props.variant) {
 				case 'primary':
 					return props.theme.colors.primaryHover

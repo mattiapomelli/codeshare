@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { FunctionComponent, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Icon from './Icon'
 import Flex from './Flex'
@@ -16,8 +16,8 @@ const ModalWrapper = styled(Flex)`
 `
 
 const ModalContent = styled.div`
-	background-color: ${props => props.theme.colors.background};
-	border-radius: ${props => props.theme.borderRadius};
+	background-color: ${(props) => props.theme.colors.background};
+	border-radius: ${(props) => props.theme.borderRadius};
 	/* margin: auto; */
 	margin-bottom: 4rem;
 	padding: 2rem 2.3rem;
@@ -33,12 +33,12 @@ const CloseIcon = styled(Icon)`
 	cursor: pointer;
 `
 
-interface Props {
+interface ModalProps {
 	children: React.ReactNode
 	close: () => void
 }
 
-export default function Modal({ children, close }: Props) {
+const Modal: FunctionComponent<ModalProps> = ({ children, close }) => {
 	const modalRef = useRef<HTMLDivElement>()
 
 	useEffect(() => {
@@ -62,3 +62,5 @@ export default function Modal({ children, close }: Props) {
 		</ModalWrapper>
 	)
 }
+
+export default Modal

@@ -1,9 +1,6 @@
 import { Navbar, Footer } from '@/components/Layout'
+import { FunctionComponent } from 'react'
 import styled from 'styled-components'
-
-interface Props {
-	children: React.ReactNode
-}
 
 const Main = styled.main`
 	display: flex;
@@ -14,7 +11,7 @@ const Main = styled.main`
 	margin: 3rem auto 8rem auto;
 `
 
-const DefaultLayout = ({ children }: Props) => {
+const DefaultLayout: FunctionComponent = ({ children }) => {
 	return (
 		<>
 			<Navbar />

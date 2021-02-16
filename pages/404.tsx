@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import Flex from '@/components/Flex'
 import styled from 'styled-components'
 import { H2 } from '@/components/Typography'
@@ -10,7 +11,7 @@ const FlexContainer = styled(Flex)`
 	}
 `
 
-export default function Custom404() {
+const Custom404: FunctionComponent = () => {
 	return (
 		<FlexContainer v="center" h="center" dir="column">
 			<Logo noText />
@@ -19,3 +20,5 @@ export default function Custom404() {
 		</FlexContainer>
 	)
 }
+
+export default Custom404

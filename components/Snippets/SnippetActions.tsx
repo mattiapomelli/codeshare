@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, FunctionComponent } from 'react'
 import Icon from '@/components/Icon'
 import DeleteSnippetModal from './DeleteSnippetModal'
 import styled from 'styled-components'
@@ -43,11 +43,7 @@ const ActionsIcon = styled.div`
 	}
 `
 
-interface Props {
-	id: string
-}
-
-export default function SnippetActions({ id }: Props) {
+const SnippetActions: FunctionComponent<{ id: string }> = ({ id }) => {
 	const [open, setOpen] = useState(false)
 	const [showModal, setShowModal] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>()
@@ -86,3 +82,5 @@ export default function SnippetActions({ id }: Props) {
 		</ActionsWrapper>
 	)
 }
+
+export default SnippetActions

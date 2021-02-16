@@ -4,6 +4,7 @@ import {
 	useContext,
 	useCallback,
 	createContext,
+	FunctionComponent,
 } from 'react'
 import Popup, { PopupsContainer } from '@/components/Popup'
 
@@ -51,7 +52,9 @@ const notificationReducer = (state: State, action: Action) => {
 	}
 }
 
-export const NotificationProvider = ({ children }: ProviderProps) => {
+export const NotificationProvider: FunctionComponent<ProviderProps> = ({
+	children,
+}) => {
 	const [messages, messageDispatch] = useReducer(notificationReducer, [])
 
 	useEffect(() => {

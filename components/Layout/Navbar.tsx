@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
@@ -73,7 +73,7 @@ const HamIcon = styled(Icon)`
 	}
 `
 
-export default function Navbar() {
+const Navbar: FunctionComponent = () => {
 	const [session] = useSession()
 	const [showNavbar, setShowNavbar] = useState(false)
 
@@ -106,3 +106,5 @@ export default function Navbar() {
 		</NavMenu>
 	)
 }
+
+export default Navbar

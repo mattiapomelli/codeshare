@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-interface Props {
+interface FlexProps {
 	h?:
 		| 'flex-start'
 		| 'flex-end'
@@ -16,15 +16,15 @@ interface Props {
 	stretch?: boolean
 }
 
-const Flex = styled.div<Props>`
+const Flex = styled.div<FlexProps>`
 	display: flex;
-	justify-content: ${props => props.h || 'flex-start'};
-	align-items: ${props => props.v || 'stretch'};
-	flex-direction: ${props => props.dir || 'row'};
-	width: ${props => props.w || 'auto'};
-	margin: ${props => (props.auto ? 'auto' : 0)};
-	flex-wrap: ${props => props.flexWrap || 'nowrap'};
-	${props =>
+	justify-content: ${(props) => props.h || 'flex-start'};
+	align-items: ${(props) => props.v || 'stretch'};
+	flex-direction: ${(props) => props.dir || 'row'};
+	width: ${(props) => props.w || 'auto'};
+	margin: ${(props) => (props.auto ? 'auto' : 0)};
+	flex-wrap: ${(props) => props.flexWrap || 'nowrap'};
+	${(props) =>
 		props.stretch &&
 		css`
 			> * {

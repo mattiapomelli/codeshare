@@ -10,11 +10,11 @@ export const StyledIconButton = styled.button`
 	border-radius: 1.2em;
 	line-height: 1;
 
-	background: ${props => props.theme.colors.elements};
+	background: ${(props) => props.theme.colors.elements};
 
-	color: ${props => props.theme.colors.text};
+	color: ${(props) => props.theme.colors.text};
 
 	&:hover:not(:disabled) {
-		background: ${props => props.theme.colors.accent};
+		background: ${(props) => props.theme.colors.accent};
 	}
 `

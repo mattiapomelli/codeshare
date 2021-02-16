@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import { H1 } from '@/components/Typography'
 import SnippetEditor from '@/components/SnippetEditor'
 import withAuth from '@/hocs/withAuth'
@@ -24,7 +25,7 @@ EditorPage.layout = DashboardLayout
 
 export default withAuth(EditorPage)
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
 	const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
 
 	const langs = []

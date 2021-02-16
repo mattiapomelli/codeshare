@@ -16,7 +16,7 @@ const Container = styled(Flex)`
 	}
 `
 
-export default function PrivacyPolicy() {
+const PrivacyPolicy = () => {
 	return (
 		<>
 			<PageHead title="Privay Policy – Codeshare" />
@@ -71,3 +71,5 @@ export default function PrivacyPolicy() {
 		</>
 	)
 }
+
+export default PrivacyPolicy

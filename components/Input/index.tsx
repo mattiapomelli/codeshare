@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react'
+import { FunctionComponent, InputHTMLAttributes } from 'react'
 import Icon, { IconName } from '../Icon'
 import { Input, InputWrapper, InputProps } from './styles'
 export default Input
@@ -12,13 +12,13 @@ interface IconInputProps
 	style?: React.CSSProperties
 }
 
-export const IconInput = ({
+export const IconInput: FunctionComponent<IconInputProps> = ({
 	icon,
 	className,
 	style,
 	iconSize,
 	...rest
-}: IconInputProps) => {
+}) => {
 	return (
 		<InputWrapper className={className} style={style}>
 			<Icon icon={icon} size={iconSize} />

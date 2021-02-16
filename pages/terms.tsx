@@ -22,7 +22,7 @@ const Container = styled(Flex)`
 	}
 `
 
-export default function Terms() {
+const Terms = () => {
 	return (
 		<>
 			<PageHead title="Terms of Service – Codeshare" />
@@ -141,3 +141,5 @@ export default function Terms() {
 		</>
 	)
 }
+
+export default Terms

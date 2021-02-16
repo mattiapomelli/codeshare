@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FunctionComponent } from 'react'
 import Button from './Button'
 import styled, { keyframes } from 'styled-components'
 
@@ -12,11 +12,11 @@ const slideInBottom = keyframes`
 `
 
 const CookiesContainer = styled.div`
-	background-color: ${props => props.theme.colors.text};
-	color: ${props => props.theme.colors.background};
+	background-color: ${(props) => props.theme.colors.text};
+	color: ${(props) => props.theme.colors.background};
 	font-size: 0.8rem;
 	border: 1px solid #333;
-	border-radius: ${props => props.theme.borderRadius};
+	border-radius: ${(props) => props.theme.borderRadius};
 	position: fixed;
 	bottom: 1rem;
 	right: 1rem;
@@ -30,7 +30,7 @@ const CookiesContainer = styled.div`
 	}
 `
 
-export default function CookiesPopup() {
+const CookiesPopup: FunctionComponent = () => {
 	const [mounted, setMounted] = useState(false)
 	const [showCookies, setShowCookies] = useState(false)
 
@@ -64,3 +64,5 @@ export default function CookiesPopup() {
 		</CookiesContainer>
 	)
 }
+
+export default CookiesPopup

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, FunctionComponent } from 'react'
 import Editor from 'react-simple-code-editor'
 import styled from 'styled-components'
 import CodeHighlight from './CodeHighlight'
@@ -23,13 +23,17 @@ const StyledEditor = styled(Editor)`
 	}
 `
 
-interface Props {
+interface CodeEditorProps {
 	onChangeHandler: (codeString: string) => void
 	value: string
 	language: string
 }
 
-const CodeEditor = ({ onChangeHandler, value, language }: Props) => {
+const CodeEditor: FunctionComponent<CodeEditorProps> = ({
+	onChangeHandler,
+	value,
+	language,
+}) => {
 	useEffect(() => {
 		function scrollOnNewLine(event) {
 			// if enter is pressed in textarea scroll to bottom as much as lineheight is

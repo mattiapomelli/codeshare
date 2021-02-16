@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import Modal from '@/components/Modal'
 import { P } from '@/components/Typography'
 import styled from 'styled-components'
@@ -8,11 +9,11 @@ const BulletList = styled.ul`
 	padding-left: 1rem;
 `
 
-interface Props {
+interface InfoModalProps {
 	close: () => void
 }
 
-export default function InfoModal({ close }: Props) {
+const InfoModal: FunctionComponent<InfoModalProps> = ({ close }) => {
 	return (
 		<Modal close={close}>
 			<h4>Wondering what you should write in your snippet's description?</h4>
@@ -32,3 +33,5 @@ export default function InfoModal({ close }: Props) {
 		</Modal>
 	)
 }
+
+export default InfoModal
