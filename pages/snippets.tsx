@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import { useState, useEffect, useRef } from 'react'
 import Dropdown from '@/components/Dropdown'
 import { IconInput } from '@/components/Input'
@@ -17,12 +17,9 @@ import { useSession } from 'next-auth/client'
 import { fetcher } from '@/graphql/client'
 import useCache from '@/hooks/use-cache'
 import DashboardLayout from '@/layouts/DashboardLayout'
+import { PageWithLayout } from 'types'
 
-interface Props {
-	langs: string[]
-}
-
-const SnippetsPage = ({ langs }: Props) => {
+const SnippetsPage: PageWithLayout<{ langs: string[] }> = ({ langs }) => {
 	const [session] = useSession()
 	const typingTimer = useRef<number>()
 	const [search, setSearch] = useCache('search', '')

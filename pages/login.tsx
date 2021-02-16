@@ -11,8 +11,9 @@ import Icon from '@/components/Icon'
 import useNotification from '@/hooks/use-notification'
 import useForm from '@/hooks/use-form'
 import BlankLayout from '@/layouts/BlankLayout'
+import { PageWithLayout } from 'types'
 
-const LoginPage = () => {
+const LoginPage: PageWithLayout = () => {
 	const router = useRouter()
 	const { formData, handleInputChange, handleSubmit } = useForm({
 		email: '',

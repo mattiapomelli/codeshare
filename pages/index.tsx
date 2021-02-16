@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { NextPage } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import styled from 'styled-components'
@@ -49,7 +50,7 @@ const Hero = styled.section`
 
 const titles = ['Find the code you need', 'Share the code you are proud of']
 
-const LandingPage = () => {
+const LandingPage: NextPage = () => {
 	useEffect(() => {
 		const heading = document.getElementById('heading')
 		let i = 1,

@@ -7,6 +7,7 @@ import theme from 'themes/theme'
 import { useRouter } from 'next/router'
 import { initGA, logPageView } from '@/utils/analytics'
 import { NotificationProvider } from '@/hooks/use-notification'
+import { PageWithLayout } from 'types'
 
 const GlobalStyle = createGlobalStyle`
 	* {
@@ -44,9 +45,7 @@ declare global {
 }
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
-	const AppComponent = Component as typeof Component & {
-		layout?: typeof DefaultLayout
-	}
+	const AppComponent = Component as PageWithLayout
 
 	const router = useRouter()
 	const prevPath = useRef(null)

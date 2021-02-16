@@ -11,7 +11,7 @@ import useSWR from 'swr'
 import { useSession } from 'next-auth/client'
 import processSnippet from '@/utils/process-snippet'
 import PageHead from '@/components/PageHead'
-import { Snippet } from 'types'
+import { PageWithLayout, Snippet } from 'types'
 import { fetcher } from '@/graphql/client'
 import DashboardLayout from '@/layouts/DashboardLayout'
 
@@ -87,7 +87,7 @@ const snippetFetcher = (query, snippetId, userId) =>
 		isAuth: userId ? true : false,
 	}).then((data) => processSnippet(data.snippet))
 
-const SnippetPage = () => {
+const SnippetPage: PageWithLayout = () => {
 	const router = useRouter()
 	const [session] = useSession()
 	const userId = session ? session.user.id : null

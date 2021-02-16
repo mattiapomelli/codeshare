@@ -1,4 +1,5 @@
 import { useState, LiHTMLAttributes } from 'react'
+import { PageWithLayout } from 'types'
 import { useSession } from 'next-auth/client'
 import styled, { css } from 'styled-components'
 import { H2, Label } from '@/components/Typography'
@@ -80,7 +81,7 @@ const TabItem = ({ children, query, active, ...rest }: TabProps) => {
 	)
 }
 
-const ProfilePage = () => {
+const ProfilePage: PageWithLayout = () => {
 	const [option, setOption] = useState('snippets')
 	const [session] = useSession()
 	const { data, loading, noResults } = useSnippets(

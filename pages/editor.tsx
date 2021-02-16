@@ -6,12 +6,9 @@ import graphQLClientAdmin from '@/graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '@/graphql/queries'
 import PageHead from '@/components/PageHead'
 import DashboardLayout from '@/layouts/DashboardLayout'
+import { PageWithLayout } from 'types'
 
-interface Props {
-	langs: string[]
-}
-
-function EditorPage({ langs }: Props) {
+const EditorPage: PageWithLayout<{ langs: string[] }> = ({ langs }) => {
 	return (
 		<>
 			<PageHead title="Editor – Codeshare" />

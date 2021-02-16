@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import Flex from '@/components/Flex'
 import styled from 'styled-components'
 import { H2 } from '@/components/Typography'
@@ -22,7 +23,7 @@ const Container = styled(Flex)`
 	}
 `
 
-const Terms = () => {
+const Terms: NextPage = () => {
 	return (
 		<>
 			<PageHead title="Terms of Service – Codeshare" />

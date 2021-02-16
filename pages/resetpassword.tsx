@@ -6,8 +6,9 @@ import withNoAuth from '@/hocs/withNoAuth'
 import useNotification from '@/hooks/use-notification'
 import useForm from '@/hooks/use-form'
 import BlankLayout from '@/layouts/BlankLayout'
+import { PageWithLayout } from 'types'
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: PageWithLayout = () => {
 	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		email: '',
 	})

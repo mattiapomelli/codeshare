@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PageWithLayout } from 'types'
 import { signIn } from 'next-auth/client'
 import { IconInput } from '@/components/Input'
 import Button from '@/components/Button'
@@ -11,7 +12,7 @@ import useNotification from '@/hooks/use-notification'
 import useForm from '@/hooks/use-form'
 import BlankLayout from '@/layouts/BlankLayout'
 
-const SignupPage = () => {
+const SignupPage: PageWithLayout = () => {
 	const { formData, handleInputChange, handleSubmit, resetForm } = useForm({
 		email: '',
 		username: '',
