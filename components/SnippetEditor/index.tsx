@@ -82,7 +82,7 @@ const SnippetEditor: FunctionComponent<{ langs: string[] }> = ({ langs }) => {
 				setSnippet({ title, description, programmingLang, code })
 			}
 		}
-	}, [data, error, cancelEdit])
+	}, [data, error, cancelEdit, session.user.username])
 
 	const onCodeChange = (codeString) => {
 		setSnippet({ ...snippet, code: codeString })
