@@ -31,65 +31,65 @@ const GlobalStyle = createGlobalStyle`
 	::selection { background-color: rgba(113, 198, 238, 0.25);}
 
 	/* @media ${(props) =>
-		props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
+    props.theme.breakpoints.tablet} { :root{font-size: 16px;} }
 	@media ${(props) =>
-		props.theme.breakpoints.desktop} { :root{font-size: 16px;} } */
+    props.theme.breakpoints.desktop} { :root{font-size: 16px;} } */
 `
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 declare global {
-	interface Window {
-		GA_INITIALIZED: boolean
-	}
+  interface Window {
+    GA_INITIALIZED: boolean
+  }
 }
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
-	const AppComponent = Component as PageWithLayout
+  const AppComponent = Component as PageWithLayout
 
-	const router = useRouter()
-	const prevPath = useRef(null)
+  const router = useRouter()
+  const prevPath = useRef(null)
 
-	useEffect(() => {
-		if (!window.GA_INITIALIZED) {
-			initGA()
-			window.GA_INITIALIZED = true
-		}
+  useEffect(() => {
+    if (!window.GA_INITIALIZED) {
+      initGA()
+      window.GA_INITIALIZED = true
+    }
 
-		if (IS_PRODUCTION) logPageView()
+    if (IS_PRODUCTION) logPageView()
 
-		const handleRouteChangeStart = () => {
-			prevPath.current = window.location.pathname
-		}
+    const handleRouteChangeStart = () => {
+      prevPath.current = window.location.pathname
+    }
 
-		const handleRouteChangeComplete = () => {
-			if (window.location.pathname !== prevPath.current && IS_PRODUCTION) {
-				logPageView()
-			}
-		}
+    const handleRouteChangeComplete = () => {
+      if (window.location.pathname !== prevPath.current && IS_PRODUCTION) {
+        logPageView()
+      }
+    }
 
-		router.events.on('routeChangeStart', handleRouteChangeStart)
-		router.events.on('routeChangeComplete', handleRouteChangeComplete)
-		return () => {
-			router.events.off('routeChangeStart', handleRouteChangeStart)
-			router.events.off('routeChangeComplete', handleRouteChangeComplete)
-		}
-	}, [router.events])
+    router.events.on('routeChangeStart', handleRouteChangeStart)
+    router.events.on('routeChangeComplete', handleRouteChangeComplete)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart)
+      router.events.off('routeChangeComplete', handleRouteChangeComplete)
+    }
+  }, [router.events])
 
-	const Layout = AppComponent.layout || DefaultLayout
+  const Layout = AppComponent.layout || DefaultLayout
 
-	return (
-		<Provider session={pageProps.session}>
-			<ThemeProvider theme={theme}>
-				<NotificationProvider>
-					<GlobalStyle />
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</NotificationProvider>
-			</ThemeProvider>
-		</Provider>
-	)
+  return (
+    <Provider session={pageProps.session}>
+      <ThemeProvider theme={theme}>
+        <NotificationProvider>
+          <GlobalStyle />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </NotificationProvider>
+      </ThemeProvider>
+    </Provider>
+  )
 }
 
 export default App
