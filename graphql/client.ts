@@ -18,14 +18,16 @@ export const fetcher = async (query: string, variables) => {
   return graphQLClient.request(query, variables)
 }
 
+const graphQLAuthClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL)
+
 export const authFetcher = async (query: string, variables) => {
   const session = await getSession()
 
   const headers = session && {
-    authorization: `Bearer ${session.accessToken.jwt}`,
+    authorization: `Bearer ${session.accessToken?.jwt || session.user.jwt}`,
   }
 
-  return graphQLClient
+  return graphQLAuthClient
     .setHeaders({
       ...headers,
     })
