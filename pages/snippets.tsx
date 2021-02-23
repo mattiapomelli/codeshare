@@ -1,4 +1,4 @@
-import { GetStaticProps, NextPage } from 'next'
+import { GetStaticProps } from 'next'
 import { useState, useEffect, useRef } from 'react'
 import Dropdown from '@/components/Dropdown'
 import { IconInput } from '@/components/Input'

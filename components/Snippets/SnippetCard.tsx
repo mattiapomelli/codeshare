@@ -72,7 +72,9 @@ const SnippetCard: FunctionComponent<SnippetCardProps> = ({
           </Link>
           <span>{user.username}</span>
         </SnippetTitle>
-        {session?.user.username === user.username && <SnippetActions id={id} />}
+        {session?.user?.username === user.username && (
+          <SnippetActions id={id} />
+        )}
         <Likes isLiked={liked} count={likesNum} snippetId={id} />
       </SnippetInfo>
     </article>
