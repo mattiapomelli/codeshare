@@ -6,6 +6,15 @@ import { CREATE_USER_FROM_GITHUB_MUTATION } from '@/graphql/mutations'
 import bcrypt from 'bcrypt'
 import { signAccessToken } from '@/utils/auth'
 
+type Email = {
+  email: string
+  primary: boolean
+  verified?: boolean
+  visibility?: string
+}
+
+type EmailResponse = Email[]
+
 async function getUserByEmail(email) {
   const variables = { email: email }
   const data = await graphQLClientAdmin.request(
@@ -70,7 +79,7 @@ const callbacks = {
       },
     })
 
-    const emails = await emailRes.json()
+    const emails: EmailResponse = await emailRes.json()
     const primaryEmail = emails.find((e) => e.primary).email
     // check if user already exists in the database
     const res = await getUserByEmail(primaryEmail)
