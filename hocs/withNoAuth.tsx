@@ -3,30 +3,30 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 
 function getDisplayName(WrappedComponent) {
-	return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
 function withNoAuth<P>(
-	WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
+  WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
 ) {
-	const ComponentWithNoAuth = (props: P) => {
-		const [session, loading] = useSession()
-		const router = useRouter()
+  const ComponentWithNoAuth = (props: P) => {
+    const [session, loading] = useSession()
+    const router = useRouter()
 
-		useEffect(() => {
-			if (!loading && session) router.push('/snippets')
-		}, [session, loading])
+    useEffect(() => {
+      if (!loading && session) router.push('/snippets')
+    }, [session, loading])
 
-		return <WrappedComponent {...props} />
-	}
+    return <WrappedComponent {...props} />
+  }
 
-	ComponentWithNoAuth.displayName = `WithNoAuth(${getDisplayName(
-		WrappedComponent
-	)})`
+  ComponentWithNoAuth.displayName = `WithNoAuth(${getDisplayName(
+    WrappedComponent
+  )})`
 
-	ComponentWithNoAuth.layout = WrappedComponent.layout
+  ComponentWithNoAuth.layout = WrappedComponent.layout
 
-	return ComponentWithNoAuth
+  return ComponentWithNoAuth
 }
 
 export default withNoAuth

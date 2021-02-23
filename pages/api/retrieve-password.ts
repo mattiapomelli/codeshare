@@ -6,80 +6,80 @@ import sendMail from '@/utils/mailer'
 import { retrieveMail, newPasswordEmail } from '@/utils/email-html'
 
 function makeNewPassword(length) {
-	let result = ''
-	const characters =
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let result = ''
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-	const charactersLength = characters.length
+  const charactersLength = characters.length
 
-	for (let i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength))
-	}
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
 
-	return result
+  return result
 }
 
 async function getUserByEmail(email) {
-	const data = await graphQLClientAdmin.request(GET_USER_BY_EMAIL_QUERY, {
-		email,
-	})
-	return data.user
+  const data = await graphQLClientAdmin.request(GET_USER_BY_EMAIL_QUERY, {
+    email,
+  })
+  return data.user
 }
 
 export default async (req, res) => {
-	if (req.method === 'POST') {
-		try {
-			const { email } = req.body
-			//check if email exists
-			const userData = await getUserByEmail(email)
-			if (userData.length == 0)
-				throw new Error('No account associated to this email')
+  if (req.method === 'POST') {
+    try {
+      const { email } = req.body
+      //check if email exists
+      const userData = await getUserByEmail(email)
+      if (userData.length == 0)
+        throw new Error('No account associated to this email')
 
-			await sendMail(
-				email,
-				'Forgot Password',
-				retrieveMail(email, userData[0].id)
-			)
+      await sendMail(
+        email,
+        'Forgot Password',
+        retrieveMail(email, userData[0].id)
+      )
 
-			return res.status(201).send({
-				message: 'Check your email to complete password reset',
-				type: 'success',
-			})
-		} catch (err) {
-			res
-				.status(err.status || 500)
-				.send({ message: err.message || 'Something went wrong' })
-		}
-	} else if (req.method === 'GET') {
-		try {
-			const { id, email } = req.query
+      return res.status(201).send({
+        message: 'Check your email to complete password reset',
+        type: 'success',
+      })
+    } catch (err) {
+      res
+        .status(err.status || 500)
+        .send({ message: err.message || 'Something went wrong' })
+    }
+  } else if (req.method === 'GET') {
+    try {
+      const { id, email } = req.query
 
-			//create new password
-			const newPassword = makeNewPassword(10)
-			//modify password
-			const hashedPassword = await bcrypt.hash(newPassword, 10)
+      //create new password
+      const newPassword = makeNewPassword(10)
+      //modify password
+      const hashedPassword = await bcrypt.hash(newPassword, 10)
 
-			//create variable object
-			const variables = {
-				id,
-				password: hashedPassword,
-			}
+      //create variable object
+      const variables = {
+        id,
+        password: hashedPassword,
+      }
 
-			//call mutation query
-			await graphQLClientAdmin.request(MODIFY_USER_PASSWORD, variables)
+      //call mutation query
+      await graphQLClientAdmin.request(MODIFY_USER_PASSWORD, variables)
 
-			sendMail(email, 'New Password', newPasswordEmail(newPassword))
+      sendMail(email, 'New Password', newPasswordEmail(newPassword))
 
-			const message = 'Your new password has been sent to your email'
+      const message = 'Your new password has been sent to your email'
 
-			res.status(301).redirect(`/login?message=${message}`)
-		} catch (err) {
-			const message = 'Something went wrong'
+      res.status(301).redirect(`/login?message=${message}`)
+    } catch (err) {
+      const message = 'Something went wrong'
 
-			res.status(err.status || 500).redirect(`/login?error=${message}`)
-		}
-	} else {
-		// Any method that is not POST or GET
-		res.status(401).send('Method unauthorized')
-	}
+      res.status(err.status || 500).redirect(`/login?error=${message}`)
+    }
+  } else {
+    // Any method that is not POST or GET
+    res.status(401).send('Method unauthorized')
+  }
 }

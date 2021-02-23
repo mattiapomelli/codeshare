@@ -3,33 +3,33 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 
 function getDisplayName(WrappedComponent) {
-	return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
 function withAuth<P>(
-	WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
+  WrappedComponent: React.ComponentType<P> & { layout?: React.ReactNode }
 ) {
-	const ComponentWithAuth = (props: P) => {
-		const [session, loading] = useSession()
-		const router = useRouter()
+  const ComponentWithAuth = (props: P) => {
+    const [session, loading] = useSession()
+    const router = useRouter()
 
-		useEffect(() => {
-			if (!loading && !session) router.push('/login')
-		}, [session, loading])
+    useEffect(() => {
+      if (!loading && !session) router.push('/login')
+    }, [session, loading])
 
-		if (loading || !session) return null
+    if (loading || !session) return null
 
-		return <WrappedComponent {...props} />
-	}
+    return <WrappedComponent {...props} />
+  }
 
-	ComponentWithAuth.displayName = `WithAuth(${getDisplayName(
-		WrappedComponent
-	)})`
+  ComponentWithAuth.displayName = `WithAuth(${getDisplayName(
+    WrappedComponent
+  )})`
 
-	// ComponentWithAuth.getLayout = WrappedComponent.getLayout
-	ComponentWithAuth.layout = WrappedComponent.layout
+  // ComponentWithAuth.getLayout = WrappedComponent.getLayout
+  ComponentWithAuth.layout = WrappedComponent.layout
 
-	return ComponentWithAuth
+  return ComponentWithAuth
 }
 
 export default withAuth

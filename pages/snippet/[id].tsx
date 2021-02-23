@@ -16,94 +16,94 @@ import { fetcher } from '@/graphql/client'
 import DashboardLayout from '@/layouts/DashboardLayout'
 
 const Description = styled.pre`
-	white-space: pre-wrap;
-	font-size: 0.9rem;
-	font-family: inherit;
-	font-weight: 300;
-	margin-left: 5px;
-	padding-left: 1.5rem;
-	color: #ccc;
-	border-left: 3px solid ${(props) => props.theme.colors.secondaryText};
+  white-space: pre-wrap;
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 300;
+  margin-left: 5px;
+  padding-left: 1.5rem;
+  color: #ccc;
+  border-left: 3px solid ${(props) => props.theme.colors.secondaryText};
 `
 
 const Info = styled(Flex)`
-	margin-bottom: 1rem;
-	margin-left: 5px;
-	span {
-		font-weight: 300;
-		color: #ccc;
-		flex: 1;
-	}
+  margin-bottom: 1rem;
+  margin-left: 5px;
+  span {
+    font-weight: 300;
+    color: #ccc;
+    flex: 1;
+  }
 `
 
 const PageSkeleton = () => (
-	<article>
-		<div style={{ marginBottom: '1rem', marginTop: '0.5rem' }}>
-			<Skeleton h="2rem" w="40%" style={{ marginBottom: '0.7rem' }} />
-			<Skeleton h="1.4rem" />
-		</div>
-		<Skeleton h="280px" />
-	</article>
+  <article>
+    <div style={{ marginBottom: '1rem', marginTop: '0.5rem' }}>
+      <Skeleton h="2rem" w="40%" style={{ marginBottom: '0.7rem' }} />
+      <Skeleton h="1.4rem" />
+    </div>
+    <Skeleton h="280px" />
+  </article>
 )
 
 const SnippetContent: FunctionComponent<Snippet> = ({
-	code,
-	programmingLang,
-	title,
-	id,
-	likesNum,
-	liked,
-	user,
-	createdAt,
-	description,
+  code,
+  programmingLang,
+  title,
+  id,
+  likesNum,
+  liked,
+  user,
+  createdAt,
+  description,
 }) => {
-	const [session] = useSession()
+  const [session] = useSession()
 
-	return (
-		<article>
-			<H2 overflowWrap>{title}</H2>
-			<Info h="space-between" v="center" flexWrap="wrap">
-				<span>
-					{user.username} &middot; {createdAt.slice(0, 10)}
-				</span>
-				<Flex v="center">
-					{session?.user.username === user.username && (
-						<SnippetActions id={id} />
-					)}
-					<Likes isLiked={liked} count={likesNum} snippetId={id} />
-				</Flex>
-			</Info>
-			<CodeBlock codeString={code + '\n'} language={programmingLang} />
-			<Label style={{ marginTop: '1rem' }}>Description</Label>
-			<Description>{description}</Description>
-		</article>
-	)
+  return (
+    <article>
+      <H2 overflowWrap>{title}</H2>
+      <Info h="space-between" v="center" flexWrap="wrap">
+        <span>
+          {user.username} &middot; {createdAt.slice(0, 10)}
+        </span>
+        <Flex v="center">
+          {session?.user.username === user.username && (
+            <SnippetActions id={id} />
+          )}
+          <Likes isLiked={liked} count={likesNum} snippetId={id} />
+        </Flex>
+      </Info>
+      <CodeBlock codeString={code + '\n'} language={programmingLang} />
+      <Label style={{ marginTop: '1rem' }}>Description</Label>
+      <Description>{description}</Description>
+    </article>
+  )
 }
 
 const snippetFetcher = (query, snippetId, userId) =>
-	fetcher(query, {
-		id: snippetId,
-		userId: userId,
-		isAuth: userId ? true : false,
-	}).then((data) => processSnippet(data.snippet))
+  fetcher(query, {
+    id: snippetId,
+    userId: userId,
+    isAuth: userId ? true : false,
+  }).then((data) => processSnippet(data.snippet))
 
 const SnippetPage: PageWithLayout = () => {
-	const router = useRouter()
-	const [session] = useSession()
-	const userId = session ? session.user.id : null
-	const { data } = useSWR(
-		[GET_SINGLE_SNIPPET_QUERY, router.query.id, userId],
-		snippetFetcher
-	)
+  const router = useRouter()
+  const [session] = useSession()
+  const userId = session ? session.user.id : null
+  const { data } = useSWR(
+    [GET_SINGLE_SNIPPET_QUERY, router.query.id, userId],
+    snippetFetcher
+  )
 
-	if (!data) return <PageSkeleton />
+  if (!data) return <PageSkeleton />
 
-	return (
-		<>
-			<PageHead title={data.title} />
-			<SnippetContent {...data} />
-		</>
-	)
+  return (
+    <>
+      <PageHead title={data.title} />
+      <SnippetContent {...data} />
+    </>
+  )
 }
 
 SnippetPage.layout = DashboardLayout
