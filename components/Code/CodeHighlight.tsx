@@ -33,36 +33,36 @@ SyntaxHighlighter.registerLanguage('cpp', cpp)
 SyntaxHighlighter.registerLanguage('rust', rust)
 
 interface CodeHighlightProps {
-	codeString: string
-	language: string
-	wrapLongLines?: boolean
-	pre?: React.ReactNode
+  codeString: string
+  language: string
+  wrapLongLines?: boolean
+  pre?: React.ReactNode
 }
 
 const CodeHighlight: FunctionComponent<CodeHighlightProps> = ({
-	codeString,
-	language,
-	wrapLongLines,
-	pre,
+  codeString,
+  language,
+  wrapLongLines,
+  pre,
 }) => {
-	return (
-		<SyntaxHighlighter
-			language={language.toLowerCase()}
-			style={theme}
-			PreTag={pre}
-			wrapLines={true}
-			showLineNumbers={false}
-			showInlineLineNumbers={false}
-			customStyle={{
-				background: 'transparent',
-				overflow: 'visible',
-				padding: 0,
-			}}
-			wrapLongLines={wrapLongLines}
-		>
-			{codeString}
-		</SyntaxHighlighter>
-	)
+  return (
+    <SyntaxHighlighter
+      language={language.toLowerCase()}
+      style={theme}
+      PreTag={pre}
+      wrapLines={true}
+      showLineNumbers={false}
+      showInlineLineNumbers={false}
+      customStyle={{
+        background: 'transparent',
+        overflow: 'visible',
+        padding: 0,
+      }}
+      wrapLongLines={wrapLongLines}
+    >
+      {codeString}
+    </SyntaxHighlighter>
+  )
 }
 
 export default CodeHighlight
