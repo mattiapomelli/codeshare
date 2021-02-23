@@ -16,7 +16,7 @@ import PageHead from '@/components/PageHead'
 import Flex from '@/components/Flex'
 import Button from '@/components/Button'
 import Link from 'next/link'
-import { authFetcher } from '@/graphql/client'
+import { authFetcher, fetcher } from '@/graphql/client'
 import { IconButton } from '@/components/Icon'
 import useSnippets from '@/hooks/use-snippets'
 import DashboardLayout from '@/layouts/DashboardLayout'
@@ -69,7 +69,9 @@ const countFetcher = async (query, userId) =>
 
 const TabItem = ({ children, query, active, ...rest }: TabProps) => {
   const [session] = useSession()
-  const { data: count } = useSWR([query, session.user.id], countFetcher)
+  const { data: count } = useSWR([query, session.user.id], countFetcher, {
+    revalidateOnFocus: false,
+  })
 
   return (
     <Tab active={active} {...rest}>
@@ -87,7 +89,7 @@ const ProfilePage: PageWithLayout = () => {
   const { data, loading, noResults } = useSnippets(
     option === 'snippets' ? GET_USER_SNIPPETS_QUERY : GET_LIKED_SNIPPETS_QUERY,
     { userId: session.user.id },
-    authFetcher
+    fetcher
   )
 
   const noResultsScreen =
