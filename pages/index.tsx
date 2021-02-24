@@ -14,6 +14,7 @@ const Hero = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100%;
 
   h1 {
     font-size: 3rem;
@@ -22,11 +23,9 @@ const Hero = styled.section`
     text-align: center;
     line-height: 1.1;
     height: 12rem;
-
     @media only screen and (min-width: 450px) {
       height: 6rem;
     }
-
     @media only screen and (min-width: 900px) {
       height: auto;
     }
