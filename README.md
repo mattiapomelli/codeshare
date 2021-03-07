@@ -1,6 +1,6 @@
 Codeshare is a platform where developers can share their best code snippets and find solutions to coding problems, published by other people.
 
-The frontend is made by [Next.js](https://nextjs.org/), and UI components are built with [Styled Components](https://styled-components.com/)
+The frontend is made by [Next.js](https://nextjs.org/), and UI components are built with [Styled Components](https://styled-components.com/).
 
 The backend is powered by Serverless Functions, and [Hasura](https://hasura.io/), which exposes a GraphQL API on top of a PostgreSQL database.
 
