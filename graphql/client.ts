@@ -14,13 +14,13 @@ export default graphQLClientAdmin
 
 const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL)
 
-export const fetcher = async (query: string, variables) => {
+export const fetcher = async (query: string, variables = {}) => {
   return graphQLClient.request(query, variables)
 }
 
 const graphQLAuthClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_URL)
 
-export const authFetcher = async (query: string, variables) => {
+export const authFetcher = async (query: string, variables = {}) => {
   const session = await getSession()
 
   const headers = session && {

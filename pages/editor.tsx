@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next'
 import { H1 } from '@/components/Typography'
 import SnippetEditor from '@/components/SnippetEditor'
 import withAuth from '@/hocs/withAuth'
-import graphQLClientAdmin from '@/graphql/client'
+import { fetcher } from '@/graphql/client'
 import { GET_PROGRAMMING_LANGS_QUERY } from '@/graphql/queries'
 import PageHead from '@/components/PageHead'
 import DashboardLayout from '@/layouts/DashboardLayout'
@@ -23,7 +23,7 @@ EditorPage.layout = DashboardLayout
 export default withAuth(EditorPage)
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
+  const data = await fetcher(GET_PROGRAMMING_LANGS_QUERY)
 
   const langs = []
   data.langs.forEach((lang) => {

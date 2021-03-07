@@ -4,7 +4,6 @@ import Dropdown from '@/components/Dropdown'
 import { IconInput } from '@/components/Input'
 import Flex from '@/components/Flex'
 import { H1 } from '@/components/Typography'
-import graphQLClientAdmin from '@/graphql/client'
 import {
   GET_PROGRAMMING_LANGS_QUERY,
   GET_LATEST_SNIPPETS_QUERY,
@@ -88,7 +87,7 @@ SnippetsPage.layout = DashboardLayout
 export default SnippetsPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await graphQLClientAdmin.request(GET_PROGRAMMING_LANGS_QUERY)
+  const data = await fetcher(GET_PROGRAMMING_LANGS_QUERY)
 
   const langs = []
   data.langs.forEach((lang) => {
