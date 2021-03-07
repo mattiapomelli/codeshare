@@ -1,4 +1,4 @@
-Codeshare is a platform where developers can share their best code snippets and find solutions to coding problems, published by other people.
+**Codeshare** is a platform where developers can share their best code snippets and find solutions to coding problems, published by other people.
 
 The frontend is made by [Next.js](https://nextjs.org/), and UI components are built with [Styled Components](https://styled-components.com/).
 
