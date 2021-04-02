@@ -1,10 +1,10 @@
-import { useState, useCallback, Dispatch, SetStateAction } from 'react'
+import { useState, useCallback } from 'react'
 import { cache } from '@/utils/cache'
 
 const useCache = <T>(
   key: string,
   initialValue: T
-): [T, Dispatch<SetStateAction<T>>] => {
+): [T, (newValue: T) => void] => {
   const [value, setValue] = useState<T>(() => {
     const cachedValue = cache.get(key)
     return typeof cachedValue !== 'undefined' ? cachedValue : initialValue

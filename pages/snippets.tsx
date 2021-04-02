@@ -22,7 +22,7 @@ const SnippetsPage: PageWithLayout<{ langs: string[] }> = ({ langs }) => {
   const [session] = useSession()
   const typingTimer = useRef<number>()
   const [search, setSearch] = useCache('search', '')
-  const [lang, setLang] = useCache('lang', null)
+  const [lang, setLang] = useCache<string | null>('lang', null)
   const [searchValue, setSearchValue] = useState(search)
 
   const userId = session ? session.user.id : null
