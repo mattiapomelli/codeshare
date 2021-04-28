@@ -73,6 +73,21 @@ const HamIcon = styled(Icon)`
   }
 `
 
+const ProductHuntLink = () => (
+  <a
+    href="https://www.producthunt.com/posts/codeshare?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-codeshare"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=294089&theme=dark"
+      alt="Codeshare - Find the code you need - Share the code you're proud of | Product Hunt"
+      width="200px"
+      height="50px"
+    />
+  </a>
+)
+
 const Navbar: FunctionComponent = () => {
   const [session] = useSession()
   const [showNavbar, setShowNavbar] = useState(false)
@@ -96,6 +111,7 @@ const Navbar: FunctionComponent = () => {
               <Button variant="primary">Sign up</Button>
             </Link>
           )}
+          <ProductHuntLink />
         </List>
         <HamIcon
           icon={showNavbar ? 'cross' : 'menu'}
