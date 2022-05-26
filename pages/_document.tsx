@@ -41,6 +41,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
           />
+          <meta property="og:type" content="website" />
           <meta property="og:title" content="Codeshare" />
           <meta
             property="og:description"
