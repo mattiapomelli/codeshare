@@ -49,7 +49,6 @@ class MyDocument extends Document {
           <meta
             property="og:image"
             content="https://codeshare.tech/thumbnail.jpg"
-            key="ogimage"
           />
         </Head>
         <body>
