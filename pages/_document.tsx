@@ -46,7 +46,11 @@ class MyDocument extends Document {
             property="og:description"
             content="Find the code you need. Share the code you are proud of"
           />
-          <meta property="og:image" content="/thumbnail.jpg" key="ogimage" />
+          <meta
+            property="og:image"
+            content="https://codeshare.tech/thumbnail.jpg"
+            key="ogimage"
+          />
         </Head>
         <body>
           <Main />
