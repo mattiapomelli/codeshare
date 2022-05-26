@@ -41,7 +41,12 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
           />
-          <meta property="og:image" content="./thumbnail.jpg" key="ogimage" />
+          <meta property="og:title" content="Codeshare" />
+          <meta
+            property="og:description"
+            content="Find the code you need. Share the code you are proud of"
+          />
+          <meta property="og:image" content="/thumbnail.jpg" key="ogimage" />
         </Head>
         <body>
           <Main />
